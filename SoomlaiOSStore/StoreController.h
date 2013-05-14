@@ -36,6 +36,8 @@
     @private
     BOOL initialized;
     BOOL storeOpen;
+    NSString *transactionServerVerifyEnable;
+    NSString *transactionVerifyURL;
 }
 
 @property BOOL initialized;
