@@ -202,6 +202,15 @@ static NSString* TAG = @"SOOMLA StoreController";
 
 - (void) completeTransaction: (SKPaymentTransaction *)transaction
 {
+    NSLog(@"VerifyEnable : %@",transactionServerVerifyEnable);
+
+    if ([transactionServerVerifyEnable isEqualToString:@"true"]) {
+        NSLog(@"VerifyEnable : %@",transactionServerVerifyEnable);
+        if (![self verifyReceipt:transaction.transactionReceipt]) {
+        [   EventHandling postUnexpectedError];
+            return;
+        }
+    }
 
     LogDebug(TAG, ([NSString stringWithFormat:@"Transaction completed for product: %@", transaction.payment.productIdentifier]));
     [self givePurchasedItem:transaction];
@@ -268,5 +277,74 @@ static NSString* TAG = @"SOOMLA StoreController";
     //    [[NSNotificationCenter defaultCenter] postNotificationName:kInAppPurchaseManagerProductsFetchedNotification object:self userInfo:nil];
 }
 
+-(BOOL) verifyReceipt:(NSData *)transactionReceiptData {
+    NSString *transactionReceiptStr = [[NSString alloc] initWithData:transactionReceiptData encoding:NSUTF8StringEncoding]; 
+    NSLog(@"transactionReceiptStr : %@", transactionReceiptStr);
+    transactionReceiptStr = [transactionReceiptStr stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]; 
+    NSLog(@"URL : %@", transactionVerifyURL);
+
+    NSString *str = [[NSString alloc] initWithString:[NSString stringWithFormat:@"transactionReceipt=%@",transactionReceiptStr]];
+    //NSData *postData = [str dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSData *postData = [str dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    NSString *strLen = [NSString stringWithFormat:@"%d", [postData length]];
+
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];// autorelease];
+    [request setURL:[NSURL URLWithString:transactionVerifyURL]];
+    [request setHTTPMethod:@"POST"];
+    //设置Content-Length
+    [request setValue:strLen forHTTPHeaderField:@"Content-Length"];
+    //設置contentType
+    [request addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    //非同步request
+    NSHTTPURLResponse *urlResponse=nil;
+    NSError *errorr=nil;
+    NSData *receivedData = [NSURLConnection sendSynchronousRequest:request
+                                                 returningResponse:&urlResponse
+                                                             error:&errorr];
+    if (urlResponse != nil) {
+        int statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
+        NSLog(@"http return code : %d",statusCode);
+        NSString *receivedString = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];  
+        NSLog(@"receivedString : %@",receivedString);
+
+        NSError *jsonError = nil;
+        id jsonObject = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingAllowFragments error:&jsonError];
+        
+        if (jsonObject != nil && jsonError == nil) {
+
+            if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *deserializedDictionary = (NSDictionary *)jsonObject;
+                NSLog(@"Dersialized JSON Dictionary = %@", deserializedDictionary);
+                NSString *status = [deserializedDictionary objectForKey:@"status"];
+
+                if ([status isEqualToString:@"0"]) {
+                    NSLog(@"status : %@",status);
+                    return YES;
+                } else {
+                    return NO;
+                }
+
+            } else if ([jsonObject isKindOfClass:[NSArray class]]) {
+                NSArray *deserializedArray = (NSArray *)jsonObject;
+                NSLog(@"Dersialized JSON Array = %@", deserializedArray);
+            } else {
+                NSLog(@"An error happened while deserializing the JSON data.");
+            }
+        }
+
+        return NO;
+    } else {
+        return NO;
+    }
+}
+
+- (void) setServerVerifyEnable:(NSString *) serverVerifyEnable{
+    transactionServerVerifyEnable = serverVerifyEnable;
+}
+
+- (void) setVerifyURL:(NSString *) verifyURL{
+    transactionVerifyURL = verifyURL;
+}
 
 @end

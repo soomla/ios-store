@@ -19,7 +19,7 @@ The ios-store is our iOS-flavored code initiative part of The SOOMLA Project. It
 >If you also want to create a **storefront** you can do that using SOOMLA's [In-App Purchase Store Designer](http://soom.la).
 
 Check out our [Wiki] (https://github.com/soomla/ios-store/wiki) for more information about the project and how to use it better.
-
+**add server verify modle**
 Getting Started (using source code)
 ---
 
