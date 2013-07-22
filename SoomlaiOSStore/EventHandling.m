@@ -109,8 +109,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_APPSTORE_PURCHASE_CANCELLED object:self userInfo:userInfo];
 }
 
-+ (void)postAppStorePurchase:(PurchasableVirtualItem*)purchasableVirtualItem{
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:purchasableVirtualItem forKey:DICT_ELEMENT_PURCHASABLE];
++ (void)postAppStorePurchase:(PurchasableVirtualItem*)purchasableVirtualItem withReceipt:(NSString *)transactionReceipt{
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              purchasableVirtualItem, DICT_ELEMENT_PURCHASABLE,
+                              transactionReceipt, DICT_ELEMENT_RECEIPT,
+                              nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_APPSTORE_PURCHASED object:self userInfo:userInfo];
 }
 

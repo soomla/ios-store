@@ -180,12 +180,12 @@ static NSString* TAG = @"SOOMLA StoreController";
     }
 }
 
-- (void)givePurchasedItem:(SKPaymentTransaction *)transaction
+- (void)givePurchasedItem:(SKPaymentTransaction *)transaction withReceipt:(NSString *)receipt
 {
     @try {
         PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
         
-        [EventHandling postAppStorePurchase:pvi];
+        [EventHandling postAppStorePurchase:pvi withReceipt:receipt];
         
         [pvi giveAmount:1];
         
@@ -213,13 +213,17 @@ static NSString* TAG = @"SOOMLA StoreController";
     }
 
     LogDebug(TAG, ([NSString stringWithFormat:@"Transaction completed for product: %@", transaction.payment.productIdentifier]));
-    [self givePurchasedItem:transaction];
+    
+    NSString *transactionReceiptStr = [[NSString alloc] initWithData:transaction.transactionReceipt encoding:NSUTF8StringEncoding];
+    transactionReceiptStr = [transactionReceiptStr stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    
+    [self givePurchasedItem:transaction withReceipt:transactionReceiptStr];
 }
 
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction
 {
     LogDebug(TAG, ([NSString stringWithFormat:@"Restore transaction for product: %@", transaction.payment.productIdentifier]));
-    [self givePurchasedItem:transaction];
+    [self givePurchasedItem:transaction withReceipt:@""];
 }
 
 - (void) failedTransaction: (SKPaymentTransaction *)transaction
@@ -279,19 +283,18 @@ static NSString* TAG = @"SOOMLA StoreController";
 
 -(BOOL) verifyReceipt:(NSData *)transactionReceiptData {
     NSString *transactionReceiptStr = [[NSString alloc] initWithData:transactionReceiptData encoding:NSUTF8StringEncoding]; 
-    NSLog(@"transactionReceiptStr : %@", transactionReceiptStr);
+    //NSLog(@"transactionReceiptStr : %@", transactionReceiptStr);
     transactionReceiptStr = [transactionReceiptStr stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]; 
-    NSLog(@"URL : %@", transactionVerifyURL);
+    //NSLog(@"URL : %@", transactionVerifyURL);
 
     NSString *str = [[NSString alloc] initWithString:[NSString stringWithFormat:@"transactionReceipt=%@",transactionReceiptStr]];
-    //NSData *postData = [str dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSData *postData = [str dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
     NSString *strLen = [NSString stringWithFormat:@"%d", [postData length]];
 
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];// autorelease];
     [request setURL:[NSURL URLWithString:transactionVerifyURL]];
     [request setHTTPMethod:@"POST"];
-    //设置Content-Length
+    //設置Content-Length
     [request setValue:strLen forHTTPHeaderField:@"Content-Length"];
     //設置contentType
     [request addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
