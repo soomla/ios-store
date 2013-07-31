@@ -47,56 +47,56 @@ static NSString* TAG = @"SOOMLA StoreController";
         LogDebug(TAG, @"You can't perform any of StoreController's actions before it was initialized. Initialize it once when your game loads.");
         return NO;
     }
-    
+
     return YES;
 }
 
 + (StoreController*)getInstance{
     static StoreController* _instance = nil;
-    
+
     @synchronized( self ) {
         if( _instance == nil ) {
             _instance = [[StoreController alloc ] init];
         }
     }
-    
+
     return _instance;
 }
 
 - (void)initializeWithStoreAssets:(id<IStoreAsssets>)storeAssets andCustomSecret:(NSString*)secret {
-    
+
     if (secret && secret.length > 0) {
         [ObscuredNSUserDefaults setString:secret forKey:@"ISU#LL#SE#REI"];
     } else if ([[ObscuredNSUserDefaults stringForKey:@"ISU#LL#SE#REI"] isEqualToString:@""]){
         LogError(TAG, @"secret is null or empty. can't initialize store !!");
         return;
     }
-    
+
     [ObscuredNSUserDefaults setInt:[storeAssets getVersion] forKey:@"SA_VER_NEW"];
-    
+
     [StorageManager getInstance];
     [[StoreInfo getInstance] initializeWithIStoreAsssets:storeAssets];
-    
+
     if ([SKPaymentQueue canMakePayments]) {
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-        
+
         [EventHandling postBillingSupported];
     } else {
         [EventHandling postBillingNotSupported];
     }
-    
+
     self.initialized = YES;
 }
 
 - (BOOL)buyInAppStoreWithAppStoreItem:(AppStoreItem*)appStoreItem{
     if (![self checkInit]) return NO;
-    
+
     if ([SKPaymentQueue canMakePayments]) {
         SKMutablePayment *payment = [[SKMutablePayment alloc] init] ;
         payment.productIdentifier = appStoreItem.productId;
         payment.quantity = 1;
         [[SKPaymentQueue defaultQueue] addPayment:payment];
-        
+
         @try {
             PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:appStoreItem.productId];
             [EventHandling postAppStorePurchaseStarted:pvi];
@@ -108,13 +108,13 @@ static NSString* TAG = @"SOOMLA StoreController";
         LogError(TAG, @"Can't make purchases. Parental control is probably enabled.");
         return NO;
     }
-    
+
     return YES;
 }
 
 - (void)storeOpening{
     if(![self checkInit]) return;
-    
+
     @synchronized(self) {
         if (self.storeOpen) {
             LogError(TAG, @"You called storeOpening whern the store was already open !");
@@ -128,28 +128,28 @@ static NSString* TAG = @"SOOMLA StoreController";
         }
 
         [EventHandling postOpeningStore];
-        
+
         self.storeOpen = YES;
     }
 }
 
 - (void)storeClosing{
     if (!self.storeOpen) return;
-    
+
     self.storeOpen = NO;
-    
+
     [EventHandling postClosingStore];
 }
 
 
 - (void)restoreTransactions {
     if(![self checkInit]) return;
-    
+
     LogDebug(TAG, @"Sending restore transaction request");
     if ([SKPaymentQueue canMakePayments]) {
         [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     }
-    
+
     [EventHandling postTransactionRestoreStarted];
 }
 
@@ -184,13 +184,13 @@ static NSString* TAG = @"SOOMLA StoreController";
 {
     @try {
         PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
-        
+
         [EventHandling postAppStorePurchase:pvi withReceipt:receipt];
-        
+
         [pvi giveAmount:1];
-        
+
         [EventHandling postItemPurchased:pvi];
-        
+
 	// Remove the transaction from the payment queue.
 	[[SKPaymentQueue defaultQueue] finishTransaction: transaction];
     } @catch (VirtualItemNotFoundException* e) {
@@ -213,10 +213,9 @@ static NSString* TAG = @"SOOMLA StoreController";
     }
 
     LogDebug(TAG, ([NSString stringWithFormat:@"Transaction completed for product: %@", transaction.payment.productIdentifier]));
-    
+
     NSString *transactionReceiptStr = [[NSString alloc] initWithData:transaction.transactionReceipt encoding:NSUTF8StringEncoding];
-    transactionReceiptStr = [transactionReceiptStr stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-    
+
     [self givePurchasedItem:transaction withReceipt:transactionReceiptStr];
 }
 
@@ -230,14 +229,14 @@ static NSString* TAG = @"SOOMLA StoreController";
 {
     if (transaction.error.code != SKErrorPaymentCancelled) {
         LogError(TAG, ([NSString stringWithFormat:@"An error occured for product id \"%@\" with code \"%d\" and description \"%@\"", transaction.payment.productIdentifier, transaction.error.code, transaction.error.localizedDescription]));
-        
+
         [EventHandling postUnexpectedError];
     }
     else{
-        
+
         @try {
             PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
-        
+
             [EventHandling postAppStorePurchaseCancelled:pvi];
         }
         @catch (VirtualItemNotFoundException* e) {
@@ -282,9 +281,9 @@ static NSString* TAG = @"SOOMLA StoreController";
 }
 
 -(BOOL) verifyReceipt:(NSData *)transactionReceiptData {
-    NSString *transactionReceiptStr = [[NSString alloc] initWithData:transactionReceiptData encoding:NSUTF8StringEncoding]; 
+    NSString *transactionReceiptStr = [[NSString alloc] initWithData:transactionReceiptData encoding:NSUTF8StringEncoding];
     //NSLog(@"transactionReceiptStr : %@", transactionReceiptStr);
-    transactionReceiptStr = [transactionReceiptStr stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]; 
+    transactionReceiptStr = [transactionReceiptStr stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
     //NSLog(@"URL : %@", transactionVerifyURL);
 
     NSString *str = [[NSString alloc] initWithString:[NSString stringWithFormat:@"transactionReceipt=%@",transactionReceiptStr]];
@@ -308,12 +307,12 @@ static NSString* TAG = @"SOOMLA StoreController";
     if (urlResponse != nil) {
         int statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
         NSLog(@"http return code : %d",statusCode);
-        NSString *receivedString = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];  
+        NSString *receivedString = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
         NSLog(@"receivedString : %@",receivedString);
 
         NSError *jsonError = nil;
         id jsonObject = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingAllowFragments error:&jsonError];
-        
+
         if (jsonObject != nil && jsonError == nil) {
 
             if ([jsonObject isKindOfClass:[NSDictionary class]]) {
