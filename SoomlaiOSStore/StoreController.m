@@ -106,6 +106,12 @@ static NSString* TAG = @"SOOMLA StoreController";
             LogError(TAG, ([NSString stringWithFormat:@"Couldn't find a purchasable item with productId: %@", appStoreItem.productId]));
         }
     } else {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"IAP Failed!"
+                                                          message:@"Can't make purchases. Parental control is probably enabled."
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
         LogError(TAG, @"Can't make purchases. Parental control is probably enabled.");
         return NO;
     }
@@ -231,6 +237,13 @@ static NSString* TAG = @"SOOMLA StoreController";
         @catch (VirtualItemNotFoundException* e) {
             LogError(TAG, ([NSString stringWithFormat:@"Couldn't find the CANCELLED VirtualCurrencyPack OR AppStoreItem with productId: %@"
                             @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
+            
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"IAP Failed!"
+                                                              message:@"Unexpected error happened during IAP. You will NOT be charged"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil];
+            [message show];
             [EventHandling postUnexpectedError];
         }
         
