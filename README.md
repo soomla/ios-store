@@ -174,4 +174,4 @@ License
 MIT License. Copyright (c) 2012 SOOMLA. http://project.soom.la
 + http://www.opensource.org/licenses/MIT
 
-測試**test**aaaaaa **中文** 中文中文中文中文
+測試\ **test**\ aaaaaa **中文** 中文中文中文中文
