@@ -37,4 +37,8 @@
     [EventHandling postChangedBalance:balance forCurrency:(VirtualCurrency*)item withAmount:amountAdded];
 }
 
+- (void)postBalanceUnchangeToItem:(VirtualItem*)item withBalance:(int)balance andAmountAdded:(int)amountAdded {
+    [EventHandling postUnchangedBalance:balance forCurrency:(VirtualCurrency*)item withAmount:amountAdded];
+}
+
 @end

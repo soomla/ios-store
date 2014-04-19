@@ -63,12 +63,22 @@
     LogDebug(tag, ([NSString stringWithFormat:@"removing %d %@", amount, item.name]));
     
     NSString* key = [self keyBalance:item.itemId];
-    int balance = [self balanceForItem:item] - amount;
-	if (balance < 0) {
-	    balance = 0;
+    int balance = [self balanceForItem:item];
+	
+    if ((balance - amount) < 0) {
 	    amount = 0;
+        
+        if (notify)
+        {
+            [self postBalanceUnchangeToItem:item withBalance:balance andAmountAdded:amount];
+        }
+        
+        return balance;
 	}
-    [[[StorageManager getInstance] keyValueStorage] setValue:[NSString stringWithFormat:@"%d",balance] forKey:key];
+    else
+    {
+        [[[StorageManager getInstance] keyValueStorage] setValue:[NSString stringWithFormat:@"%d",(balance - amount)] forKey:key];
+    }
     
     if (notify) {
         [self postBalanceChangeToItem:item withBalance:balance andAmountAdded:(-1*amount)];

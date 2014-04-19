@@ -40,6 +40,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UNEXPECTED_ERROR_IN_STORE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_STORECONTROLLER_INIT object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_ITEMS_REFRESHED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_INSUFFICIENT_VIRTUAL_CURRENCY object:nil];
 }
 
 + (void)postBillingSupported{
@@ -57,6 +58,15 @@
                               [NSNumber numberWithInt:amountAdded], DICT_ELEMENT_AMOUNT_ADDED,
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_CURRENCY_BALANCE_CHANGED object:self userInfo:userInfo];
+}
+
++ (void)postUnchangedBalance:(int)balance forCurrency:(VirtualCurrency*)currency withAmount:(int)amountAdded {
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:balance], DICT_ELEMENT_BALANCE,
+                              currency, DICT_ELEMENT_CURRENCY,
+                              [NSNumber numberWithInt:amountAdded], DICT_ELEMENT_AMOUNT_ADDED,
+                              nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_INSUFFICIENT_VIRTUAL_CURRENCY object:self userInfo:userInfo];
 }
 
 + (void)postChangedBalance:(int)balance forGood:(VirtualGood*)good withAmount:(int)amountAdded {

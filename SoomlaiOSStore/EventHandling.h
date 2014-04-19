@@ -44,6 +44,7 @@
 #define EVENT_STORECONTROLLER_INIT          @"StoreControllerInitialized"
 #define EVENT_MARKET_ITEMS_REFRESHED        @"MarketItemsRefreshed"
 #define EVENT_UNEXPECTED_ERROR_IN_STORE     @"UnexpectedErrorInStore"
+#define EVENT_INSUFFICIENT_VIRTUAL_CURRENCY @"InsufficientVirtualCurrency"
 
 
 
@@ -102,6 +103,7 @@
 + (void)postRestoreTransactionsStarted;
 + (void)postUnexpectedError:(int)code forObject:(id)object;
 + (void)postStoreControllerInitialized;
++ (void)postUnchangedBalance:(int)balance forCurrency:(VirtualCurrency*)currency withAmount:(int)amountAdded;
 
 @end
 
