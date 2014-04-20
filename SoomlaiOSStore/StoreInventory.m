@@ -43,17 +43,24 @@
     return [[[StorageManager getInstance] virtualItemStorage:item] balanceForItem:item];
 }
 
-+ (void)giveAmount:(int)amount ofItem:(NSString*)itemId {
++ (BOOL)giveAmount:(int)amount ofItem:(NSString*)itemId {
     VirtualItem* item = [[StoreInfo getInstance] virtualItemWithId:itemId];
-    [item giveAmount:amount];
+    int balance = [self getItemBalance:item.itemId] + amount;
+    if(balance == [item giveAmount:amount])
+        return YES;
+    else
+        return NO;
 }
 
-+ (void)takeAmount:(int)amount ofItem:(NSString*)itemId {
++ (BOOL)takeAmount:(int)amount ofItem:(NSString*)itemId {
     VirtualItem* item = [[StoreInfo getInstance] virtualItemWithId:itemId];
-    [item takeAmount:amount];
+    int balance = [self getItemBalance:item.itemId];
+    
+    if(balance == [item takeAmount:amount])
+        return NO;
+    else
+        return YES;
 }
-
-
 
 + (void)equipVirtualGoodWithItemId:(NSString*)goodItemId {
     EquippableVG* good = (EquippableVG*)[[StoreInfo getInstance] virtualItemWithId:goodItemId];

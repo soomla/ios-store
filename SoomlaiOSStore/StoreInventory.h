@@ -35,12 +35,12 @@
  *
  * throws VirtualItemNotFoundException
  */
-+ (void)giveAmount:(int)amount ofItem:(NSString*)itemId;
++ (BOOL)giveAmount:(int)amount ofItem:(NSString*)itemId;
 /**
  *
  * throws VirtualItemNotFoundException
  */
-+ (void)takeAmount:(int)amount ofItem:(NSString*)itemId;
++ (BOOL)takeAmount:(int)amount ofItem:(NSString*)itemId;
 
 /** Virtual Goods **/
 /**

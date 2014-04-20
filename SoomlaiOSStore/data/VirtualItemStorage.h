@@ -55,5 +55,6 @@
 
 - (NSString*)keyBalance:(NSString*)itemId;
 - (void)postBalanceChangeToItem:(VirtualItem*)item withBalance:(int)balance andAmountAdded:(int)amountAdded;
+- (void)postBalanceUnchangeToItem:(VirtualItem*)item withBalance:(int)balance andAmountAdded:(int)amountAdded;
 
 @end
