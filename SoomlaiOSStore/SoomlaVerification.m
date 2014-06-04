@@ -43,7 +43,9 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
 
     NSData* data = nil;
     if (version < 7) {
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         data = transaction.transactionReceipt;
+        #pragma clang diagnostic pop
     } else {
         NSURL* receiptUrl = [[NSBundle mainBundle] appStoreReceiptURL];
         if ([[NSFileManager defaultManager] fileExistsAtPath:[receiptUrl path]]) {
