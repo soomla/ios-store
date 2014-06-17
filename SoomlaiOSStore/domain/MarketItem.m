@@ -51,6 +51,7 @@
     return [[NSDictionary alloc] initWithObjectsAndKeys:
             [NSNumber numberWithInt:self.consumable], JSON_MARKETITEM_CONSUMABLE,
             self.productId, JSON_MARKETITEM_IOS_ID,
+            self.productId, JSON_MARKETITEM_PRODUCT_ID,
             [NSNumber numberWithDouble:self.price], JSON_MARKETITEM_PRICE,
             nil];
 }
