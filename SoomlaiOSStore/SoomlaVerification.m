@@ -58,7 +58,7 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
 
         NSData *postData = [[SoomlaUtils dictToJsonString:postDict] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         
-        NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+        NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         
@@ -81,7 +81,7 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     responseData = [[NSMutableData alloc] init];
     NSHTTPURLResponse * httpResponse = (NSHTTPURLResponse*)response;
-    responseCode = [httpResponse statusCode];
+    responseCode = (int)[httpResponse statusCode];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

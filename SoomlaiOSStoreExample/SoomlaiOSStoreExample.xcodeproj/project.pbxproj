@@ -50,18 +50,7 @@
 		C08CF2FF164321F7007603E8 /* iOS Simulator Screen shot Nov 1, 2012 11.31.54 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = C08CF2FC164321F7007603E8 /* iOS Simulator Screen shot Nov 1, 2012 11.31.54 PM.png */; };
 		C08CF30516432235007603E8 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C08CF30416432235007603E8 /* Icon.png */; };
 		C08CF30716432239007603E8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08CF30616432239007603E8 /* Icon@2x.png */; };
-		C0AE277018EC3FE300941020 /* libSoomlaiOSStore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0AE276F18EC3FBB00941020 /* libSoomlaiOSStore.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		C0AE276E18EC3FBB00941020 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C0AE276A18EC3FBB00941020 /* SoomlaiOSStore.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C02CEC42160DC870000AA0D2;
-			remoteInfo = SoomlaiOSStore;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C08CF2071641C68D007603E8 /* SoomlaiOSStoreExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoomlaiOSStoreExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,7 +106,8 @@
 		C08CF2FC164321F7007603E8 /* iOS Simulator Screen shot Nov 1, 2012 11.31.54 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iOS Simulator Screen shot Nov 1, 2012 11.31.54 PM.png"; sourceTree = "<group>"; };
 		C08CF30416432235007603E8 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../../Icon.png; sourceTree = "<group>"; };
 		C08CF30616432239007603E8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../../Icon@2x.png"; sourceTree = "<group>"; };
-		C0AE276A18EC3FBB00941020 /* SoomlaiOSStore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSStore.xcodeproj; path = ../SoomlaiOSStore.xcodeproj; sourceTree = "<group>"; };
+		C0969D1519545AFB007349A3 /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-cplyvflfgyicwuehqavfnigqnefb/Build/Products/Debug-iphoneos/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
+		C0969D1619545AFB007349A3 /* libSoomlaiOSStore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSStore.a; path = "../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-cplyvflfgyicwuehqavfnigqnefb/Build/Products/Debug-iphoneos/libSoomlaiOSStore.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +115,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0AE277018EC3FE300941020 /* libSoomlaiOSStore.a in Frameworks */,
 				C08CF2D01641D004007603E8 /* Security.framework in Frameworks */,
 				C08CF2CE1641CFFE007603E8 /* libsqlite3.0.dylib in Frameworks */,
 				C08CF2CC1641CFF3007603E8 /* StoreKit.framework in Frameworks */,
@@ -141,7 +130,6 @@
 		C08CF1FC1641C68D007603E8 = {
 			isa = PBXGroup;
 			children = (
-				C0AE276A18EC3FBB00941020 /* SoomlaiOSStore.xcodeproj */,
 				C08CF2111641C68D007603E8 /* SoomlaiOSStoreExample */,
 				C08CF20A1641C68D007603E8 /* Frameworks */,
 				C08CF2081641C68D007603E8 /* Products */,
@@ -159,6 +147,8 @@
 		C08CF20A1641C68D007603E8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0969D1519545AFB007349A3 /* libSoomlaiOSCore.a */,
+				C0969D1619545AFB007349A3 /* libSoomlaiOSStore.a */,
 				C08CF2CF1641D004007603E8 /* Security.framework */,
 				C08CF2CD1641CFFE007603E8 /* libsqlite3.0.dylib */,
 				C08CF2CB1641CFF3007603E8 /* StoreKit.framework */,
@@ -246,14 +236,6 @@
 			path = images;
 			sourceTree = "<group>";
 		};
-		C0AE276B18EC3FBB00941020 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C0AE276F18EC3FBB00941020 /* libSoomlaiOSStore.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -293,28 +275,12 @@
 			mainGroup = C08CF1FC1641C68D007603E8;
 			productRefGroup = C08CF2081641C68D007603E8 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C0AE276B18EC3FBB00941020 /* Products */;
-					ProjectRef = C0AE276A18EC3FBB00941020 /* SoomlaiOSStore.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C08CF2061641C68D007603E8 /* SoomlaiOSStoreExample */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		C0AE276F18EC3FBB00941020 /* libSoomlaiOSStore.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSoomlaiOSStore.a;
-			remoteRef = C0AE276E18EC3FBB00941020 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C08CF2051641C68D007603E8 /* Resources */ = {
@@ -452,11 +418,18 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"../SoomlaiOSStore/**",
-					"../submodules/soomla-ios-core/SoomlaiOSCore/**",
+					"../build/headers/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSStoreExample/SoomlaiOSStoreExample-Info.plist";
-				OTHER_LDFLAGS = "-ObjC";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"../build/**",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lSoomlaiOSStore",
+					"-lSoomlaiOSCore",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -471,11 +444,18 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"../SoomlaiOSStore/**",
-					"../submodules/soomla-ios-core/SoomlaiOSCore/**",
+					"../build/headers/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSStoreExample/SoomlaiOSStoreExample-Info.plist";
-				OTHER_LDFLAGS = "-ObjC";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"../build/**",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lSoomlaiOSStore",
+					"-lSoomlaiOSCore",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
