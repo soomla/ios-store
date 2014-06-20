@@ -1,4 +1,4 @@
-*This project is a part of [The SOOMLA Project](http://project.soom.la) which is a series of open source initiatives with a joint goal to help mobile game developers get better stores and more in-app purchases.*
+*This project is a part of The [SOOMLA](http://project.soom.la) Framework which is a series of open source initiatives with a joint goal to help mobile game developers do more together. SOOMLA encourages better game designing, economy modeling and faster development.*
 
 Haven't you ever wanted an in-app purchase one liner that looks like this ?!
 
@@ -6,9 +6,14 @@ Haven't you ever wanted an in-app purchase one liner that looks like this ?!
     [StoreInventory buyItemWithItemId:@"[itemId]"]
 ```
 
-iOS-store
+ios-store
 ---
-**March 31st, 2014:** StoreController will **automatically try to fetch prices** for PurchasableItems that has a purchase type of PurchaseWithMarket. The product ids that'll be found in the App Store will update the associated 'AppStoreItem' in special fields: appStorePrice, appStoreLocale, appStoreTitle, appStoreDescription.
+
+*SOOMLA's Store Module for iOS*
+
+**June 20th, 2014**: v3.4.0 presents support for "Soomla Core" (which separates some objects common to ALL SOOMLA's modules). It also removed the usage of SOOM_SEC. [Getting Started](https://github.com/soomla/ios-store#getting-started) has changed! see [CHANGELOG](changelog.md).
+
+**March 31st, 2014:** SoomlaStore will **automatically try to fetch prices** for PurchasableItems that has a purchase type of PurchaseWithMarket. The product ids that'll be found in the App Store will update the associated 'AppStoreItem' in special fields: appStorePrice, appStoreLocale, appStoreTitle, appStoreDescription.
 
 **September 29th, 2013:** Server Side Verification is now implemented into ios-store. The server is a complimentary server provided by [SOOMLA](http://soom.la) to help you get your in-game purchases a bit more secured. This feature is not enabled by default. In order to enable Server Side verification go to StoreConfig.m and set  **VERIFY_PURCHASES = YES**.
 
@@ -16,39 +21,37 @@ Want to learn more about modelV3? Try these:
 * [Economy Model Objects](https://github.com/soomla/ios-store/wiki/Economy-Model-Objects)  
 * [Handling Store Operations](https://github.com/soomla/ios-store/wiki/Handling-Store-Operations)
 
-The iOS-store is our iOS-flavored code initiative part of The SOOMLA Project. It is an iOS SDK that simplifies the App Store's in-app purchasing API and complements it with storage, security and event handling. The project also includes a sample app for reference. 
-
->If you also want to create a **storefront** you can do that using SOOMLA's [In-App Purchase Store Designer](http://soom.la).
+ios-store is the iOS flavor of SOOMLA's Store Module.
 
 Check out our [Wiki] (https://github.com/soomla/ios-store/wiki) for more information about the project and how to use it better.
 
-Getting Started (using source code)
+Getting Started
 ---
 
 #### **WE USE ARC !**
 
 
-* Before doing anything, SOOMLA recommends that you go through [Selling with In-App Purchase](https://developer.apple.com/appstore/in-app-purchase/index.html).
+Before doing anything, SOOMLA recommends that you go through [Selling with In-App Purchase](https://developer.apple.com/appstore/in-app-purchase/index.html).
 
-1. Clone ios-store. Copy all files from ../ios-store/SoomlaiOSStore/SoomlaiOSStore into your iOS project:
+1. The static libs and headers you need are in the folder [build](https://github.com/soomla/ios-store/tree/master/build).
 
- `git clone git@github.com:soomla/ios-store.git`
+  * Set your project's "Library Search Paths" and "Header Search Paths" to that folder.
+  * Add `-ObjC -lSoomlaiOSStore -lSoomlaiOSCore` to the project's "Other Linker Flags".
 
 2. Make sure you have the following frameworks in your application's project: **Security, libsqlite3.0.dylib, StoreKit**.
 
-3. Change the value of SOOM_SEC in StoreConfig.m to a secret of you choice. Do this now! **You can't change this value after you publish your game!**
+3. Initialize **Soomla** with a secret that you chose to encrypt the user data. (For those who came from older versions, this should be the same as the old "custom secret"):
 
-4. We use [OpenUDID](https://github.com/ylechelle/OpenUDID) when we can't use Apple's approved way of fetching the UDID (using 'identifierForVendor'). We use ARC but OpenUDID doesn't use ARC. Open your *Project Properties* -> *Build Phases* -> *Compile Sources* and and add the flag '-fno-objc-arc' to OpenUDID.m.
+    ```objective-c
+     [Soomla initializeWithSecret:@"[YOUR CUSTOM GAME SECRET HERE]"];
+    ```
+> The secret is your encryption secret for data saved in the DB.
 
-5. Create your own implementation of _IStoreAssets_ in order to describe your specific game's assets. Initialize _StoreController_ with the class you just created:
+4. Create your own implementation of _IStoreAssets_ in order to describe your specific game's assets. Initialize _SoomlaStore_ with the class you just created:
 
-      ```objective-c
-       [[StoreController getInstance] initializeWithStoreAssets:[[YourStoreAssetsImplementation alloc] init] andCustomSecret:@"[YOUR CUSTOM SECRET HERE]"];
-      ```
-
-    > The custom secret is your encryption secret for data saved in the DB. This secret is NOT the secret from step 4 (select a different value).
-
-    > Initialize `StoreController` ONLY ONCE when your application loads.
+    ```objective-c
+     [[SoomlaStore getInstance] initializeWithStoreAssets:[[YourStoreAssetsImplementation alloc] init]];
+    ```
 
 And that's it ! You have Storage and in-app purchasing capabilities... ALL-IN-ONE.
 
@@ -67,11 +70,11 @@ Here is an example:
 Lets say you have a _VirtualCurrencyPack_ you call `TEN_COINS_PACK` and a _VirtualCurrency_ you call `COIN_CURRENCY`:
 
 ```objective-c
-VirtualCurrencyPack* TEN_COINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"10 Coins" 
-											   andDescription:@"A pack of 10 coins" 
-											        andItemId:@"10_coins" 
-											andCurrencyAmount:10 
-											 	  andCurrency:COIN_CURRENCY_ITEM_ID 
+VirtualCurrencyPack* TEN_COINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"10 Coins"
+											   andDescription:@"A pack of 10 coins"
+											        andItemId:@"10_coins"
+											andCurrencyAmount:10
+											 	  andCurrency:COIN_CURRENCY_ITEM_ID
 											  andPurchaseType:[[PurchaseWithMarket alloc] initWithProductId:TEN_COINS_PACK_PRODUCT_ID andPrice:1.99]];
 ```
 
@@ -86,7 +89,7 @@ And that's it! iOS-store knows how to contact the App Store for you and redirect
 Storage & Meta-Data
 ---
 
-When you initialize _StoreController_, it automatically initializes two other classes: _StorageManager_ and _StoreInfo_. _StorageManager_ is the father of all storage related instances in your game. Use it to access the balances of virtual currencies and virtual goods (usually, using their itemIds). _StoreInfo_ is the mother of all meta data information about your specific game. It is initialized with your implementation of `IStoreAssets` and you can use it to retrieve information about your specific game.
+When you initialize _SoomlaStore_, it automatically initializes two other classes: _StorageManager_ and _StoreInfo_. _StorageManager_ is the father of all storage related instances in your game. Use it to access the balances of virtual currencies and virtual goods (usually, using their itemIds). _StoreInfo_ is the mother of all meta data information about your specific game. It is initialized with your implementation of `IStoreAssets` and you can use it to retrieve information about your specific game.
 
 The on-device storage is encrypted and kept in a SQLite database. SOOMLA is preparing a cloud-based storage service that will allow this SQLite to be synced to a cloud-based repository that you'll define. Stay tuned... this is just one of the goodies we prepare for you.
 
@@ -97,26 +100,26 @@ The on-device storage is encrypted and kept in a SQLite database. SOOMLA is prep
     ```objective-c
     [StoreInventory giveAmount:10 ofItem:@"currency_coin"];
     ```
-    
+
 * Take 10 virtual goods with itemId "green_hat":
 
     ```objective-c
     [StoreInventory takeAmount:10 ofItem:@"currency_coin"];
     ```
-    
+
 * Get the current balance of a virtual good with itemId "green_hat" (here we decided to show you the 'long' way. you can also use StoreInventory):
 
     ```objective-c
     VirtualGood* greenHat = (VirtualGood*)[[StoreInfo getInstance] virtualItemWithId:@"green_hat"];
     int greenHatsBalance = [[[StorageManager getInstance] virtualGoodStorage] balanceForItem:greenHat];
     ```
-    
+
 Security
 ---
 
 If you want to protect your application from 'bad people' (and who doesn't?!), you might want to follow some guidelines:
 
-+ SOOMLA keeps the game's data in an encrypted database. In order to encrypt your data, SOOMLA generates a private key out of several parts of information. StoreConfig's STORE_CUSTOM_SECRET is one of them. SOOMLA recommends that you change this value before you release your game. BE CAREFUL: You can change this value once! If you try to change it again, old data from the database will become unavailable.
++ SOOMLA keeps the game's data in an encrypted database. In order to encrypt your data, SOOMLA generates a private key out of several parts of information. Soomla's secret (before v3.4.0 is was known as custom secret) is one of them. SOOMLA recommends that you change this value before you release your game. BE CAREFUL: You can change this value once! If you try to change it again, old data from the database will become unavailable.
 
 
 Event Handling
@@ -129,7 +132,7 @@ SOOMLA lets you get notifications on various events and implement your own appli
 In order to observe store events you need to import EventHandling.h and then you can add a notification to *NSNotificationCenter*:
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yourCustomSelector:) name:EVENT_ITEM_PURCHASED object:nil];
-    
+
 OR, you can observe all events with the same selector by calling:
 
     [EventHandling observeAllEventsWithObserver:self withSelector:@selector(yourCustomSelector:)];
@@ -164,4 +167,3 @@ License
 ---
 Apache License. Copyright (c) 2012-2014 SOOMLA. http://project.soom.la
 + http://opensource.org/licenses/Apache-2.0
-

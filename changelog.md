@@ -1,3 +1,13 @@
+### v3.4.0 [view commit logs](https://github.com/soomla/android-store/compare/v3.3.1...v3.4.0)
+
+* New Features
+  * Some core objects and features were extracted to a separate project [soomla-ios-core](https://github.com/soomla/soomla-ios-core).
+  * SOOM_SEC is no longer relevant. You only supply one secret called Soomla Secret when you initialize "Soomla" (soomla core).
+
+* Changes
+  * StoreController is now called SoomlaStore.
+
+
 ### v3.3.1 [view commit logs](https://github.com/soomla/android-store/compare/v3.3.0...v3.3.1)
 
 * New Features
