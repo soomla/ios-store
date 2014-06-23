@@ -25,7 +25,6 @@
 
 @synthesize associatedItemId, amount;
 
-static NSString* TYPE_NAME = @"item";
 static NSString* TAG = @"SOOMLA VirtualItemReward";
 
 - (id)initWithRewardId:(NSString *)oRewardId andName:(NSString *)oName andAmount:(int)oAmount andAssociatedItemId:(NSString *)oAssociatedItemId {
@@ -39,8 +38,8 @@ static NSString* TAG = @"SOOMLA VirtualItemReward";
 
 - (id)initWithDictionary:(NSDictionary *)dict {
     if (self = [super initWithDictionary:dict]) {
-        self.amount = [dict[BP_REWARD_AMOUNT] intValue];
-        self.associatedItemId = dict[BP_ASSOCITEMID];
+        self.amount = [dict[SOOM_REWARD_AMOUNT] intValue];
+        self.associatedItemId = dict[SOOM_ASSOCITEMID];
     }
     
     return self;
@@ -50,9 +49,9 @@ static NSString* TAG = @"SOOMLA VirtualItemReward";
     NSDictionary* parentDict = [super toDictionary];
     
     NSMutableDictionary* toReturn = [[NSMutableDictionary alloc] initWithDictionary:parentDict];
-    [toReturn setObject:[NSNumber numberWithInt:self.amount] forKey:BP_REWARD_AMOUNT];
-    [toReturn setObject:self.associatedItemId forKey:BP_ASSOCITEMID];
-    [toReturn setObject:TYPE_NAME forKey:BP_TYPE];
+    [toReturn setObject:[NSNumber numberWithInt:self.amount] forKey:SOOM_REWARD_AMOUNT];
+    [toReturn setObject:self.associatedItemId forKey:SOOM_ASSOCITEMID];
+    [toReturn setObject:NSStringFromClass([self class]) forKey:SOOM_CLASSNAME];
     
     return toReturn;
 }
