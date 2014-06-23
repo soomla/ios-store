@@ -50,6 +50,22 @@
 		C08CF2FF164321F7007603E8 /* iOS Simulator Screen shot Nov 1, 2012 11.31.54 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = C08CF2FC164321F7007603E8 /* iOS Simulator Screen shot Nov 1, 2012 11.31.54 PM.png */; };
 		C08CF30516432235007603E8 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C08CF30416432235007603E8 /* Icon.png */; };
 		C08CF30716432239007603E8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08CF30616432239007603E8 /* Icon@2x.png */; };
+		C0969D371956CF3F007349A3 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D361956CF3F007349A3 /* AdSupport.framework */; };
+		C0969D391956CF44007349A3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D381956CF44007349A3 /* AudioToolbox.framework */; };
+		C0969D3B1956CF4A007349A3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D3A1956CF4A007349A3 /* AVFoundation.framework */; };
+		C0969D3D1956CF4F007349A3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D3C1956CF4F007349A3 /* CFNetwork.framework */; };
+		C0969D3F1956CF5A007349A3 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D3E1956CF5A007349A3 /* CoreMedia.framework */; };
+		C0969D411956CF60007349A3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D401956CF60007349A3 /* libz.dylib */; };
+		C0969D431956CF66007349A3 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D421956CF66007349A3 /* MediaPlayer.framework */; };
+		C0969D451956CF6B007349A3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D441956CF6B007349A3 /* QuartzCore.framework */; };
+		C0969D471956CF75007349A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D461956CF75007349A3 /* SystemConfiguration.framework */; };
+		C0969D5C1956D502007349A3 /* __vungle.db in Resources */ = {isa = PBXBuildFile; fileRef = C0969D551956D502007349A3 /* __vungle.db */; };
+		C0969D5D1956D502007349A3 /* vg_close.png in Resources */ = {isa = PBXBuildFile; fileRef = C0969D561956D502007349A3 /* vg_close.png */; };
+		C0969D5E1956D502007349A3 /* vg_cta.png in Resources */ = {isa = PBXBuildFile; fileRef = C0969D571956D502007349A3 /* vg_cta.png */; };
+		C0969D5F1956D502007349A3 /* vg_mute_off.png in Resources */ = {isa = PBXBuildFile; fileRef = C0969D581956D502007349A3 /* vg_mute_off.png */; };
+		C0969D601956D502007349A3 /* vg_mute_on.png in Resources */ = {isa = PBXBuildFile; fileRef = C0969D591956D502007349A3 /* vg_mute_on.png */; };
+		C0969D611956D502007349A3 /* vg_timer.png in Resources */ = {isa = PBXBuildFile; fileRef = C0969D5A1956D502007349A3 /* vg_timer.png */; };
+		C0969D621956D502007349A3 /* VungleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D5B1956D502007349A3 /* VungleSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +124,22 @@
 		C08CF30616432239007603E8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../../Icon@2x.png"; sourceTree = "<group>"; };
 		C0969D1519545AFB007349A3 /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-cplyvflfgyicwuehqavfnigqnefb/Build/Products/Debug-iphoneos/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
 		C0969D1619545AFB007349A3 /* libSoomlaiOSStore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSStore.a; path = "../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-cplyvflfgyicwuehqavfnigqnefb/Build/Products/Debug-iphoneos/libSoomlaiOSStore.a"; sourceTree = "<group>"; };
+		C0969D361956CF3F007349A3 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		C0969D381956CF44007349A3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		C0969D3A1956CF4A007349A3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C0969D3C1956CF4F007349A3 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		C0969D3E1956CF5A007349A3 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		C0969D401956CF60007349A3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		C0969D421956CF66007349A3 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		C0969D441956CF6B007349A3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C0969D461956CF75007349A3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		C0969D551956D502007349A3 /* __vungle.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = __vungle.db; sourceTree = "<group>"; };
+		C0969D561956D502007349A3 /* vg_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vg_close.png; sourceTree = "<group>"; };
+		C0969D571956D502007349A3 /* vg_cta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vg_cta.png; sourceTree = "<group>"; };
+		C0969D581956D502007349A3 /* vg_mute_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vg_mute_off.png; sourceTree = "<group>"; };
+		C0969D591956D502007349A3 /* vg_mute_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vg_mute_on.png; sourceTree = "<group>"; };
+		C0969D5A1956D502007349A3 /* vg_timer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vg_timer.png; sourceTree = "<group>"; };
+		C0969D5B1956D502007349A3 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VungleSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,12 +147,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0969D471956CF75007349A3 /* SystemConfiguration.framework in Frameworks */,
+				C0969D451956CF6B007349A3 /* QuartzCore.framework in Frameworks */,
+				C0969D621956D502007349A3 /* VungleSDK.framework in Frameworks */,
+				C0969D431956CF66007349A3 /* MediaPlayer.framework in Frameworks */,
+				C0969D411956CF60007349A3 /* libz.dylib in Frameworks */,
+				C0969D3F1956CF5A007349A3 /* CoreMedia.framework in Frameworks */,
+				C08CF2101641C68D007603E8 /* CoreGraphics.framework in Frameworks */,
+				C0969D3D1956CF4F007349A3 /* CFNetwork.framework in Frameworks */,
+				C0969D3B1956CF4A007349A3 /* AVFoundation.framework in Frameworks */,
+				C0969D391956CF44007349A3 /* AudioToolbox.framework in Frameworks */,
+				C0969D371956CF3F007349A3 /* AdSupport.framework in Frameworks */,
 				C08CF2D01641D004007603E8 /* Security.framework in Frameworks */,
 				C08CF2CE1641CFFE007603E8 /* libsqlite3.0.dylib in Frameworks */,
 				C08CF2CC1641CFF3007603E8 /* StoreKit.framework in Frameworks */,
 				C08CF20C1641C68D007603E8 /* UIKit.framework in Frameworks */,
 				C08CF20E1641C68D007603E8 /* Foundation.framework in Frameworks */,
-				C08CF2101641C68D007603E8 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +172,7 @@
 		C08CF1FC1641C68D007603E8 = {
 			isa = PBXGroup;
 			children = (
+				C0969D531956D502007349A3 /* VungleSDK.embeddedframework */,
 				C08CF2111641C68D007603E8 /* SoomlaiOSStoreExample */,
 				C08CF20A1641C68D007603E8 /* Frameworks */,
 				C08CF2081641C68D007603E8 /* Products */,
@@ -147,6 +190,15 @@
 		C08CF20A1641C68D007603E8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0969D461956CF75007349A3 /* SystemConfiguration.framework */,
+				C0969D441956CF6B007349A3 /* QuartzCore.framework */,
+				C0969D421956CF66007349A3 /* MediaPlayer.framework */,
+				C0969D401956CF60007349A3 /* libz.dylib */,
+				C0969D3E1956CF5A007349A3 /* CoreMedia.framework */,
+				C0969D3C1956CF4F007349A3 /* CFNetwork.framework */,
+				C0969D3A1956CF4A007349A3 /* AVFoundation.framework */,
+				C0969D381956CF44007349A3 /* AudioToolbox.framework */,
+				C0969D361956CF3F007349A3 /* AdSupport.framework */,
 				C0969D1519545AFB007349A3 /* libSoomlaiOSCore.a */,
 				C0969D1619545AFB007349A3 /* libSoomlaiOSStore.a */,
 				C08CF2CF1641D004007603E8 /* Security.framework */,
@@ -236,6 +288,29 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		C0969D531956D502007349A3 /* VungleSDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				C0969D541956D502007349A3 /* Resources */,
+				C0969D5B1956D502007349A3 /* VungleSDK.framework */,
+			);
+			name = VungleSDK.embeddedframework;
+			path = "../../plugins/soomla-vungle/ios/VungleSDK.embeddedframework";
+			sourceTree = "<group>";
+		};
+		C0969D541956D502007349A3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C0969D551956D502007349A3 /* __vungle.db */,
+				C0969D561956D502007349A3 /* vg_close.png */,
+				C0969D571956D502007349A3 /* vg_cta.png */,
+				C0969D581956D502007349A3 /* vg_mute_off.png */,
+				C0969D591956D502007349A3 /* vg_mute_on.png */,
+				C0969D5A1956D502007349A3 /* vg_timer.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -289,8 +364,11 @@
 			files = (
 				C08CF2161641C68D007603E8 /* InfoPlist.strings in Resources */,
 				C08CF2331641C707007603E8 /* MainStoryboard_iPhone.storyboard in Resources */,
+				C0969D611956D502007349A3 /* vg_timer.png in Resources */,
 				C08CF2401641C751007603E8 /* Default-568h@2x.png in Resources */,
 				C08CF2411641C751007603E8 /* Default.png in Resources */,
+				C0969D5D1956D502007349A3 /* vg_close.png in Resources */,
+				C0969D5C1956D502007349A3 /* __vungle.db in Resources */,
 				C08CF2421641C751007603E8 /* Default@2x.png in Resources */,
 				C08CF2431641C751007603E8 /* gradient.png in Resources */,
 				C08CF2441641C751007603E8 /* Icon.png in Resources */,
@@ -302,15 +380,18 @@
 				C08CF24B1641C7D2007603E8 /* GoodDog.otf in Resources */,
 				C08CF2D21641D30C007603E8 /* muffin.png in Resources */,
 				C08CF2D51641D34A007603E8 /* back.png in Resources */,
+				C0969D5E1956D502007349A3 /* vg_cta.png in Resources */,
 				C08CF2D61641D34A007603E8 /* GetMore.png in Resources */,
 				C08CF2DE1642BDD5007603E8 /* chocolate_cake.png in Resources */,
 				C08CF2DF1642BDD5007603E8 /* cream_cup.png in Resources */,
+				C0969D5F1956D502007349A3 /* vg_mute_off.png in Resources */,
 				C08CF2E01642BDD5007603E8 /* fruit_cake.png in Resources */,
 				C08CF2E11642BDD5007603E8 /* pavlova.png in Resources */,
 				C08CF2F616431A4E007603E8 /* muffins01.png in Resources */,
 				C08CF2F716431A4E007603E8 /* muffins02.png in Resources */,
 				C08CF2F816431A4E007603E8 /* muffins03.png in Resources */,
 				C08CF2F916431A4E007603E8 /* muffins04.png in Resources */,
+				C0969D601956D502007349A3 /* vg_mute_on.png in Resources */,
 				C08CF2FD164321F7007603E8 /* iOS Simulator Screen shot Nov 1, 2012 11.31.22 PM.png in Resources */,
 				C08CF2FE164321F7007603E8 /* iOS Simulator Screen shot Nov 1, 2012 11.31.44 PM.png in Resources */,
 				C08CF2FF164321F7007603E8 /* iOS Simulator Screen shot Nov 1, 2012 11.31.54 PM.png in Resources */,
@@ -412,6 +493,10 @@
 		C08CF22C1641C68D007603E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/refaelos/work/soomla/plugins/soomla-vungle/ios/VungleSDK.embeddedframework",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSStoreExample/SoomlaiOSStoreExample-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -419,16 +504,19 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"../build/headers/**",
+					"../../plugins/soomla-vungle/ios/build/headers/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSStoreExample/SoomlaiOSStoreExample-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"../build/**",
+					"../../plugins/soomla-vungle/ios/build/",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lSoomlaiOSStore",
 					"-lSoomlaiOSCore",
+					"-lSoomlaiOSVungle",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -438,6 +526,10 @@
 		C08CF22D1641C68D007603E8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/refaelos/work/soomla/plugins/soomla-vungle/ios/VungleSDK.embeddedframework",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSStoreExample/SoomlaiOSStoreExample-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -445,16 +537,19 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"../build/headers/**",
+					"../../plugins/soomla-vungle/ios/build/headers/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSStoreExample/SoomlaiOSStoreExample-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"../build/**",
+					"../../plugins/soomla-vungle/ios/build/",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lSoomlaiOSStore",
 					"-lSoomlaiOSCore",
+					"-lSoomlaiOSVungle",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
