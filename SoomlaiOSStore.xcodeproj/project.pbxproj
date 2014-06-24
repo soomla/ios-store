@@ -80,9 +80,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C0969D1C19545F48007349A3 /* PBXContainerItemProxy */ = {
+		3AA28FB91959A17D00207508 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = EF4CDCF8194F18D9008B1CF2 /* SoomlaiOSCore.xcodeproj */;
+			containerPortal = 3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C0B3C5EF168C6D0C00161FAA;
 			remoteInfo = SoomlaiOSCore;
@@ -90,6 +90,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSCore.xcodeproj; path = "../soomla-ios-core/SoomlaiOSCore.xcodeproj"; sourceTree = "<group>"; };
 		C018B47B160F5B23000FE817 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C024132A176F2512007BB351 /* StoreJSONConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreJSONConsts.h; sourceTree = "<group>"; };
 		C024132B176F2512007BB351 /* StoreJSONConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreJSONConsts.m; sourceTree = "<group>"; };
@@ -161,7 +162,6 @@
 		C02CECF5160DCB4A000AA0D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C054F21117FAB22A006F5B8E /* SoomlaVerification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoomlaVerification.h; sourceTree = "<group>"; };
 		C054F21217FAB22A006F5B8E /* SoomlaVerification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoomlaVerification.m; sourceTree = "<group>"; };
-		EF4CDCF8194F18D9008B1CF2 /* SoomlaiOSCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSCore.xcodeproj; path = "../../../../../../../../work/soomla/ios-store/submodules/soomla-ios-core/SoomlaiOSCore.xcodeproj"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4CDD2D194F20C7008B1CF2 /* VirtualItemReward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualItemReward.h; sourceTree = "<group>"; };
 		EF4CDD2E194F20C7008B1CF2 /* VirtualItemReward.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualItemReward.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,6 +182,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3AA28FB61959A17D00207508 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3AA28FBA1959A17D00207508 /* libSoomlaiOSCore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C0241328176F2512007BB351 /* SoomlaiOSStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,7 +313,7 @@
 		C02CEC37160DC870000AA0D2 = {
 			isa = PBXGroup;
 			children = (
-				EF4CDCF8194F18D9008B1CF2 /* SoomlaiOSCore.xcodeproj */,
+				3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */,
 				C0241328176F2512007BB351 /* SoomlaiOSStore */,
 				C02CEC44160DC870000AA0D2 /* Frameworks */,
 				C02CEC43160DC870000AA0D2 /* Products */,
@@ -331,14 +339,6 @@
 				C018B47B160F5B23000FE817 /* CoreFoundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C0969D1919545F48007349A3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C0969D1D19545F48007349A3 /* libSoomlaiOSCore.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		EF4CDD2C194F20C7008B1CF2 /* rewards */ = {
@@ -435,8 +435,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C0969D1919545F48007349A3 /* Products */;
-					ProjectRef = EF4CDCF8194F18D9008B1CF2 /* SoomlaiOSCore.xcodeproj */;
+					ProductGroup = 3AA28FB61959A17D00207508 /* Products */;
+					ProjectRef = 3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -447,11 +447,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C0969D1D19545F48007349A3 /* libSoomlaiOSCore.a */ = {
+		3AA28FBA1959A17D00207508 /* libSoomlaiOSCore.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libSoomlaiOSCore.a;
-			remoteRef = C0969D1C19545F48007349A3 /* PBXContainerItemProxy */;
+			remoteRef = 3AA28FB91959A17D00207508 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
