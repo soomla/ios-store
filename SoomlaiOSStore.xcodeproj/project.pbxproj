@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3AA28FC01959AE9900207508 /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA28FBA1959A17D00207508 /* libSoomlaiOSCore.a */; };
+		3AA28FC01959AE9900207508 /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA28FBA1959A17D00207508 /* libSoomlaiOSCore.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C018B64F16105F77000FE817 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C018B47B160F5B23000FE817 /* CoreFoundation.framework */; };
 		C024137F176F2512007BB351 /* StoreJSONConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = C024132B176F2512007BB351 /* StoreJSONConsts.m */; };
 		C0241388176F2512007BB351 /* NonConsumableStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = C0241331176F2512007BB351 /* NonConsumableStorage.m */; };
@@ -86,13 +86,6 @@
 			containerPortal = 3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C0B3C5EF168C6D0C00161FAA;
-			remoteInfo = SoomlaiOSCore;
-		};
-		3AA28FBE1959AE5C00207508 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C0B3C5EE168C6D0C00161FAA;
 			remoteInfo = SoomlaiOSCore;
 		};
 /* End PBXContainerItemProxy section */
@@ -417,7 +410,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				3AA28FBF1959AE5C00207508 /* PBXTargetDependency */,
 			);
 			name = SoomlaiOSStore;
 			productName = SoomlaiOSStore;
@@ -523,14 +515,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		3AA28FBF1959AE5C00207508 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SoomlaiOSCore;
-			targetProxy = 3AA28FBE1959AE5C00207508 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C02CEC65160DC870000AA0D2 /* Debug */ = {
