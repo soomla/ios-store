@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3AA28FC01959AE9900207508 /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA28FBA1959A17D00207508 /* libSoomlaiOSCore.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C018B64F16105F77000FE817 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C018B47B160F5B23000FE817 /* CoreFoundation.framework */; };
 		C024137F176F2512007BB351 /* StoreJSONConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = C024132B176F2512007BB351 /* StoreJSONConsts.m */; };
 		C0241388176F2512007BB351 /* NonConsumableStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = C0241331176F2512007BB351 /* NonConsumableStorage.m */; };
@@ -78,6 +77,7 @@
 		C097629C18FBF2D9000A4403 /* VirtualItemStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = C0241340176F2512007BB351 /* VirtualItemStorage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		EF4CDD2F194F20C7008B1CF2 /* VirtualItemReward.h in Headers */ = {isa = PBXBuildFile; fileRef = EF4CDD2D194F20C7008B1CF2 /* VirtualItemReward.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF4CDD30194F20C7008B1CF2 /* VirtualItemReward.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4CDD2E194F20C7008B1CF2 /* VirtualItemReward.m */; };
+		EFF449211962FDCB00EB03FD /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA28FBA1959A17D00207508 /* libSoomlaiOSCore.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +86,13 @@
 			containerPortal = 3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C0B3C5EF168C6D0C00161FAA;
+			remoteInfo = SoomlaiOSCore;
+		};
+		EFF4491E1962FDC000EB03FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C0B3C5EE168C6D0C00161FAA;
 			remoteInfo = SoomlaiOSCore;
 		};
 /* End PBXContainerItemProxy section */
@@ -172,7 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AA28FC01959AE9900207508 /* libSoomlaiOSCore.a in Frameworks */,
+				EFF449211962FDCB00EB03FD /* libSoomlaiOSCore.a in Frameworks */,
 				C018B64F16105F77000FE817 /* CoreFoundation.framework in Frameworks */,
 				C02CECF6160DCB4A000AA0D2 /* UIKit.framework in Frameworks */,
 				C02CEC7B160DCA3A000AA0D2 /* Security.framework in Frameworks */,
@@ -410,6 +417,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				EFF4491F1962FDC000EB03FD /* PBXTargetDependency */,
 			);
 			name = SoomlaiOSStore;
 			productName = SoomlaiOSStore;
@@ -515,6 +523,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EFF4491F1962FDC000EB03FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SoomlaiOSCore;
+			targetProxy = EFF4491E1962FDC000EB03FD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C02CEC65160DC870000AA0D2 /* Debug */ = {
