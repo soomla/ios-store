@@ -77,20 +77,20 @@
 		C097629C18FBF2D9000A4403 /* VirtualItemStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = C0241340176F2512007BB351 /* VirtualItemStorage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		EF4CDD2F194F20C7008B1CF2 /* VirtualItemReward.h in Headers */ = {isa = PBXBuildFile; fileRef = EF4CDD2D194F20C7008B1CF2 /* VirtualItemReward.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF4CDD30194F20C7008B1CF2 /* VirtualItemReward.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4CDD2E194F20C7008B1CF2 /* VirtualItemReward.m */; };
-		EFF449211962FDCB00EB03FD /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA28FBA1959A17D00207508 /* libSoomlaiOSCore.a */; };
+		EF6F64591962FFD40044608D /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF6F64561962FFCB0044608D /* libSoomlaiOSCore.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3AA28FB91959A17D00207508 /* PBXContainerItemProxy */ = {
+		EF6F64551962FFCB0044608D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */;
+			containerPortal = EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C0B3C5EF168C6D0C00161FAA;
 			remoteInfo = SoomlaiOSCore;
 		};
-		EFF4491E1962FDC000EB03FD /* PBXContainerItemProxy */ = {
+		EF6F64571962FFD00044608D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */;
+			containerPortal = EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = C0B3C5EE168C6D0C00161FAA;
 			remoteInfo = SoomlaiOSCore;
@@ -98,7 +98,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSCore.xcodeproj; path = "../soomla-ios-core/SoomlaiOSCore.xcodeproj"; sourceTree = "<group>"; };
 		C018B47B160F5B23000FE817 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C024132A176F2512007BB351 /* StoreJSONConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreJSONConsts.h; sourceTree = "<group>"; };
 		C024132B176F2512007BB351 /* StoreJSONConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreJSONConsts.m; sourceTree = "<group>"; };
@@ -172,6 +171,7 @@
 		C054F21217FAB22A006F5B8E /* SoomlaVerification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoomlaVerification.m; sourceTree = "<group>"; };
 		EF4CDD2D194F20C7008B1CF2 /* VirtualItemReward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualItemReward.h; sourceTree = "<group>"; };
 		EF4CDD2E194F20C7008B1CF2 /* VirtualItemReward.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualItemReward.m; sourceTree = "<group>"; };
+		EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSCore.xcodeproj; path = "submodules/soomla-ios-core/SoomlaiOSCore.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,7 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFF449211962FDCB00EB03FD /* libSoomlaiOSCore.a in Frameworks */,
+				EF6F64591962FFD40044608D /* libSoomlaiOSCore.a in Frameworks */,
 				C018B64F16105F77000FE817 /* CoreFoundation.framework in Frameworks */,
 				C02CECF6160DCB4A000AA0D2 /* UIKit.framework in Frameworks */,
 				C02CEC7B160DCA3A000AA0D2 /* Security.framework in Frameworks */,
@@ -191,14 +191,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3AA28FB61959A17D00207508 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3AA28FBA1959A17D00207508 /* libSoomlaiOSCore.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C0241328176F2512007BB351 /* SoomlaiOSStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,7 +314,7 @@
 		C02CEC37160DC870000AA0D2 = {
 			isa = PBXGroup;
 			children = (
-				3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */,
+				EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */,
 				C0241328176F2512007BB351 /* SoomlaiOSStore */,
 				C02CEC44160DC870000AA0D2 /* Frameworks */,
 				C02CEC43160DC870000AA0D2 /* Products */,
@@ -357,6 +349,14 @@
 				EF4CDD2E194F20C7008B1CF2 /* VirtualItemReward.m */,
 			);
 			path = rewards;
+			sourceTree = "<group>";
+		};
+		EF6F64521962FFCB0044608D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EF6F64561962FFCB0044608D /* libSoomlaiOSCore.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,7 +417,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				EFF4491F1962FDC000EB03FD /* PBXTargetDependency */,
+				EF6F64581962FFD00044608D /* PBXTargetDependency */,
 			);
 			name = SoomlaiOSStore;
 			productName = SoomlaiOSStore;
@@ -445,8 +445,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3AA28FB61959A17D00207508 /* Products */;
-					ProjectRef = 3AA28FB51959A17D00207508 /* SoomlaiOSCore.xcodeproj */;
+					ProductGroup = EF6F64521962FFCB0044608D /* Products */;
+					ProjectRef = EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -457,11 +457,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		3AA28FBA1959A17D00207508 /* libSoomlaiOSCore.a */ = {
+		EF6F64561962FFCB0044608D /* libSoomlaiOSCore.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libSoomlaiOSCore.a;
-			remoteRef = 3AA28FB91959A17D00207508 /* PBXContainerItemProxy */;
+			remoteRef = EF6F64551962FFCB0044608D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -525,10 +525,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		EFF4491F1962FDC000EB03FD /* PBXTargetDependency */ = {
+		EF6F64581962FFD00044608D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SoomlaiOSCore;
-			targetProxy = EFF4491E1962FDC000EB03FD /* PBXContainerItemProxy */;
+			targetProxy = EF6F64571962FFD00044608D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
