@@ -77,7 +77,6 @@
 		C097629C18FBF2D9000A4403 /* VirtualItemStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = C0241340176F2512007BB351 /* VirtualItemStorage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		EF4CDD2F194F20C7008B1CF2 /* VirtualItemReward.h in Headers */ = {isa = PBXBuildFile; fileRef = EF4CDD2D194F20C7008B1CF2 /* VirtualItemReward.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF4CDD30194F20C7008B1CF2 /* VirtualItemReward.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4CDD2E194F20C7008B1CF2 /* VirtualItemReward.m */; };
-		EF6F64591962FFD40044608D /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF6F64561962FFCB0044608D /* libSoomlaiOSCore.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,7 +178,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF6F64591962FFD40044608D /* libSoomlaiOSCore.a in Frameworks */,
 				C018B64F16105F77000FE817 /* CoreFoundation.framework in Frameworks */,
 				C02CECF6160DCB4A000AA0D2 /* UIKit.framework in Frameworks */,
 				C02CEC7B160DCA3A000AA0D2 /* Security.framework in Frameworks */,
