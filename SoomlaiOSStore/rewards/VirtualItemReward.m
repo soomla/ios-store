@@ -51,7 +51,6 @@ static NSString* TAG = @"SOOMLA VirtualItemReward";
     NSMutableDictionary* toReturn = [[NSMutableDictionary alloc] initWithDictionary:parentDict];
     [toReturn setObject:[NSNumber numberWithInt:self.amount] forKey:SOOM_REWARD_AMOUNT];
     [toReturn setObject:self.associatedItemId forKey:SOOM_ASSOCITEMID];
-    [toReturn setObject:NSStringFromClass([self class]) forKey:SOOM_CLASSNAME];
     
     return toReturn;
 }
