@@ -1,3 +1,12 @@
+### v3.4.1 [view commit logs](https://github.com/soomla/android-store/compare/v3.4.0...v3.4.1)
+
+* New Features
+  * Added the option to provide a payload to the 'buy' function
+
+* Fixed
+  * Configuration fixes
+  * SOOM_CLASSNAME assigned in parent reward
+
 ### v3.4.0 [view commit logs](https://github.com/soomla/android-store/compare/v3.3.1...v3.4.0)
 
 * New Features
