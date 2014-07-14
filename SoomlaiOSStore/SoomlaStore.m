@@ -86,13 +86,15 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
     return YES;
 }
 
-- (BOOL)buyInMarketWithMarketItem:(MarketItem*)marketItem{
+static NSString* developerPayload = NULL;
+- (BOOL)buyInMarketWithMarketItem:(MarketItem*)marketItem andPayload:(NSString*)payload{
     if (![self checkInit]) return NO;
 
     if ([SKPaymentQueue canMakePayments]) {
         SKMutablePayment *payment = [[SKMutablePayment alloc] init] ;
         payment.productIdentifier = marketItem.productId;
         payment.quantity = 1;
+        developerPayload = payload;
         [[SKPaymentQueue defaultQueue] addPayment:payment];
 
         @try {
@@ -181,7 +183,8 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
 
     [StoreEventHandling postMarketPurchase:pvi withReceiptUrl:receiptUrl andPurchaseToken:transaction.transactionIdentifier];
     [pvi giveAmount:1];
-    [StoreEventHandling postItemPurchased:pvi];
+    [StoreEventHandling postItemPurchased:pvi withPayload:developerPayload];
+    developerPayload = NULL;
 
     // Remove the transaction from the payment queue.
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];

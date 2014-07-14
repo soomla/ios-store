@@ -99,12 +99,12 @@ static NSString* TAG = @"SOOMLA PurchasableVirtualItem";
     return toReturn;
 }
 
-- (void)buy {
+- (void)buyWithPayload:(NSString*)payload {
     if (![self canBuy]) {
         return;
     }
     
-    [purchaseType buy];
+    [purchaseType buyWithPayload:payload];
 }
 
 - (BOOL)canBuy {

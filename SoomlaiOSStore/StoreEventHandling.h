@@ -55,6 +55,7 @@
 #define DICT_ELEMENT_EquippableVG      @"EquippableVG"
 #define DICT_ELEMENT_UpgradeVG         @"UpgradeVG"
 #define DICT_ELEMENT_PURCHASABLE       @"PurchasableVirtualItem"
+#define DICT_ELEMENT_DEVELOPERPAYLOAD  @"DeveloperPayload"
 #define DICT_ELEMENT_RECEIPT           @"receipt"
 #define DICT_ELEMENT_TOKEN             @"token"
 #define DICT_ELEMENT_SUCCESS           @"success"
@@ -102,7 +103,7 @@
 
 + (void)postItemPurchaseStarted:(PurchasableVirtualItem*)item;
 
-+ (void)postItemPurchased:(PurchasableVirtualItem*)item;
++ (void)postItemPurchased:(PurchasableVirtualItem*)item withPayload:(NSString*)payload;
 
 + (void)postMarketPurchaseCancelled:(PurchasableVirtualItem*)purchasableVirtualItem;
 

@@ -31,9 +31,9 @@
 
 @implementation StoreInventory
 
-+ (void)buyItemWithItemId:(NSString*)itemId {
++ (void)buyItemWithItemId:(NSString*)itemId andPayload:(NSString*)payload{
     PurchasableVirtualItem* pvi = (PurchasableVirtualItem*) [[StoreInfo getInstance] virtualItemWithId:itemId];
-    [pvi buy];
+    [pvi buyWithPayload:payload];
 }
 
 + (int)getItemBalance:(NSString*)itemId {
@@ -106,11 +106,11 @@
             return;
         }
         UpgradeVG* vgu = (UpgradeVG*)[[StoreInfo getInstance] virtualItemWithId:nextItemId];
-        [vgu buy];
+        [vgu buyWithPayload:@""];
     } else {
         UpgradeVG* first = [[StoreInfo getInstance] firstUpgradeForGoodWithItemId:goodItemId];
         if (first) {
-            [first buy];
+            [first buyWithPayload:@""];
         }
     }
 }

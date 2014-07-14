@@ -43,7 +43,7 @@ static NSString* TAG = @"SOOMLA PurchaseWithVirtualItem";
 /*
  see parent
  */
-- (void)buy {
+- (void)buyWithPayload:(NSString*)payload {
     LogDebug(TAG, ([NSString stringWithFormat:@"Trying to buy a %@ with %d pieces of %@.",
                     self.associatedItem.name, self.amount, self.targetItemId]));
     
@@ -68,7 +68,7 @@ static NSString* TAG = @"SOOMLA PurchaseWithVirtualItem";
     [storage removeAmount:amount fromItem:item];
     
     [self.associatedItem giveAmount:1];
-    [StoreEventHandling postItemPurchased:self.associatedItem];
+    [StoreEventHandling postItemPurchased:self.associatedItem withPayload:payload];
 }
 
 

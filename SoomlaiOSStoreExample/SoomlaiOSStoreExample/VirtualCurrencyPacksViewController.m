@@ -72,7 +72,7 @@
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
     VirtualCurrencyPack* pack = [[[StoreInfo getInstance] virtualCurrencyPacks] objectAtIndex:indexPath.row];
     
-    [pack buy];
+    [pack buyWithPayload:@"this is a payload"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

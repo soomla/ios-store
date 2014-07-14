@@ -30,7 +30,7 @@
     return self;
 }
 
-- (void)buy {
+- (void)buyWithPayload:(NSString*)payload {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:[NSString stringWithFormat:@"You must override %@ in a subclass",
                                            NSStringFromSelector(_cmd)]

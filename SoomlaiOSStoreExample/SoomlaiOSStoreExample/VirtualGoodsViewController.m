@@ -79,7 +79,7 @@
     VirtualGood* good = [[[StoreInfo getInstance] virtualGoods] objectAtIndex:indexPath.row];
     
     @try {
-        [good buy];
+        [good buyWithPayload:@"this is a payload"];
     }
     @catch (InsufficientFundsException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Insufficient funds"

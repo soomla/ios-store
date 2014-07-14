@@ -43,10 +43,10 @@ static NSString* TAG = @"SOOMLA PurchaseWithMarket";
 /*
  see parent
  */
-- (void)buy {
+- (void)buyWithPayload:(NSString*)payload {
     LogDebug(TAG, ([NSString stringWithFormat:@"Starting in-app purchase for productId: %@", self.marketItem.productId]));
     
-    if (![[SoomlaStore getInstance] buyInMarketWithMarketItem:self.marketItem]) {
+    if (![[SoomlaStore getInstance] buyInMarketWithMarketItem:self.marketItem andPayload:payload]) {
         [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
         return;
     }
