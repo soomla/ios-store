@@ -181,7 +181,7 @@ static NSString* developerPayload = NULL;
         receiptUrl = [[NSBundle mainBundle] appStoreReceiptURL];
     }
 
-    [StoreEventHandling postMarketPurchase:pvi withReceiptUrl:receiptUrl andPurchaseToken:transaction.transactionIdentifier];
+    [StoreEventHandling postMarketPurchase:pvi withReceiptUrl:receiptUrl andPurchaseToken:transaction.transactionIdentifier andPayload:developerPayload];
     [pvi giveAmount:1];
     [StoreEventHandling postItemPurchased:pvi withPayload:developerPayload];
     developerPayload = NULL;
