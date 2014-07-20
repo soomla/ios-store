@@ -93,6 +93,9 @@
 }
 
 + (void)postItemPurchased:(PurchasableVirtualItem*)item withPayload:(NSString*)payload{
+    if (!payload) {
+        payload = @"";
+    }
     NSDictionary *userInfo = @{ DICT_ELEMENT_PURCHASABLE: item, DICT_ELEMENT_DEVELOPERPAYLOAD: payload };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_ITEM_PURCHASED object:self userInfo:userInfo];
 }
