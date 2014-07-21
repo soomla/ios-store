@@ -15,6 +15,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "SoomlaEntity.h"
 
 /**
  ABSTRACT.
@@ -23,14 +24,9 @@
  are many types of virtual items - each one of the various types extends
  `VirtualItem` and adds its own behavior on top of it.
  */
-@interface VirtualItem : NSObject {
-    NSString* name;
-    NSString* description;
-    NSString* itemId;
+@interface VirtualItem : SoomlaEntity {
 }
 
-@property (retain, nonatomic) NSString* name;
-@property (retain, nonatomic) NSString* description;
 @property (retain, nonatomic) NSString* itemId;
 
 - (id)init;

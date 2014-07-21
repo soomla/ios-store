@@ -19,7 +19,15 @@
 
 @implementation VirtualItem
 
-@synthesize name, description, itemId;
+@synthesize itemId;
+
+- (NSString*)itemId {
+    return self.ID;
+}
+
+- (void)setItemId:(NSString *)oItemId {
+    self.ID = oItemId;
+}
 
 - (id)init{
     self = [super init];
@@ -32,16 +40,13 @@
 }
 
 - (id)initWithName:(NSString*)oName andDescription:(NSString*)oDescription andItemId:(NSString*)oItemId {
-    self = [super init];
+    self = [super initWithName:oName andDescription:oDescription andID:oItemId];
     if ([self class] == [VirtualItem class]) {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:@"Error, attempting to instantiate AbstractClass directly." userInfo:nil];
     }
     
     if (self) {
-        self.name = oName;
-        self.description = oDescription;
-        self.itemId = oItemId;
     }
     
     return self;
@@ -49,27 +54,20 @@
 
 
 - (id)initWithDictionary:(NSDictionary*)dict{
-    self = [super init];
+    self = [super initWithDictionary:dict];
     if ([self class] == [VirtualItem class]) {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:@"Error, attempting to instantiate AbstractClass directly." userInfo:nil];
     }
     
     if (self) {
-        self.name = [dict objectForKey:JSON_ITEM_NAME];
-        self.itemId = [dict objectForKey:JSON_ITEM_ITEMID];
-        self.description = [dict objectForKey:JSON_ITEM_DESCRIPTION] ?: @"";
     }
     
     return self;
 }
 
 - (NSDictionary*)toDictionary{
-    return [[NSDictionary alloc] initWithObjectsAndKeys:
-            self.name, JSON_ITEM_NAME,
-            self.description, JSON_ITEM_DESCRIPTION,
-            self.itemId, JSON_ITEM_ITEMID,
-            nil];
+    return [super toDictionary];
 }
 
 - (int)giveAmount:(int)amount {
