@@ -41,6 +41,9 @@ extern NSString *const JSON_MARKETITEM_PRODUCT_ID;
 extern NSString *const JSON_MARKETITEM_IOS_ID;
 extern NSString *const JSON_MARKETITEM_CONSUMABLE;
 extern NSString *const JSON_MARKETITEM_PRICE;
+extern NSString *const JSON_MARKETITEM_MARKETPRICE;
+extern NSString *const JSON_MARKETITEM_MARKETTITLE;
+extern NSString *const JSON_MARKETITEM_MARKETDESC;
 
 extern NSString *const JSON_EQUIPPABLE_EQUIPPING;
 

@@ -42,17 +42,24 @@
             self.productId = [dict objectForKey:JSON_MARKETITEM_PRODUCT_ID];
         }
         self.price = [[dict valueForKey:JSON_MARKETITEM_PRICE] doubleValue];
+        
+        self.marketPrice = [dict objectForKey:JSON_MARKETITEM_MARKETPRICE];
+        self.marketTitle = [dict objectForKey:JSON_MARKETITEM_MARKETTITLE];
+        self.marketDescription = [dict objectForKey:JSON_MARKETITEM_MARKETDESC];
     }
     
     return self;
 }
 
 - (NSDictionary*)toDictionary{
-    return [[NSDictionary alloc] initWithObjectsAndKeys:
-            [NSNumber numberWithInt:self.consumable], JSON_MARKETITEM_CONSUMABLE,
-            self.productId, JSON_MARKETITEM_IOS_ID,
-            [NSNumber numberWithDouble:self.price], JSON_MARKETITEM_PRICE,
-            nil];
+    return @{
+             JSON_MARKETITEM_CONSUMABLE: [NSNumber numberWithInt:self.consumable],
+             JSON_MARKETITEM_IOS_ID: self.productId,
+             JSON_MARKETITEM_PRICE: [NSNumber numberWithDouble:self.price],
+             JSON_MARKETITEM_MARKETPRICE: (self.marketPrice ? self.marketPrice : [NSNull null]),
+             JSON_MARKETITEM_MARKETTITLE: (self.marketTitle ? self.marketTitle : [NSNull null]),
+             JSON_MARKETITEM_MARKETDESC: (self.marketDescription ? self.marketDescription : [NSNull null])
+             };
 }
 
 - (NSString*)priceWithCurrencySymbol {
