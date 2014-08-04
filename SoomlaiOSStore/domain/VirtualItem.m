@@ -25,10 +25,6 @@
     return self.ID;
 }
 
-- (void)setItemId:(NSString *)oItemId {
-    self.ID = oItemId;
-}
-
 - (id)init{
     self = [super init];
     if ([self class] == [VirtualItem class]) {
