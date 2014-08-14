@@ -27,10 +27,6 @@ NSString *const JSON_STORE_GOODS_UP           = @"goodUpgrades";
 NSString *const JSON_STORE_GOODS_LT           = @"lifetime";
 NSString *const JSON_STORE_GOODS_EQ           = @"equippable";
 
-NSString *const JSON_ITEM_NAME                = @"name";
-NSString *const JSON_ITEM_DESCRIPTION         = @"description";
-NSString *const JSON_ITEM_ITEMID              = @"itemId";
-
 NSString *const JSON_CATEGORY_NAME            = @"name";
 NSString *const JSON_CATEGORY_GOODSITEMIDS    = @"goods_itemIds";
 
@@ -44,9 +40,11 @@ NSString *const JSON_MARKETITEM_MARKETDESC    = @"marketDesc";
 
 NSString *const JSON_EQUIPPABLE_EQUIPPING     = @"equipping";
 
+// VGP = SingleUsePackVG
 NSString *const JSON_VGP_GOOD_ITEMID          = @"good_itemId";
 NSString *const JSON_VGP_GOOD_AMOUNT          = @"good_amount";
 
+// VGU = UpgradeVG
 NSString *const JSON_VGU_GOOD_ITEMID          = @"good_itemId";
 NSString *const JSON_VGU_PREV_ITEMID          = @"prev_itemId";
 NSString *const JSON_VGU_NEXT_ITEMID          = @"next_itemId";
@@ -54,6 +52,7 @@ NSString *const JSON_VGU_NEXT_ITEMID          = @"next_itemId";
 NSString *const JSON_CURRENCYPACK_CURRENCYAMOUNT = @"currency_amount";
 NSString *const JSON_CURRENCYPACK_CURRENCYITEMID = @"currency_itemId";
 
+/** IabPurchase Type **/
 NSString *const JSON_PURCHASABLE_ITEM         = @"purchasableItem";
 
 NSString *const JSON_PURCHASE_TYPE            = @"purchaseType";
@@ -64,3 +63,7 @@ NSString *const JSON_PURCHASE_MARKET_ITEM     = @"marketItem";
 
 NSString *const JSON_PURCHASE_VI_ITEMID       = @"pvi_itemId";
 NSString *const JSON_PURCHASE_VI_AMOUNT       = @"pvi_amount";
+
+// VIR = VirtualItemReward
+NSString *const VIR_ASSOCITEMID               = @"associatedItemId";
+NSString *const VIR_AMOUNT                    = @"amount";

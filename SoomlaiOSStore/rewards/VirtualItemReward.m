@@ -17,7 +17,7 @@
 #import "VirtualItemReward.h"
 #import "VirtualItem.h"
 #import "StoreInventory.h"
-#import "JSONConsts.h"
+#import "StoreJSONConsts.h"
 #import "VirtualItemNotFoundException.h"
 #import "SoomlaUtils.h"
 
@@ -38,8 +38,8 @@ static NSString* TAG = @"SOOMLA VirtualItemReward";
 
 - (id)initWithDictionary:(NSDictionary *)dict {
     if (self = [super initWithDictionary:dict]) {
-        self.amount = [dict[SOOM_REWARD_AMOUNT] intValue];
-        self.associatedItemId = dict[SOOM_ASSOCITEMID];
+        self.amount = [dict[VIR_AMOUNT] intValue];
+        self.associatedItemId = dict[VIR_ASSOCITEMID];
     }
     
     return self;
@@ -49,8 +49,8 @@ static NSString* TAG = @"SOOMLA VirtualItemReward";
     NSDictionary* parentDict = [super toDictionary];
     
     NSMutableDictionary* toReturn = [[NSMutableDictionary alloc] initWithDictionary:parentDict];
-    [toReturn setObject:[NSNumber numberWithInt:self.amount] forKey:SOOM_REWARD_AMOUNT];
-    [toReturn setObject:self.associatedItemId forKey:SOOM_ASSOCITEMID];
+    [toReturn setObject:[NSNumber numberWithInt:self.amount] forKey:VIR_AMOUNT];
+    [toReturn setObject:self.associatedItemId forKey:VIR_ASSOCITEMID];
     
     return toReturn;
 }

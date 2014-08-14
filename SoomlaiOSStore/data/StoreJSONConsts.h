@@ -30,10 +30,6 @@ extern NSString *const JSON_STORE_GOODS_UP;
 extern NSString *const JSON_STORE_GOODS_LT;
 extern NSString *const JSON_STORE_GOODS_EQ;
 
-extern NSString *const JSON_ITEM_NAME;
-extern NSString *const JSON_ITEM_DESCRIPTION;
-extern NSString *const JSON_ITEM_ITEMID;
-
 extern NSString *const JSON_CATEGORY_NAME;
 extern NSString *const JSON_CATEGORY_GOODSITEMIDS;
 
@@ -47,9 +43,11 @@ extern NSString *const JSON_MARKETITEM_MARKETDESC;
 
 extern NSString *const JSON_EQUIPPABLE_EQUIPPING;
 
+// VGP = SingleUsePackVG
 extern NSString *const JSON_VGP_GOOD_ITEMID;
 extern NSString *const JSON_VGP_GOOD_AMOUNT;
 
+// VGU = UpgradeVG
 extern NSString *const JSON_VGU_GOOD_ITEMID;
 extern NSString *const JSON_VGU_PREV_ITEMID;
 extern NSString *const JSON_VGU_NEXT_ITEMID;
@@ -57,6 +55,7 @@ extern NSString *const JSON_VGU_NEXT_ITEMID;
 extern NSString *const JSON_CURRENCYPACK_CURRENCYAMOUNT;
 extern NSString *const JSON_CURRENCYPACK_CURRENCYITEMID;
 
+/** IabPurchase Type **/
 extern NSString *const JSON_PURCHASABLE_ITEM;
 
 extern NSString *const JSON_PURCHASE_TYPE;
@@ -68,4 +67,7 @@ extern NSString *const JSON_PURCHASE_MARKET_ITEM;
 extern NSString *const JSON_PURCHASE_VI_ITEMID;
 extern NSString *const JSON_PURCHASE_VI_AMOUNT;
 
+// VIR = VirtualItemReward
+extern NSString *const VIR_ASSOCITEMID;
+extern NSString *const VIR_AMOUNT;
 
