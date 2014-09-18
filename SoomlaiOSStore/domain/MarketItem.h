@@ -36,7 +36,7 @@ typedef enum {
     Consumable      consumable;
     double          price;
 
-    NSDecimalNumber *marketPrice;
+    NSString        *marketPrice;
     NSLocale        *marketLocale;
     NSString        *marketTitle;
     NSString        *marketDescription;
@@ -45,7 +45,7 @@ typedef enum {
 @property (nonatomic, retain) NSString* productId;
 @property Consumable      consumable;
 @property double          price;
-@property (nonatomic, retain) NSDecimalNumber *marketPrice;
+@property (nonatomic, retain) NSString        *marketPrice;
 @property (nonatomic, retain) NSLocale        *marketLocale;
 @property (nonatomic, retain) NSString        *marketTitle;
 @property (nonatomic, retain) NSString        *marketDescription;
@@ -74,11 +74,14 @@ typedef enum {
 - (NSDictionary*)toDictionary;
 
 /**
- Retrieves the price of `MarketItem` with its currency symbol.
+ Retrieves the price provided with its currency symbol according to provided locale.
  
- @return The price of this `MarketItem`.
+ @param locale The locale to use to get currency for the price
+ @param price The actual price to use
+ @param backupPrice If the actual price is not provided use a backup price which should always be provided
+ @return The price in string format with currency symbol.
  */
-- (NSString*)priceWithCurrencySymbol;
++ (NSString*)priceWithCurrencySymbol:(NSLocale *)locale andPrice:(NSDecimalNumber *)price andBackupPrice:(double)backupPrice;
 
 
 @end

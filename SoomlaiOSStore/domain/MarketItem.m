@@ -62,22 +62,22 @@
              };
 }
 
-- (NSString*)priceWithCurrencySymbol {
++ (NSString*)priceWithCurrencySymbol:(NSLocale *)locale andPrice:(NSDecimalNumber *)price andBackupPrice:(double)backupPrice{
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     
     
-    if (self.marketLocale) {
-        [numberFormatter setLocale:self.marketLocale];
+    if (locale) {
+        [numberFormatter setLocale:locale];
     } else {
         [numberFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     }
     
-    if (self.marketLocale) {
-        return [numberFormatter stringFromNumber:self.marketPrice];
+    if (locale) {
+        return [numberFormatter stringFromNumber:price];
     } else {
-        return [numberFormatter stringFromNumber:[NSNumber numberWithDouble:price]];
+        return [numberFormatter stringFromNumber:[NSNumber numberWithDouble:backupPrice]];
     }
 }
 

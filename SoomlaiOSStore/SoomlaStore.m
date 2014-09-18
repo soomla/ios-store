@@ -315,7 +315,7 @@ static NSString* developerPayload = NULL;
             if ([purchaseType isKindOfClass:[PurchaseWithMarket class]]) {
                 MarketItem* mi = ((PurchaseWithMarket*)purchaseType).marketItem;
                 mi.marketDescription = description;
-                mi.marketPrice = price;
+                mi.marketPrice = [MarketItem priceWithCurrencySymbol:locale andPrice:price andBackupPrice:mi.price];
                 mi.marketLocale = locale;
                 mi.marketTitle = title;
 
