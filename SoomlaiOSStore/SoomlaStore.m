@@ -314,10 +314,11 @@ static NSString* developerPayload = NULL;
             PurchaseType* purchaseType = pvi.purchaseType;
             if ([purchaseType isKindOfClass:[PurchaseWithMarket class]]) {
                 MarketItem* mi = ((PurchaseWithMarket*)purchaseType).marketItem;
-                mi.marketDescription = description;
-                mi.marketPrice = [MarketItem priceWithCurrencySymbol:locale andPrice:price andBackupPrice:mi.price];
-                mi.marketLocale = locale;
-                mi.marketTitle = title;
+                [mi setMarketInformation:[MarketItem priceWithCurrencySymbol:locale andPrice:price andBackupPrice:mi.price]
+                          andTitle:title
+                          andDescription:description
+                          andCurrencyCode:[locale objectForKey:NSLocaleCurrencyCode]
+                          andPriceMicros:(product.price.floatValue * 1000000)];
 
                 [marketItems addObject:mi];
             }

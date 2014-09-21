@@ -36,19 +36,21 @@ typedef enum {
     Consumable      consumable;
     double          price;
 
-    NSString        *marketPrice;
-    NSLocale        *marketLocale;
+    NSString        *marketPriceAndCurrency;
     NSString        *marketTitle;
     NSString        *marketDescription;
+    NSString        *marketCurrencyCode;
+    long            marketPriceMicros;
 }
 
 @property (nonatomic, retain) NSString* productId;
 @property Consumable      consumable;
 @property double          price;
-@property (nonatomic, retain) NSString        *marketPrice;
-@property (nonatomic, retain) NSLocale        *marketLocale;
+@property (nonatomic, retain) NSString        *marketPriceAndCurrency;
 @property (nonatomic, retain) NSString        *marketTitle;
 @property (nonatomic, retain) NSString        *marketDescription;
+@property (nonatomic, retain) NSString        *marketCurrencyCode;
+@property (nonatomic)         long            marketPriceMicros;
 
 /** 
  Constructor
@@ -72,6 +74,18 @@ typedef enum {
  @return This instance of `MarketItem` as an `NSDictionary`.
  */
 - (NSDictionary*)toDictionary;
+
+/**
+ Sets the information originating from app market
+ 
+ @param priceAndCurrency a String representing the price with the localized currency symbol
+ @param title The title of the product defined in the market
+ @param description The description defined in the market
+ @param currencyCode The currency code of the product's price
+ @param priceMicros The item's price in micros
+ */
+- (void)setMarketInformation:(NSString *)priceAndCurrency andTitle:(NSString *)title andDescription:(NSString *)description
+             andCurrencyCode:(NSString *)currencyCode andPriceMicros:(long) priceMicros;
 
 /**
  Retrieves the price provided with its currency symbol according to provided locale.
