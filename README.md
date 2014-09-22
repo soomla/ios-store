@@ -17,6 +17,20 @@ ios-store
 
 **September 29th, 2013:** Server Side Verification is now implemented into ios-store. The server is a complimentary server provided by [SOOMLA](http://soom.la) to help you get your in-game purchases a bit more secured. This feature is not enabled by default. In order to enable Server Side verification go to StoreConfig.m and set  **VERIFY_PURCHASES = YES**.
 
+**September 22th, 2014**:
+**BREAKING:** NonConsumableItem class removed.
+To prevent confusion between `NonConsumableItem` and `LifeTimeVG`, we have removed the `NonConsumableItem`. From now on you can use `LifeTimeVG` as a non-consumable item by declaring its purchase type `PurchaseWithMarket`. For example:
+
+```ObjectiveC
+MARRIAGE_GOOD = [[LifetimeVG alloc] 
+	initWithName:@"Marriage" 
+	andDescription:@"This is a LIFETIME thing." 
+	andItemId:MARRIAGE_GOOD_ITEM_ID 
+	andPurchaseType: [[PurchaseWithMarket alloc] 
+		initWithMarketItem: [[MarketItem alloc] 
+			initWithProductId:MARRIAGE_PRODUCT_ID andConsumable:kNonConsumable andPrice:9.99]]];
+```
+
 Want to learn more about modelV3? Try these:  
 * [Economy Model Objects](https://github.com/soomla/ios-store/wiki/Economy-Model-Objects)  
 * [Handling Store Operations](https://github.com/soomla/ios-store/wiki/Handling-Store-Operations)
