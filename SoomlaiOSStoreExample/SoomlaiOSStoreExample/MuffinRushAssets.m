@@ -143,7 +143,7 @@ VirtualCurrencyPack* _1000_MUFFINS_PACK;
     
     /* LifetimeVGs */
     
-    MARRIAGE_GOOD = [[LifetimeVG alloc] initWithName:@"Marriage" andDescription:@"This is a LIFETIME thing." andItemId:MARRIAGE_GOOD_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:MARRIAGE_PRODUCT_ID andConsumable:kConsumable andPrice:9.99]]];
+    MARRIAGE_GOOD = [[LifetimeVG alloc] initWithName:@"Marriage" andDescription:@"This is a LIFETIME thing." andItemId:MARRIAGE_GOOD_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:MARRIAGE_PRODUCT_ID andConsumable:kNonConsumable andPrice:9.99]]];
     
     /* EquippableVGs */
     
