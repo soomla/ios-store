@@ -19,7 +19,9 @@ ios-store
 
 **September 22th, 2014**:
 **BREAKING:** NonConsumableItem class removed.
-To prevent confusion between `NonConsumableItem` and `LifeTimeVG`, we have removed the `NonConsumableItem`. From now on you can use `LifeTimeVG` as a non-consumable item by declaring its purchase type `PurchaseWithMarket`. For example:
+To prevent confusion between `NonConsumableItem` and `LifeTimeVG`, we have removed the `NonConsumableItem`. 
+To create a non-consumable item, define it as such on iTunes connect, and in your IStoreAssets implementation, defined it as a `LifeTimeVG` with `PurchaseType` of `PurchaseWithMarket`. 
+For example: 
 
 ```ObjectiveC
 MARRIAGE_GOOD = [[LifetimeVG alloc] 
