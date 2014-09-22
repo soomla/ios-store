@@ -56,7 +56,7 @@ static int currentAssetsVersion = 0;
     return _instance;
 }
 
-+ (BOOL)isNonConsumableItem:(PurchasableVirtualItem*) pvi {
++ (BOOL)isItemNonConsumable:(PurchasableVirtualItem*) pvi {
     return ([pvi isKindOfClass:[LifetimeVG class]] && [[pvi purchaseType] isKindOfClass:[PurchaseWithMarket class]]);
 }
 

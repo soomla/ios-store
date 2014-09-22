@@ -62,7 +62,7 @@
  @param pvi - the PurchasableVirtualItem to check
  @return YES if if pvi is non-consumable, NO otherwise
  */
-+ (BOOL)isNonConsumableItem:(PurchasableVirtualItem*) pvi;
++ (BOOL)isItemNonConsumable:(PurchasableVirtualItem*) pvi;
 
 /**
  Initializes `StoreInfo`, either from `IStoreAssets` or from database.
