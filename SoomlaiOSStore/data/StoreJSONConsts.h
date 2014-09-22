@@ -23,7 +23,6 @@ extern NSString *const JSON_STORE_CURRENCIES;
 extern NSString *const JSON_STORE_CURRENCYPACKS;
 extern NSString *const JSON_STORE_GOODS;
 extern NSString *const JSON_STORE_CATEGORIES;
-extern NSString *const JSON_STORE_NONCONSUMABLES;
 extern NSString *const JSON_STORE_GOODS_SU;
 extern NSString *const JSON_STORE_GOODS_PA;
 extern NSString *const JSON_STORE_GOODS_UP;

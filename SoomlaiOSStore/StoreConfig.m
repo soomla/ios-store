@@ -16,7 +16,7 @@
 
 #import "StoreConfig.h"
 
-const int METADATA_VERSION          = 2;
+const int METADATA_VERSION          = 3;
 
 BOOL VERIFY_PURCHASES = NO;
 

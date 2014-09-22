@@ -76,11 +76,4 @@
  */
 - (NSArray*)virtualCategories;
 
-/**
- Retrieves the array of all non-consumable items served by your store.
- 
- @return All non-consumables served in your game.
- */
-- (NSArray*)nonConsumableItems;
-
 @end

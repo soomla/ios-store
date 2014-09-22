@@ -24,13 +24,11 @@
 #import "VirtualCurrency.h"
 #import "VirtualCurrencyPack.h"
 #import "VirtualCurrencyStorage.h"
-#import "NonConsumableStorage.h"
 #import "VirtualGoodStorage.h"
 #import "InsufficientFundsException.h"
 #import "NotEnoughGoodsException.h"
 #import "VirtualItemNotFoundException.h"
 #import "MarketItem.h"
-#import "NonConsumableItem.h"
 #import "SoomlaUtils.h"
 #import "PurchaseWithMarket.h"
 
@@ -162,14 +160,12 @@ static NSString* developerPayload = NULL;
 }
 
 - (void)finalizeTransaction:(SKPaymentTransaction *)transaction forPurchasable:(PurchasableVirtualItem*)pvi {
-    if ([pvi isKindOfClass:[NonConsumableItem class]]) {
-        NonConsumableItem* nonCons = (NonConsumableItem*)pvi;
-        BOOL exists = [[[StorageManager getInstance] nonConsumableStorage] nonConsumableExists:nonCons];
-        if (exists) {
-
+    if ([StoreInfo isNonConsumableItem:pvi]){
+        int balance = [[[StorageManager getInstance] virtualItemStorage:pvi] balanceForItem:pvi];
+        BOOL exists = balance >= 1 ? YES : NO;
+        if (exists){
             // Remove the transaction from the payment queue.
             [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
-
             return;
         }
     }

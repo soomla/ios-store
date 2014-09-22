@@ -196,36 +196,6 @@
 + (void)removeUpgrades:(NSString*)goodItemId;
 
 
-/** NON-CONSUMABLES **/
 
-/**
- Checks if the item with the given `itemId` exists in `nonConsumableStorage`.
-
- @param itemId The id of the item to check if exists.
- @return YES if the item with the given id exists in `nonConsumableStorage`, NO
-    otherwise.
- @exception VirtualItemNotFoundException Thrown if the virtual item is not
-    found.
- */
-+ (BOOL) nonConsumableItemExists:(NSString*)itemId;
-
-/**
- Adds the non-consumable item with the given itemId to `nonConsumableStorage`.
-
- @param itemId The id of the item to add to the storage.
- @exception VirtualItemNotFoundException Thrown if the virtual item is not
-    found.
- */
-+ (void) addNonConsumableItem:(NSString*)itemId;
-
-/**
- Removes the non-consumable item with the given `itemId` from
- `nonConsumableStorage`.
-
- @param itemId The id of the item to remove from the storage.
- @exception VirtualItemNotFoundException Thrown if the virtual item is not
-    found.
- */
-+ (void) removeNonConsumableItem:(NSString*)itemId;
 
 @end

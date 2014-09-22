@@ -18,7 +18,6 @@
 
 @class VirtualGoodStorage;
 @class VirtualCurrencyStorage;
-@class NonConsumableStorage;
 @class VirtualItemStorage;
 @class VirtualItem;
 
@@ -31,12 +30,10 @@
 @interface StorageManager : NSObject{
     VirtualGoodStorage* virtualGoodStorage;
     VirtualCurrencyStorage* virtualCurrenctStorage;
-    NonConsumableStorage* nonConsumableStorage;
 }
 
 @property (nonatomic, retain)VirtualGoodStorage* virtualGoodStorage;
 @property (nonatomic, retain)VirtualCurrencyStorage* virtualCurrencyStorage;
-@property (nonatomic, retain)NonConsumableStorage* nonConsumableStorage;
 
 + (StorageManager*)getInstance;
 

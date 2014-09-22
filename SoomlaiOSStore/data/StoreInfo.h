@@ -21,7 +21,6 @@
 @class VirtualCurrency;
 @class VirtualGood;
 @class VirtualCurrencyPack;
-@class NonConsumableItem;
 @class VirtualItem;
 @class PurchasableVirtualItem;
 @class UpgradeVG;
@@ -44,14 +43,12 @@
     NSMutableArray* virtualCurrencies;
     NSMutableArray* virtualGoods;
     NSMutableArray* virtualCurrencyPacks;
-    NSMutableArray* nonConsumableItems;
     NSMutableArray* virtualCategories;
 }
 
 @property (nonatomic, retain) NSMutableArray* virtualCurrencies;
 @property (nonatomic, retain) NSMutableArray* virtualGoods;
 @property (nonatomic, retain) NSMutableArray* virtualCurrencyPacks;
-@property (nonatomic, retain) NSMutableArray* nonConsumableItems;
 @property (nonatomic, retain) NSMutableArray* virtualCategories;
 @property (nonatomic, retain) NSMutableDictionary* virtualItems;
 @property (nonatomic, retain) NSMutableDictionary* purchasableItems;
@@ -59,6 +56,13 @@
 @property (nonatomic, retain) NSMutableDictionary* goodsUpgrades;
 
 + (StoreInfo*)getInstance;
+
+/**
+ Checks if a given PurchasableVirtualItem is a non-consumable item
+ @param pvi - the PurchasableVirtualItem to check
+ @return YES if if pvi is non-consumable, NO otherwise
+ */
++ (BOOL)isNonConsumableItem:(PurchasableVirtualItem*) pvi;
 
 /**
  Initializes `StoreInfo`, either from `IStoreAssets` or from database.

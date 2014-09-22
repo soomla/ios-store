@@ -22,7 +22,6 @@
 #import "VirtualGood.h"
 #import "VirtualCurrency.h"
 #import "VirtualCurrencyPack.h"
-#import "NonConsumableItem.h"
 #import "VirtualItemNotFoundException.h"
 #import "MarketItem.h"
 #import "SoomlaUtils.h"
@@ -39,7 +38,7 @@
 
 @implementation StoreInfo
 
-@synthesize virtualCategories, virtualCurrencies, virtualCurrencyPacks, virtualGoods, nonConsumableItems, virtualItems, purchasableItems, goodsCategories, goodsUpgrades;
+@synthesize virtualCategories, virtualCurrencies, virtualCurrencyPacks, virtualGoods, virtualItems, purchasableItems, goodsCategories, goodsUpgrades;
 
 static NSString* TAG = @"SOOMLA StoreInfo";
 static int currentAssetsVersion = 0;
@@ -55,6 +54,10 @@ static int currentAssetsVersion = 0;
     }
     
     return _instance;
+}
+
++ (BOOL)isNonConsumableItem:(PurchasableVirtualItem*) pvi {
+    return ([pvi isKindOfClass:[LifetimeVG class]] && [[pvi purchaseType] isKindOfClass:[PurchaseWithMarket class]]);
 }
 
 - (void)checkAndAddPurchasable:(PurchasableVirtualItem*)pvi {
@@ -132,20 +135,6 @@ static int currentAssetsVersion = 0;
         }
         [self.virtualGoods addObject:virtualItem];
     }
-    
-    if ([virtualItem isKindOfClass:[NonConsumableItem class]]) {
-        
-        [self checkAndAddPurchasable:(NonConsumableItem*)virtualItem];
-        
-        for(int i=0; i<[self.nonConsumableItems count]; i++) {
-            if ([((VirtualGood*)[self.nonConsumableItems objectAtIndex:i]).itemId isEqualToString:virtualItem.itemId]) {
-                [self.nonConsumableItems removeObjectAtIndex:i];
-                break;
-            }
-        }
-        [self.nonConsumableItems addObject:virtualItem];
-        
-    }
 }
 
 - (void)privInitializeWithIStoreAssets:(id)storeAssets {
@@ -155,7 +144,6 @@ static int currentAssetsVersion = 0;
     self.virtualCurrencies = [NSMutableArray arrayWithArray:[storeAssets virtualCurrencies]];
     self.virtualCurrencyPacks = [NSMutableArray arrayWithArray:[storeAssets virtualCurrencyPacks]];
     self.virtualCategories = [NSMutableArray arrayWithArray:[storeAssets virtualCategories]];
-    self.nonConsumableItems = [NSMutableArray arrayWithArray:[storeAssets nonConsumableItems]];
     
     self.virtualItems = [NSMutableDictionary dictionary];
     self.purchasableItems = [NSMutableDictionary dictionary];
@@ -183,12 +171,6 @@ static int currentAssetsVersion = 0;
             }
             [upgrades addObject:vi];
         }
-        
-        [self checkAndAddPurchasable:vi];
-    }
-    
-    for(NonConsumableItem* vi in self.nonConsumableItems) {
-        [self.virtualItems setObject:vi forKey:vi.itemId];
         
         [self checkAndAddPurchasable:vi];
     }
@@ -308,17 +290,6 @@ static int currentAssetsVersion = 0;
             }
         }
         
-        self.nonConsumableItems = [[NSMutableArray alloc] init];
-        NSArray* nonConsumableItemsDict = [storeInfo objectForKey:JSON_STORE_NONCONSUMABLES];
-        for(NSDictionary* nonConsumableItemDict in nonConsumableItemsDict){
-            NonConsumableItem* non = [[NonConsumableItem alloc] initWithDictionary:nonConsumableItemDict];
-            [self.nonConsumableItems addObject:non];
-            
-            [self.virtualItems setObject:non forKey:non.itemId];
-            
-            [self checkAndAddPurchasable:non];
-        }
-        
         // everything went well... StoreInfo is initialized from the local DB.
         // it's ok to return now.
         
@@ -372,18 +343,12 @@ static int currentAssetsVersion = 0;
         [categories addObject:[c toDictionary]];
     }
     
-    NSMutableArray* nonConsumables = [NSMutableArray array];
-    for(NonConsumableItem* non in self.nonConsumableItems) {
-        [nonConsumables addObject:[non toDictionary]];
-    }
-    
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
     
     [dict setObject:categories forKey:JSON_STORE_CATEGORIES];
     [dict setObject:currencies forKey:JSON_STORE_CURRENCIES];
     [dict setObject:packs forKey:JSON_STORE_CURRENCYPACKS];
     [dict setObject:goods forKey:JSON_STORE_GOODS];
-    [dict setObject:nonConsumables forKey:JSON_STORE_NONCONSUMABLES];
     
     return dict;
 }

@@ -20,7 +20,6 @@ NSString *const JSON_STORE_CURRENCIES         = @"currencies";
 NSString *const JSON_STORE_CURRENCYPACKS      = @"currencyPacks";
 NSString *const JSON_STORE_GOODS              = @"goods";
 NSString *const JSON_STORE_CATEGORIES         = @"categories";
-NSString *const JSON_STORE_NONCONSUMABLES     = @"nonConsumables";
 NSString *const JSON_STORE_GOODS_SU           = @"singleUse";
 NSString *const JSON_STORE_GOODS_PA           = @"goodPacks";
 NSString *const JSON_STORE_GOODS_UP           = @"goodUpgrades";
