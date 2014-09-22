@@ -162,8 +162,7 @@ static NSString* developerPayload = NULL;
 - (void)finalizeTransaction:(SKPaymentTransaction *)transaction forPurchasable:(PurchasableVirtualItem*)pvi {
     if ([StoreInfo isNonConsumableItem:pvi]){
         int balance = [[[StorageManager getInstance] virtualItemStorage:pvi] balanceForItem:pvi];
-        BOOL exists = balance >= 1 ? YES : NO;
-        if (exists){
+        if (balance >= 1){
             // Remove the transaction from the payment queue.
             [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
             return;
