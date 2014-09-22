@@ -69,10 +69,6 @@ NSString* const _400_MUFFINS_PRODUCT_ID = @"android.test.purchased";
 NSString* const _1000_MUFFINS_PACK_ITEM_ID = @"muffins_1000";
 NSString* const _1000_MUFFINS_PRODUCT_ID = @"2500_pack";
 
-// Non Consumables
-NSString* const NO_ADS_NON_CONS_ITEM_ID = @"no_ads";
-NSString* const NO_ADS_PRODUCT_ID = @"my.game.no_ads";
-
 @implementation MuffinRushAssets
 
 VirtualCategory* _MUFFINS_CATEGORY;
