@@ -47,7 +47,7 @@
         self.marketTitle = [dict objectForKey:JSON_MARKETITEM_MARKETTITLE];
         self.marketDescription = [dict objectForKey:JSON_MARKETITEM_MARKETDESC];
         self.marketCurrencyCode = [dict objectForKey:JSON_MARKETITEM_MARKETCURRENCYCODE];
-        self.marketPriceMicros = [dict objectForKey:JSON_MARKETITEM_MARKETPRICEMICROS];
+        self.marketPriceMicros = [[dict objectForKey:JSON_MARKETITEM_MARKETPRICEMICROS] longValue];
     }
     
     return self;
