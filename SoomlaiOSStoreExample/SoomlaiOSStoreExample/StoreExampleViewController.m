@@ -118,7 +118,7 @@ static NSString* TAG = @"SOOMLA StoreExampleViewController";
         logoImageView.frame = CGRectMake(0, 0, logoImageView.frame.size.width, logoImageView.frame.size.height);
         
         
-        PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:@"my.game.no_ads"];
+        PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:@"noncons.ltvg.marriage"];
         PurchaseWithMarket* pt = (PurchaseWithMarket*)pvi.purchaseType;
         
         LogDebug(TAG, ([NSString stringWithFormat:@"XXX %f %@ %s %@", pt.marketItem.price, pt.marketItem.marketTitle, [pt.marketItem.marketPriceAndCurrency UTF8String], pt.marketItem.marketDescription]));
