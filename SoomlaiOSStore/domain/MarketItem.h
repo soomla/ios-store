@@ -36,19 +36,21 @@ typedef enum {
     Consumable      consumable;
     double          price;
 
-    NSDecimalNumber *marketPrice;
-    NSLocale        *marketLocale;
+    NSString        *marketPriceAndCurrency;
     NSString        *marketTitle;
     NSString        *marketDescription;
+    NSString        *marketCurrencyCode;
+    long            marketPriceMicros;
 }
 
 @property (nonatomic, retain) NSString* productId;
 @property Consumable      consumable;
 @property double          price;
-@property (nonatomic, retain) NSDecimalNumber *marketPrice;
-@property (nonatomic, retain) NSLocale        *marketLocale;
+@property (nonatomic, retain) NSString        *marketPriceAndCurrency;
 @property (nonatomic, retain) NSString        *marketTitle;
 @property (nonatomic, retain) NSString        *marketDescription;
+@property (nonatomic, retain) NSString        *marketCurrencyCode;
+@property (nonatomic)         long            marketPriceMicros;
 
 /** 
  Constructor
@@ -74,11 +76,26 @@ typedef enum {
 - (NSDictionary*)toDictionary;
 
 /**
- Retrieves the price of `MarketItem` with its currency symbol.
+ Sets the information originating from app market
  
- @return The price of this `MarketItem`.
+ @param priceAndCurrency a String representing the price with the localized currency symbol
+ @param title The title of the product defined in the market
+ @param description The description defined in the market
+ @param currencyCode The currency code of the product's price
+ @param priceMicros The item's price in micros
  */
-- (NSString*)priceWithCurrencySymbol;
+- (void)setMarketInformation:(NSString *)priceAndCurrency andTitle:(NSString *)title andDescription:(NSString *)description
+             andCurrencyCode:(NSString *)currencyCode andPriceMicros:(long) priceMicros;
+
+/**
+ Retrieves the price provided with its currency symbol according to provided locale.
+ 
+ @param locale The locale to use to get currency for the price
+ @param price The actual price to use
+ @param backupPrice If the actual price is not provided use a backup price which should always be provided
+ @return The price in string format with currency symbol.
+ */
++ (NSString*)priceWithCurrencySymbol:(NSLocale *)locale andPrice:(NSDecimalNumber *)price andBackupPrice:(double)backupPrice;
 
 
 @end

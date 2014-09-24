@@ -36,6 +36,8 @@ NSString *const JSON_MARKETITEM_PRICE         = @"price";
 NSString *const JSON_MARKETITEM_MARKETPRICE   = @"marketPrice";
 NSString *const JSON_MARKETITEM_MARKETTITLE   = @"marketTitle";
 NSString *const JSON_MARKETITEM_MARKETDESC    = @"marketDesc";
+NSString *const JSON_MARKETITEM_MARKETCURRENCYCODE = @"marketCurrencyCode";
+NSString *const JSON_MARKETITEM_MARKETPRICEMICROS  = @"marketPriceMicros";
 
 NSString *const JSON_EQUIPPABLE_EQUIPPING     = @"equipping";
 

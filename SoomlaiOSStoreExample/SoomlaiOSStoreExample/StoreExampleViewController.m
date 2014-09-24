@@ -118,10 +118,10 @@ static NSString* TAG = @"SOOMLA StoreExampleViewController";
         logoImageView.frame = CGRectMake(0, 0, logoImageView.frame.size.width, logoImageView.frame.size.height);
         
         
-        PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:@"2500_pack"];
+        PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:@"my.game.no_ads"];
         PurchaseWithMarket* pt = (PurchaseWithMarket*)pvi.purchaseType;
         
-        LogDebug(TAG, ([NSString stringWithFormat:@"XXX %f %@ %@ %@", pt.marketItem.price, pt.marketItem.marketTitle, [pt.marketItem priceWithCurrencySymbol], pt.marketItem.marketDescription]));
+        LogDebug(TAG, ([NSString stringWithFormat:@"XXX %f %@ %s %@", pt.marketItem.price, pt.marketItem.marketTitle, [pt.marketItem.marketPriceAndCurrency UTF8String], pt.marketItem.marketDescription]));
     }
     else{
         logoImageView.frame = CGRectMake(0,0,

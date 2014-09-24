@@ -19,7 +19,7 @@
 
 @implementation MarketItem
 
-@synthesize price, productId, consumable, marketPrice, marketLocale, marketTitle, marketDescription;
+@synthesize price, productId, consumable, marketPriceAndCurrency, marketTitle, marketDescription, marketCurrencyCode, marketPriceMicros;
 
 - (id)initWithProductId:(NSString*)oProductId andConsumable:(Consumable)oConsumable andPrice:(double)oPrice{
     self = [super init];
@@ -43,9 +43,11 @@
         }
         self.price = [[dict valueForKey:JSON_MARKETITEM_PRICE] doubleValue];
         
-        self.marketPrice = [dict objectForKey:JSON_MARKETITEM_MARKETPRICE];
+        self.marketPriceAndCurrency = [dict objectForKey:JSON_MARKETITEM_MARKETPRICE];
         self.marketTitle = [dict objectForKey:JSON_MARKETITEM_MARKETTITLE];
         self.marketDescription = [dict objectForKey:JSON_MARKETITEM_MARKETDESC];
+        self.marketCurrencyCode = [dict objectForKey:JSON_MARKETITEM_MARKETCURRENCYCODE];
+        self.marketPriceMicros = [[dict objectForKey:JSON_MARKETITEM_MARKETPRICEMICROS] longValue];
     }
     
     return self;
@@ -56,28 +58,39 @@
              JSON_MARKETITEM_CONSUMABLE: [NSNumber numberWithInt:self.consumable],
              JSON_MARKETITEM_IOS_ID: self.productId,
              JSON_MARKETITEM_PRICE: [NSNumber numberWithDouble:self.price],
-             JSON_MARKETITEM_MARKETPRICE: (self.marketPrice ? self.marketPrice : [NSNull null]),
+             JSON_MARKETITEM_MARKETPRICE: (self.marketPriceAndCurrency ? self.marketPriceAndCurrency : [NSNull null]),
              JSON_MARKETITEM_MARKETTITLE: (self.marketTitle ? self.marketTitle : [NSNull null]),
-             JSON_MARKETITEM_MARKETDESC: (self.marketDescription ? self.marketDescription : [NSNull null])
+             JSON_MARKETITEM_MARKETDESC: (self.marketDescription ? self.marketDescription : [NSNull null]),
+             JSON_MARKETITEM_MARKETCURRENCYCODE: (self.marketCurrencyCode ? self.marketCurrencyCode : [NSNull null]),
+             JSON_MARKETITEM_MARKETPRICEMICROS: [NSNumber numberWithLong:marketPriceMicros]
              };
 }
 
-- (NSString*)priceWithCurrencySymbol {
+- (void)setMarketInformation:(NSString *)priceAndCurrency andTitle:(NSString *)title andDescription:(NSString *)description
+             andCurrencyCode:(NSString *)currencyCode andPriceMicros:(long)priceMicros {
+    self.marketPriceAndCurrency = priceAndCurrency;
+    self.marketTitle = title;
+    self.marketDescription = description;
+    self.marketCurrencyCode = currencyCode;
+    self.marketPriceMicros = priceMicros;
+}
+
++ (NSString*)priceWithCurrencySymbol:(NSLocale *)locale andPrice:(NSDecimalNumber *)price andBackupPrice:(double)backupPrice{
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     
     
-    if (self.marketLocale) {
-        [numberFormatter setLocale:self.marketLocale];
+    if (locale) {
+        [numberFormatter setLocale:locale];
     } else {
         [numberFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     }
     
-    if (self.marketLocale) {
-        return [numberFormatter stringFromNumber:self.marketPrice];
+    if (locale) {
+        return [numberFormatter stringFromNumber:price];
     } else {
-        return [numberFormatter stringFromNumber:[NSNumber numberWithDouble:price]];
+        return [numberFormatter stringFromNumber:[NSNumber numberWithDouble:backupPrice]];
     }
 }
 
