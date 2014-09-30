@@ -15,6 +15,8 @@
  */
 
 #import "MarketItem.h"
+#import "JSONConsts.h"
+#import "SoomlaUtils.h"
 #import "StoreJSONConsts.h"
 
 @implementation MarketItem
@@ -55,6 +57,7 @@
 
 - (NSDictionary*)toDictionary{
     return @{
+             SOOM_CLASSNAME : [SoomlaUtils getClassName:self],
              JSON_MARKETITEM_CONSUMABLE: [NSNumber numberWithInt:self.consumable],
              JSON_MARKETITEM_IOS_ID: self.productId,
              JSON_MARKETITEM_PRICE: [NSNumber numberWithDouble:self.price],
