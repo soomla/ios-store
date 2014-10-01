@@ -20,7 +20,7 @@ ios-store
 **September 22th, 2014**:
 `NonConsumableItem` class was removed.
 
-To create a non-consumable item use `LifeTimeVG` with `PurchaseWithMarket`. 
+To create a non-consumable item in your `IStoreAssets` implementation, use `LifeTimeVG` with `PurchaseType` of `PurchaseWithMarket`.
 For example:
 ```ObjectiveC
 VirtualGood *NO_ADS_LTVG = [[LifetimeVG alloc]
