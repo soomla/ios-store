@@ -1,9 +1,8 @@
 ### v3.5.0 [view commit logs](https://github.com/soomla/ios-store/compare/v3.4.1...v3.5.0)
 
-* Changes:
-  * NonConsumableItem class was removed with all its references.
-  * StoreInfo - added new function, isNonConsumableItem, which checks if a given PurchasableVirtualItem is a non-consumable item.
-  * SoomlaStore - using isNonConsumableItem function intead of checking instance of NonConsumableItem.
+* Changes:  
+     
+    **BREAKING**: Removed `NonConsumableItem` class. Use `LifeTimeVG` instead.
 
 ### v3.4.1 [view commit logs](https://github.com/soomla/ios-store/compare/v3.4.0...v3.4.1)
 

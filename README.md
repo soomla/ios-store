@@ -18,17 +18,18 @@ ios-store
 **September 29th, 2013:** Server Side Verification is now implemented into ios-store. The server is a complimentary server provided by [SOOMLA](http://soom.la) to help you get your in-game purchases a bit more secured. This feature is not enabled by default. In order to enable Server Side verification go to StoreConfig.m and set  **VERIFY_PURCHASES = YES**.
 
 **September 22th, 2014**:
-**BREAKING:** `NonConsumableItem` class removed to prevent confusion between `NonConsumableItem` and `LifeTimeVG`. 
-To create a non-consumable item, define it as such on iTunes connect, and in your IStoreAssets implementation, defined it as a `LifeTimeVG` with `PurchaseWithMarket`. 
-For example: 
+`NonConsumableItem` class was removed.
+
+To create a non-consumable item use `LifeTimeVG` with `PurchaseWithMarket`. 
+For example:
 ```ObjectiveC
-MARRIAGE_GOOD = [[LifetimeVG alloc] 
-	initWithName:@"Marriage" 
-	andDescription:@"This is a LIFETIME thing." 
-	andItemId:MARRIAGE_GOOD_ITEM_ID 
-	andPurchaseType: [[PurchaseWithMarket alloc] 
-		initWithMarketItem: [[MarketItem alloc] 
-			initWithProductId:MARRIAGE_PRODUCT_ID andConsumable:kNonConsumable andPrice:9.99]]];
+VirtualGood *NO_ADS_LTVG = [[LifetimeVG alloc]
+        initWithName:@"No Ads"
+        andDescription:@"No More Ads!"
+        andItemId:"no_ads"
+        andPurchaseType: [[PurchaseWithMarket alloc]
+                initWithMarketItem: [[MarketItem alloc]
+                        initWithProductId:"no_ads" andConsumable:kNonConsumable andPrice:0.99]]];
 ```
 
 Want to learn more about modelV3? Try these:  
