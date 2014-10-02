@@ -15,6 +15,8 @@
  */
 
 #import "VirtualCategory.h"
+#import "JSONConsts.h"
+#import "SoomlaUtils.h"
 #import "StoreJSONConsts.h"
 
 @implementation VirtualCategory
@@ -57,6 +59,7 @@
     }
     
     return [[NSDictionary alloc] initWithObjectsAndKeys:
+            [SoomlaUtils getClassName:self], SOOM_CLASSNAME,
             self.name, JSON_CATEGORY_NAME,
             arr, JSON_CATEGORY_GOODSITEMIDS,
             nil];
