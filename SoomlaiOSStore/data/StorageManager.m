@@ -17,7 +17,6 @@
 #import "StorageManager.h"
 #import "VirtualCurrencyStorage.h"
 #import "VirtualGoodStorage.h"
-#import "NonConsumableStorage.h"
 #import "VirtualItemStorage.h"
 #import "VirtualItem.h"
 #import "VirtualGood.h"
@@ -26,7 +25,7 @@
 
 @implementation StorageManager
 
-@synthesize virtualCurrencyStorage, virtualGoodStorage, nonConsumableStorage;
+@synthesize virtualCurrencyStorage, virtualGoodStorage;
 
 static NSString* TAG = @"SOOMLA StorageManager";
 
@@ -47,7 +46,6 @@ static NSString* TAG = @"SOOMLA StorageManager";
     if (self){
         self.virtualCurrencyStorage = [[VirtualCurrencyStorage alloc] init];
         self.virtualGoodStorage = [[VirtualGoodStorage alloc] init];
-        self.nonConsumableStorage = [[NonConsumableStorage alloc] init];
     }
     
     return self;

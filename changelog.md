@@ -1,4 +1,10 @@
-### v3.4.1 [view commit logs](https://github.com/soomla/android-store/compare/v3.4.0...v3.4.1)
+### v3.5.0 [view commit logs](https://github.com/soomla/ios-store/compare/v3.4.1...v3.5.0)
+
+* Changes:  
+     
+    **BREAKING**: Removed `NonConsumableItem` class. Use `LifeTimeVG` instead.
+
+### v3.4.1 [view commit logs](https://github.com/soomla/ios-store/compare/v3.4.0...v3.4.1)
 
 * New Features
   * Added the option to provide a payload to the 'buy' function
@@ -7,7 +13,7 @@
   * Configuration fixes
   * SOOM_CLASSNAME assigned in parent reward
 
-### v3.4.0 [view commit logs](https://github.com/soomla/android-store/compare/v3.3.1...v3.4.0)
+### v3.4.0 [view commit logs](https://github.com/soomla/ios-store/compare/v3.3.1...v3.4.0)
 
 * New Features
   * Some core objects and features were extracted to a separate project [soomla-ios-core](https://github.com/soomla/soomla-ios-core).
@@ -17,7 +23,7 @@
   * StoreController is now called SoomlaStore.
 
 
-### v3.3.1 [view commit logs](https://github.com/soomla/android-store/compare/v3.3.0...v3.3.1)
+### v3.3.1 [view commit logs](https://github.com/soomla/ios-store/compare/v3.3.0...v3.3.1)
 
 * New Features
   * Added the option to overwrite an object in StoreInfo and save it.
@@ -29,7 +35,7 @@
 * Optimizations
   * Added build phase to create multiple platform static lib.
 
-### v3.3.0 [view commit logs](https://github.com/soomla/android-store/compare/v3.2.2...v3.3.0)
+### v3.3.0 [view commit logs](https://github.com/soomla/ios-store/compare/v3.2.2...v3.3.0)
 
 * New Features
   * ios-store will now refresh details of market items on initialization.

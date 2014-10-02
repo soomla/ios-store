@@ -19,7 +19,6 @@
 #import "VirtualCurrency.h"
 #import "VirtualGood.h"
 #import "VirtualCurrencyPack.h"
-#import "NonConsumableItem.h"
 #import "SingleUseVG.h"
 #import "PurchaseWithMarket.h"
 #import "PurchaseWithVirtualItem.h"
@@ -46,7 +45,7 @@ NSString* const _LEVEL_4_GOOD_ITEM_ID = @"pav4";
 NSString* const _LEVEL_5_GOOD_ITEM_ID = @"pav5";
 NSString* const _LEVEL_6_GOOD_ITEM_ID = @"pav6";
 NSString* const MARRIAGE_GOOD_ITEM_ID = @"marriage_lt";
-NSString* const MARRIAGE_PRODUCT_ID = @"marriage_lifetime";
+NSString* const MARRIAGE_PRODUCT_ID = @"noncons.ltvg.marriage";
 NSString* const JERRY_GOOD_ITEM_ID = @"jerry_character";
 NSString* const GEORGE_GOOD_ITEM_ID = @"george_character";
 NSString* const KRAMER_GOOD_ITEM_ID = @"kramer_character";
@@ -69,10 +68,6 @@ NSString* const _400_MUFFINS_PACK_ITEM_ID = @"muffins_400";
 NSString* const _400_MUFFINS_PRODUCT_ID = @"android.test.purchased";
 NSString* const _1000_MUFFINS_PACK_ITEM_ID = @"muffins_1000";
 NSString* const _1000_MUFFINS_PRODUCT_ID = @"2500_pack";
-
-// Non Consumables
-NSString* const NO_ADS_NON_CONS_ITEM_ID = @"no_ads";
-NSString* const NO_ADS_PRODUCT_ID = @"my.game.no_ads";
 
 @implementation MuffinRushAssets
 
@@ -112,7 +107,6 @@ VirtualCurrencyPack* _10_MUFFINS_PACK;
 VirtualCurrencyPack* _50_MUFFINS_PACK;
 VirtualCurrencyPack* _400_MUFFINS_PACK;
 VirtualCurrencyPack* _1000_MUFFINS_PACK;
-NonConsumableItem* NO_ADS_NON_CONS;
 
 + (void)initialize{
     
@@ -145,7 +139,7 @@ NonConsumableItem* NO_ADS_NON_CONS;
     
     /* LifetimeVGs */
     
-    MARRIAGE_GOOD = [[LifetimeVG alloc] initWithName:@"Marriage" andDescription:@"This is a LIFETIME thing." andItemId:MARRIAGE_GOOD_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:MARRIAGE_PRODUCT_ID andConsumable:kConsumable andPrice:9.99]]];
+    MARRIAGE_GOOD = [[LifetimeVG alloc] initWithName:@"Marriage" andDescription:@"This is a LIFETIME thing." andItemId:MARRIAGE_GOOD_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:MARRIAGE_PRODUCT_ID andConsumable:kNonConsumable andPrice:9.99]]];
     
     /* EquippableVGs */
     
@@ -209,8 +203,6 @@ NonConsumableItem* NO_ADS_NON_CONS;
     PACKS_OF_CHOCOLATE_CAKES_CATEGORY  = [[VirtualCategory alloc] initWithName:@"Packs of Chocolate Cakes" andGoodsItemIds:@[_20_CHOCOLATE_CAKES_GOOD_ITEM_ID, _50_CHOCOLATE_CAKES_GOOD_ITEM_ID, _100_CHOCOLATE_CAKES_GOOD_ITEM_ID, _200_CHOCOLATE_CAKES_GOOD_ITEM_ID]];
     
     
-    /** Non Consumables **/
-    NO_ADS_NON_CONS = [[NonConsumableItem alloc] initWithName:@"No Ads" andDescription:@"No more ads" andItemId:NO_ADS_NON_CONS_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:NO_ADS_PRODUCT_ID andConsumable:kNonConsumable andPrice:1.99]]];
     
 }
 
@@ -240,8 +232,5 @@ NonConsumableItem* NO_ADS_NON_CONS;
     return @[_MUFFINS_CATEGORY, MUFFIN_CAKE_UPGRADES_CATEGORY, PAVLOVA_UPGRADES_CATEGORY, CHARACTERS_CATEGORY, LIFETIME_THINGS_CATEGORY, PACKS_OF_CHOCOLATE_CAKES_CATEGORY];
 }
 
-- (NSArray*)nonConsumableItems{
-    return @[NO_ADS_NON_CONS];
-}
 
 @end

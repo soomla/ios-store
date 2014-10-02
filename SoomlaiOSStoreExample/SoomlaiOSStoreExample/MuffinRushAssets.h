@@ -66,10 +66,6 @@ extern NSString* const _400_MUFFINS_PRODUCT_ID;
 extern NSString* const _1000_MUFFINS_PACK_ITEM_ID;
 extern NSString* const _1000_MUFFINS_PRODUCT_ID;
 
-// Non Consumables
-extern NSString* const NO_ADS_NON_CONS_ITEM_ID;
-extern NSString* const NO_ADS_PRODUCT_ID;
-
 @interface MuffinRushAssets : NSObject <IStoreAssets>{
     
 }

@@ -111,7 +111,7 @@
     if ([good.purchaseType isKindOfClass:[PurchaseWithVirtualItem class]]) {
         cell.price.text = [NSString stringWithFormat:@"%d", ((PurchaseWithVirtualItem*)good.purchaseType).amount];
     } else if ([good.purchaseType isKindOfClass:[PurchaseWithMarket class]]) {
-        cell.price.text = [NSString stringWithFormat:@"%f", ((PurchaseWithMarket*)good.purchaseType).marketItem.price];
+        cell.price.text = [NSString stringWithFormat:@"$ %f", ((PurchaseWithMarket*)good.purchaseType).marketItem.price];
     }
     cell.icon.image = [UIImage imageNamed:[images objectForKey:good.itemId]];
     int balance = [StoreInventory getItemBalance:good.itemId];

@@ -11,6 +11,21 @@ ios-store
 
 *SOOMLA's Store Module for iOS*
 
+**September 22th, 2014**:
+`NonConsumableItem` class was removed.
+
+To create a non-consumable item in your `IStoreAssets` implementation, use `LifeTimeVG` with `PurchaseType` of `PurchaseWithMarket`.
+For example:
+```ObjectiveC
+VirtualGood *NO_ADS_LTVG = [[LifetimeVG alloc]
+        initWithName:@"No Ads"
+        andDescription:@"No More Ads!"
+        andItemId:"no_ads"
+        andPurchaseType: [[PurchaseWithMarket alloc]
+                initWithMarketItem: [[MarketItem alloc]
+                        initWithProductId:"no_ads" andConsumable:kNonConsumable andPrice:0.99]]];
+```
+
 **June 20th, 2014**: v3.4.0 presents support for "Soomla Core" (which separates some objects common to ALL SOOMLA's modules). It also removed the usage of SOOM_SEC. [Getting Started](https://github.com/soomla/ios-store#getting-started) has changed! see [CHANGELOG](changelog.md).
 
 **March 31st, 2014:** SoomlaStore will **automatically try to fetch prices** for PurchasableItems that has a purchase type of PurchaseWithMarket. The product ids that'll be found in the App Store will update the associated 'AppStoreItem' in special fields: appStorePrice, appStoreLocale, appStoreTitle, appStoreDescription.

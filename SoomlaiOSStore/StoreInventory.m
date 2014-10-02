@@ -21,7 +21,6 @@
 #import "StoreInfo.h"
 #import "VirtualCurrencyStorage.h"
 #import "VirtualGoodStorage.h"
-#import "NonConsumableStorage.h"
 #import "PurchasableVirtualItem.h"
 #import "UpgradeVG.h"
 #import "EquippableVG.h"
@@ -136,26 +135,6 @@
     
     VirtualGood* good = (VirtualGood*)[[StoreInfo getInstance] virtualItemWithId:goodItemId];
     [[[StorageManager getInstance] virtualGoodStorage] removeUpgradesFrom:good];
-}
-
-
-
-+ (BOOL) nonConsumableItemExists:(NSString*)itemId {
-    NonConsumableItem* nonConsumable = (NonConsumableItem*)[[StoreInfo getInstance] virtualItemWithId:itemId];
-    
-    return [[[StorageManager getInstance] nonConsumableStorage] nonConsumableExists:nonConsumable];
-}
-
-+ (void) addNonConsumableItem:(NSString*)itemId {
-    NonConsumableItem* nonConsumable = (NonConsumableItem*)[[StoreInfo getInstance] virtualItemWithId:itemId];
-    
-    [[[StorageManager getInstance] nonConsumableStorage] add:nonConsumable];
-}
-
-+ (void) removeNonConsumableItem:(NSString*)itemId {
-    NonConsumableItem* nonConsumable = (NonConsumableItem*)[[StoreInfo getInstance] virtualItemWithId:itemId];
-    
-    [[[StorageManager getInstance] nonConsumableStorage] remove:nonConsumable];
 }
 
 @end
