@@ -1,8 +1,12 @@
 ### v3.5.0 [view commit logs](https://github.com/soomla/ios-store/compare/v3.4.1...v3.5.0)
 
-* Changes:  
-     
-    **BREAKING**: Removed `NonConsumableItem` class. Use `LifeTimeVG` instead.
+***Important***: this is a breaking release. Read the changes carefully.
+
+* Changes: 
+    * **BREAKING**: `NonConsumableItem` class was **removed**. To create non-consumable item, use `LifeTimeVG` instead.
+
+* Fixes:
+    * Fixed issue [#30](https://github.com/soomla/ios-store/issues/30)
 
 ### v3.4.1 [view commit logs](https://github.com/soomla/ios-store/compare/v3.4.0...v3.4.1)
 
