@@ -211,6 +211,14 @@ static int currentAssetsVersion = 0;
         return NO;
     }
     
+    // This is done in case old versions of the DB exist (especially from
+    // Cocos2dx) which used jsonType instead of className
+    if ([storeInfoJSON rangeOfString:@"jsonType"].location != NSNotFound) {
+        LogDebug(TAG, @"the StoreInfo JSON is from an older version. we need to delete and let it be recreated.");
+        [KeyValueStorage deleteValueForKey:key];
+        return NO;
+    }
+    
     LogDebug(TAG, ([NSString stringWithFormat:@"the metadata-economy json (from DB) is %@", storeInfoJSON]));
     
     @try {
