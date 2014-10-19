@@ -151,10 +151,13 @@
 }
 
 + (void)postUnexpectedErrorWithErrorCodeAndMessage:(int)code forObject:(id)object errorCode:(int)ecode andMessage:(NSString*)message{
+    if (!message) {
+        message = @" ";
+    }
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithInt:code], DICT_ELEMENT_ERROR_CODE,
                               [NSNumber numberWithInt:ecode], DICT_ELEMENT_STORE_ERROR_CODE,
-                              message, DICT_ELEMENT_STORE_ERROR_MSG,
+                              [NSString stringWithString: message], DICT_ELEMENT_STORE_ERROR_MSG,
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UNEXPECTED_ERROR_IN_STORE_WITH_MSG object:object userInfo:userInfo];
 }
