@@ -304,6 +304,7 @@ static int currentAssetsVersion = 0;
         
         // everything went well... StoreInfo is initialized from the local DB.
         // it's ok to return now.
+        
         return YES;
     } @catch (NSException* ex) {
         LogError(TAG, @"An error occured while trying to parse store info JSON.");
@@ -492,7 +493,6 @@ static int currentAssetsVersion = 0;
     if (mt_ver < METADATA_VERSION || sa_ver_old < currentAssetsVersion) {
         [defaults setInteger:METADATA_VERSION forKey:@"MT_VER"];
         [defaults setInteger:currentAssetsVersion forKey:@"SA_VER_OLD"];
-        [defaults setBool:YES forKey:@"MIGRATE_NONCONSUMABLES"];
         [defaults synchronize];
         
         [StoreInfo setMigrationIndicator:YES];
