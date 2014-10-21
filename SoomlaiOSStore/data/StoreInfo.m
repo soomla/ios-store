@@ -49,7 +49,6 @@ static int currentAssetsVersion = 0;
     @synchronized( self ) {
         if( _instance == nil ) {
             _instance = [[StoreInfo alloc ] init];
-            [self checkMetadataVersion];
         }
     }
     
@@ -181,6 +180,9 @@ static int currentAssetsVersion = 0;
         }
     }
     
+    //Disable the function call when migration process is no longer required.
+    [self migrateNonConsumableItems];
+    
     [self save];
 }
 
@@ -200,8 +202,11 @@ static int currentAssetsVersion = 0;
 }
 
 - (BOOL)initializeFromDB{
-    
     [StoreInfo checkMetadataVersion];
+    //if migration process is required we do not initialize from DB.
+    //remove this code when migration process becomes obsolete.
+    if([StoreInfo isMigrationRequired])
+        return NO;
     
     NSString* key = [StoreInfo keyMetaStoreInfo];
     NSString* storeInfoJSON = [KeyValueStorage getValueForKey:key];
@@ -361,6 +366,52 @@ static int currentAssetsVersion = 0;
     return dict;
 }
 
+-(void) migrateNonConsumableItems{
+    NSString *storeInfoJSON = [KeyValueStorage getValueForKey:[StoreInfo keyMetaStoreInfo]];
+    if (!storeInfoJSON)
+        return;
+    
+    NSString* storeNonConsumables = @"nonConsumables";
+    NSMutableDictionary* storeInfo = [SoomlaUtils jsonStringToDict:storeInfoJSON];
+    
+    @try{
+        NSArray* nonConsumablesDicts = [storeInfo objectForKey:storeNonConsumables];
+        for(NSDictionary* nonConsumableDict in nonConsumablesDicts){
+            LifetimeVG* migratedNonCons = [[LifetimeVG alloc] initWithDictionary: nonConsumableDict];
+            VirtualItem *correspondingVirtualItem = [self.virtualItems objectForKey:[migratedNonCons itemId]];
+            if (correspondingVirtualItem
+                && [correspondingVirtualItem isKindOfClass:[LifetimeVG class]]
+                && ([[(LifetimeVG*)correspondingVirtualItem purchaseType] isKindOfClass:[PurchaseWithMarket class]])){
+                NSString* keyNonConsExist = [NSString stringWithFormat:@"nonconsumable.%@.exists", [migratedNonCons itemId]];
+                if ([KeyValueStorage getValueForKey:keyNonConsExist]){
+                    [migratedNonCons giveAmount:1];
+                    [KeyValueStorage deleteValueForKey:keyNonConsExist];
+                }
+            }
+        }
+        
+    }@catch (NSException* ex){
+        LogDebug(TAG, ([NSString stringWithFormat:@"Migration process failed with error: %@",
+                        [ex reason]]));
+        
+    }@finally{
+        //mark migration process as finished and delete database
+        [StoreInfo setMigrationIndicator:NO];
+        [KeyValueStorage deleteValueForKey:[StoreInfo keyMetaStoreInfo]];
+    }
+}
+
++(BOOL)isMigrationRequired{
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults boolForKey:@"MIGRATE_NONCONSUMABLES"];
+}
+
++(void)setMigrationIndicator:(BOOL) indicator {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:indicator forKey:@"MIGRATE_NONCONSUMABLES"];
+    [defaults synchronize];
+}
+
 - (VirtualItem*)virtualItemWithId:(NSString*)itemId {
     VirtualItem* vi = [self.virtualItems objectForKey:itemId];
     if (!vi) {
@@ -438,17 +489,15 @@ static int currentAssetsVersion = 0;
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     
     int mt_ver = (int)[defaults integerForKey:@"MT_VER"]; // Defaults to 0
-    int sa_ver_old = (int)[defaults integerForKey:@"SA_VER_OLD"];
-    if (!sa_ver_old) {
-        sa_ver_old = -1;
-    }
+    int sa_ver_old = [defaults objectForKey:@"SA_VER_OLD"] == nil ? -1 : (int)[defaults integerForKey:@"SA_VER_OLD"]; //Defaults to -1
     
     if (mt_ver < METADATA_VERSION || sa_ver_old < currentAssetsVersion) {
         [defaults setInteger:METADATA_VERSION forKey:@"MT_VER"];
         [defaults setInteger:currentAssetsVersion forKey:@"SA_VER_OLD"];
         [defaults synchronize];
         
-        [KeyValueStorage deleteValueForKey:[self keyMetaStoreInfo]];
+        [StoreInfo setMigrationIndicator:YES];
+//        [KeyValueStorage deleteValueForKey:[self keyMetaStoreInfo]];
     }
 }
 
