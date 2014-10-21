@@ -202,6 +202,7 @@ static int currentAssetsVersion = 0;
 }
 
 - (BOOL)initializeFromDB{
+    [StoreInfo checkMetadataVersion];
     //if migration process is required we do not initialize from DB.
     //remove this code when migration process becomes obsolete.
     if([StoreInfo migrationIndicator])
