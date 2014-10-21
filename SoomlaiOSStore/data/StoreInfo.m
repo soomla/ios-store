@@ -205,7 +205,7 @@ static int currentAssetsVersion = 0;
     [StoreInfo checkMetadataVersion];
     //if migration process is required we do not initialize from DB.
     //remove this code when migration process becomes obsolete.
-    if([StoreInfo migrationIndicator])
+    if([StoreInfo isMigrationRequired])
         return NO;
     
     NSString* key = [StoreInfo keyMetaStoreInfo];
@@ -401,7 +401,7 @@ static int currentAssetsVersion = 0;
     }
 }
 
-+(BOOL)migrationIndicator{
++(BOOL)isMigrationRequired{
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     return [defaults boolForKey:@"MIGRATE_NONCONSUMABLES"];
 }
