@@ -403,7 +403,7 @@ static int currentAssetsVersion = 0;
 
 +(BOOL)migrationIndicator{
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    return [defaults valueForKey:@"MIGRATE_NONCONSUMABLES"];
+    return [defaults boolForKey:@"MIGRATE_NONCONSUMABLES"];
 }
 
 +(void)setMigrationIndicator:(BOOL) indicator {
