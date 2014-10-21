@@ -55,6 +55,7 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
     @synchronized( self ) {
         if( _instance == nil ) {
             _instance = [[SoomlaStore alloc] init];
+            _instance.customVerificationClass = nil;
         }
     }
 
@@ -63,7 +64,6 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
 
 
 - (BOOL)initializeWithStoreAssets:(id<IStoreAssets>)storeAssets {
-
     LogDebug(TAG, @"SoomlaStore Initializing ...");
 
     [StorageManager getInstance];
@@ -89,6 +89,18 @@ static NSString* developerPayload = NULL;
     if (![self checkInit]) return NO;
 
     if ([SKPaymentQueue canMakePayments]) {
+        // See if there is a completed purchase in the transaction queue.
+        // This can happen if server side verification request fails.
+        for (SKPaymentTransaction *transaction in [SKPaymentQueue defaultQueue].transactions) {
+            if ([transaction.payment.productIdentifier isEqualToString:marketItem.productId]) {
+                if (transaction.transactionState == SKPaymentTransactionStatePurchased) {
+                    [self completeTransaction:transaction];
+                    return YES;
+                }
+            }
+        }
+        
+        
         SKMutablePayment *payment = [[SKMutablePayment alloc] init] ;
         payment.productIdentifier = marketItem.productId;
         payment.quantity = 1;
@@ -143,6 +155,8 @@ static NSString* developerPayload = NULL;
 {
     for (SKPaymentTransaction *transaction in transactions)
     {
+        LogDebug(TAG, ([NSString stringWithFormat:@"Updated transaction: %@ %ld", transaction.payment.productIdentifier, transaction.transactionState]));
+
         switch (transaction.transactionState)
         {
             case SKPaymentTransactionStatePurchased:
@@ -153,6 +167,11 @@ static NSString* developerPayload = NULL;
                 break;
             case SKPaymentTransactionStateRestored:
                 [self restoreTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateDeferred:
+                [self deferTransaction:transaction];
+                break;
+                
             default:
                 break;
         }
@@ -218,12 +237,28 @@ static NSString* developerPayload = NULL;
         PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
 
         if (VERIFY_PURCHASES) {
-            sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi];
-
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseVerified:) name:EVENT_MARKET_PURCHASE_VERIF object:sv];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_ERROR_IN_STORE object:sv];
-
-            [sv verifyData];
+            if (self.customVerificationClass) {
+                id vObject = [self.customVerificationClass alloc];
+                if (vObject &&
+                    [vObject respondsToSelector:@selector(initWithTransaction:andPurchasable:)] &&
+                    [vObject respondsToSelector:@selector(verifyData)]) {
+                    sv = [vObject initWithTransaction:transaction andPurchasable:pvi];
+                } else {
+                    LogError(TAG, @"Custom verification object is misconfigured!");
+                }
+            } else {
+                sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi];
+            }
+            
+            if (sv) {
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseVerified:) name:EVENT_MARKET_PURCHASE_VERIF object:sv];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_ERROR_IN_STORE object:sv];
+                
+                [sv verifyData];
+            } else {
+                LogError(TAG, @"Could not create a valid verification object! Validating purchase.");
+                [self finalizeTransaction:transaction forPurchasable:pvi];
+            }
         } else {
             [self finalizeTransaction:transaction forPurchasable:pvi];
         }
@@ -245,6 +280,22 @@ static NSString* developerPayload = NULL;
 {
     LogDebug(TAG, ([NSString stringWithFormat:@"Restore transaction for product: %@", transaction.payment.productIdentifier]));
     [self givePurchasedItem:transaction];
+}
+
+- (void) deferTransaction: (SKPaymentTransaction *)transaction
+{
+    LogDebug(TAG, ([NSString stringWithFormat:@"Defer transaction for product: %@", transaction.payment.productIdentifier]));
+
+    @try {
+        PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
+        
+        [StoreEventHandling postMarketPurchaseDeferred:pvi];
+    }
+    @catch (VirtualItemNotFoundException* e) {
+        LogError(TAG, ([NSString stringWithFormat:@"Couldn't find the DEFERRED VirtualCurrencyPack OR MarketItem with productId: %@"
+                        @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
+        [StoreEventHandling postUnexpectedError:ERR_GENERAL forObject:self];
+    }
 }
 
 - (void) failedTransaction: (SKPaymentTransaction *)transaction

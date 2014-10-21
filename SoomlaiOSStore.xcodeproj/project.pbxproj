@@ -43,7 +43,7 @@
 		C054F21417FAB22A006F5B8E /* SoomlaVerification.m in Sources */ = {isa = PBXBuildFile; fileRef = C054F21217FAB22A006F5B8E /* SoomlaVerification.m */; };
 		C097627518FBF277000A4403 /* StoreEventHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = C024135F176F2512007BB351 /* StoreEventHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C097627618FBF277000A4403 /* IStoreAssets.h in Headers */ = {isa = PBXBuildFile; fileRef = C024136D176F2512007BB351 /* IStoreAssets.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C097627718FBF277000A4403 /* SoomlaVerification.h in Headers */ = {isa = PBXBuildFile; fileRef = C054F21117FAB22A006F5B8E /* SoomlaVerification.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C097627718FBF277000A4403 /* SoomlaVerification.h in Headers */ = {isa = PBXBuildFile; fileRef = C054F21117FAB22A006F5B8E /* SoomlaVerification.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C097627818FBF277000A4403 /* StoreConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = C0241376176F2512007BB351 /* StoreConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C097627918FBF277000A4403 /* SoomlaStore.h in Headers */ = {isa = PBXBuildFile; fileRef = C0241378176F2512007BB351 /* SoomlaStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C097627A18FBF277000A4403 /* StoreInventory.h in Headers */ = {isa = PBXBuildFile; fileRef = C024137A176F2512007BB351 /* StoreInventory.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -375,9 +375,9 @@
 				C097629A18FBF2D9000A4403 /* VirtualCurrencyStorage.h in Headers */,
 				C097628A18FBF2C5000A4403 /* VirtualCurrencyPack.h in Headers */,
 				C097628818FBF2C5000A4403 /* VirtualCategory.h in Headers */,
-				C097627718FBF277000A4403 /* SoomlaVerification.h in Headers */,
 				C097628B18FBF2C5000A4403 /* EquippableVG.h in Headers */,
 				C097629C18FBF2D9000A4403 /* VirtualItemStorage.h in Headers */,
+				C097627718FBF277000A4403 /* SoomlaVerification.h in Headers */,
 				C097629218FBF2D9000A4403 /* StoreJSONConsts.h in Headers */,
 				C097628C18FBF2C5000A4403 /* LifetimeVG.h in Headers */,
 				C097628F18FBF2C5000A4403 /* UpgradeVG.h in Headers */,

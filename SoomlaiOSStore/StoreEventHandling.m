@@ -35,6 +35,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_PURCHASED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_PURCHASE_VERIF object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_PURCHASE_STARTED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_PURCHASE_DEFERRED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_RESTORE_TRANSACTIONS_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_RESTORE_TRANSACTIONS_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UNEXPECTED_ERROR_IN_STORE object:nil];
@@ -117,6 +118,7 @@
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               purchasableVirtualItem, DICT_ELEMENT_PURCHASABLE,
                               [NSNumber numberWithBool:verified], DICT_ELEMENT_VERIFIED,
+                              transaction.transactionIdentifier, DICT_ELEMENT_TOKEN,
                               transaction, DICT_ELEMENT_TRANSACTION,
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASE_VERIF object:object userInfo:userInfo];
@@ -125,6 +127,11 @@
 + (void)postMarketPurchaseStarted:(PurchasableVirtualItem*)purchasableVirtualItem{
     NSDictionary *userInfo = [NSDictionary dictionaryWithObject:purchasableVirtualItem forKey:DICT_ELEMENT_PURCHASABLE];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASE_STARTED object:self userInfo:userInfo];
+}
+
++ (void)postMarketPurchaseDeferred:(PurchasableVirtualItem*)purchasableVirtualItem{
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:purchasableVirtualItem forKey:DICT_ELEMENT_PURCHASABLE];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASE_DEFERRED object:self userInfo:userInfo];
 }
 
 + (void)postMarketItemsRefreshStarted {

@@ -32,10 +32,17 @@
     @private
     BOOL initialized;
     SoomlaVerification* sv;
+    
 }
 
 @property BOOL initialized;
 
+/**
+ The custom class that will be used to verify purchases.
+ 
+ @warning Must be a subclass of SoomlaVerification and override verifyData.
+ */
+@property (retain) Class customVerificationClass;
 
 + (SoomlaStore*)getInstance;
 
@@ -91,5 +98,6 @@
  @return YES if initialized, NO otherwise.
  */
 - (BOOL)isInitialized;
+
 
 @end

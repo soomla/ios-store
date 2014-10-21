@@ -39,6 +39,7 @@
 #define EVENT_MARKET_PURCHASED              @"MarketPurchased"
 #define EVENT_MARKET_PURCHASE_VERIF         @"MarketPurchaseVerification"
 #define EVENT_MARKET_PURCHASE_STARTED       @"MarketPurchaseProcessStarted"
+#define EVENT_MARKET_PURCHASE_DEFERRED      @"MarketPurchaseDeferred"
 #define EVENT_RESTORE_TRANSACTIONS_FINISHED @"RestoreTransactionsFinished"
 #define EVENT_RESTORE_TRANSACTIONS_STARTED  @"RestoreTransactionsStarted"
 #define EVENT_SOOMLASTORE_INIT              @"SoomlaStoreInitialized"
@@ -112,6 +113,8 @@
 + (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction forObject:(id)object;
 
 + (void)postMarketPurchaseStarted:(PurchasableVirtualItem*)purchasableVirtualItem;
+
++ (void)postMarketPurchaseDeferred:(PurchasableVirtualItem*)purchasableVirtualItem;
 
 + (void)postMarketItemsRefreshStarted;
 
