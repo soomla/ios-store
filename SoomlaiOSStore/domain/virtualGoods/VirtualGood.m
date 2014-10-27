@@ -58,7 +58,7 @@
  @return see parent.
  */
 - (int)resetBalance:(int)balance withEvent:(BOOL)notify {
-    return [[StorageManager getInstance].virtualGoodStorage setBalance:balance toItem:self withEvent:notify];
+    return [[StorageManager getInstance].virtualGoodStorage setBalance:balance toItem:self.itemId withEvent:notify];
 }
 
 @end

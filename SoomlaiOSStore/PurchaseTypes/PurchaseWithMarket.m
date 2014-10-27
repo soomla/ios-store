@@ -19,6 +19,7 @@
 #import "SoomlaUtils.h"
 #import "SoomlaStore.h"
 #import "StoreEventHandling.h"
+#import "PurchasableVirtualItem.h"
 
 @implementation PurchaseWithMarket
 
@@ -51,7 +52,7 @@ static NSString* TAG = @"SOOMLA PurchaseWithMarket";
         return;
     }
     
-    [StoreEventHandling postItemPurchaseStarted:self.associatedItem];
+    [StoreEventHandling postItemPurchaseStarted:self.associatedItem.itemId];
 }
 
 @end

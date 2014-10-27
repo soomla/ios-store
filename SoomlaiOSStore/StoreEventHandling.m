@@ -51,52 +51,52 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_BILLING_NOT_SUPPORTED object:self];
 }
 
-+ (void)postChangedBalance:(int)balance forCurrency:(VirtualCurrency*)currency withAmount:(int)amountAdded {
++ (void)postChangedBalance:(int)balance forCurrency:(NSString*)currencyItemId withAmount:(int)amountAdded {
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithInt:balance], DICT_ELEMENT_BALANCE,
-                              currency, DICT_ELEMENT_CURRENCY,
+                              currencyItemId, DICT_ELEMENT_CURRENCY,
                               [NSNumber numberWithInt:amountAdded], DICT_ELEMENT_AMOUNT_ADDED,
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_CURRENCY_BALANCE_CHANGED object:self userInfo:userInfo];
 }
 
-+ (void)postChangedBalance:(int)balance forGood:(VirtualGood*)good withAmount:(int)amountAdded {
++ (void)postChangedBalance:(int)balance forGood:(NSString*)goodItemId withAmount:(int)amountAdded {
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithInt:balance], DICT_ELEMENT_BALANCE,
-                              good, DICT_ELEMENT_GOOD,
+                              goodItemId, DICT_ELEMENT_GOOD,
                               [NSNumber numberWithInt:amountAdded], DICT_ELEMENT_AMOUNT_ADDED,
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_GOOD_BALANCE_CHANGED object:self userInfo:userInfo];
 }
 
-+ (void)postGoodEquipped:(EquippableVG*)good{
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:good forKey:DICT_ELEMENT_EquippableVG];
++ (void)postGoodEquipped:(NSString*)goodItemId{
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:goodItemId forKey:DICT_ELEMENT_EquippableVG];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_GOOD_EQUIPPED object:self userInfo:userInfo];
 }
 
-+ (void)postGoodUnEquipped:(EquippableVG*)good{
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:good forKey:DICT_ELEMENT_EquippableVG];
++ (void)postGoodUnEquipped:(NSString*)goodItemId{
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:goodItemId forKey:DICT_ELEMENT_EquippableVG];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_GOOD_UNEQUIPPED object:self userInfo:userInfo];
 }
 
-+ (void)postGoodUpgrade:(VirtualGood*)good withGoodUpgrade:(UpgradeVG*)goodUpgrade{
++ (void)postGoodUpgrade:(NSString*)goodItemId withGoodUpgrade:(NSString*)goodUpgradeItemId{
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              good, DICT_ELEMENT_GOOD,
-                              goodUpgrade, DICT_ELEMENT_UpgradeVG,
+                              goodItemId, DICT_ELEMENT_GOOD,
+                              goodUpgradeItemId, DICT_ELEMENT_UpgradeVG,
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_GOOD_UPGRADE object:self userInfo:userInfo];
 }
 
-+ (void)postItemPurchaseStarted:(PurchasableVirtualItem*)item{
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:item forKey:DICT_ELEMENT_PURCHASABLE];
++ (void)postItemPurchaseStarted:(NSString*)itemId{
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:itemId forKey:DICT_ELEMENT_PURCHASABLE];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_ITEM_PURCHASE_STARTED object:self userInfo:userInfo];
 }
 
-+ (void)postItemPurchased:(PurchasableVirtualItem*)item withPayload:(NSString*)payload{
++ (void)postItemPurchased:(NSString*)itemId withPayload:(NSString*)payload{
     if (!payload) {
         payload = @"";
     }
-    NSDictionary *userInfo = @{ DICT_ELEMENT_PURCHASABLE: item, DICT_ELEMENT_DEVELOPERPAYLOAD: payload };
+    NSDictionary *userInfo = @{ DICT_ELEMENT_PURCHASABLE: itemId, DICT_ELEMENT_DEVELOPERPAYLOAD: payload };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_ITEM_PURCHASED object:self userInfo:userInfo];
 }
 

@@ -33,8 +33,8 @@
  
  @param good The `VirtualGood` to remove the upgrade from.
  */
-- (void)removeUpgradesFrom:(VirtualGood*)good;
-- (void)removeUpgradesFrom:(VirtualGood*)good withEvent:(BOOL)notify;
+- (void)removeUpgradesFrom:(NSString*)goodItemId;
+- (void)removeUpgradesFrom:(NSString*)goodItemId withEvent:(BOOL)notify;
 
 /**
  Assigns a specific upgrade to the given `VirtualGood`.
@@ -42,37 +42,37 @@
  @param upgradeVG The upgrade to assign.
  @param good The `VirtualGood` to upgrade.
  */
-- (void)assignCurrentUpgrade:(UpgradeVG*)upgradeVG toGood:(VirtualGood*)good;
-- (void)assignCurrentUpgrade:(UpgradeVG*)upgradeVG toGood:(VirtualGood*)good withEvent:(BOOL)notify;
+- (void)assignCurrentUpgrade:(NSString*)upgradeVGItemId toGood:(NSString*)goodItemId;
+- (void)assignCurrentUpgrade:(NSString*)upgradeVGItemId toGood:(NSString*)goodItemId withEvent:(BOOL)notify;
 
 /**
  Retrieves the current upgrade for the given `VirtualGood`.
  
  @param good The `VirtualGood` to retrieve the upgrade for.
  */
-- (UpgradeVG*)currentUpgradeOf:(VirtualGood*)good;
+- (NSString*)currentUpgradeOf:(NSString*)goodItemId;
 
 /**
  Checks the equipping status of the given `EquippableVG`.
  
  @param good The `EquippableVG` to check the status for.
  */
-- (BOOL)isGoodEquipped:(EquippableVG*)good;
+- (BOOL)isGoodEquipped:(NSString*)goodItemId;
 
 /**
  Equips the given `EquippableVG`.
  
  @param good The `EquippableVG` to equip.
  */
-- (void)equipGood:(EquippableVG*)good;
-- (void)equipGood:(EquippableVG*)good withEvent:(BOOL)notify;
+- (void)equipGood:(NSString*)goodItemId;
+- (void)equipGood:(NSString*)goodItemId withEvent:(BOOL)notify;
 
 /**
  UnEquips the given `EquippableVG`.
  
  @param good The `EquippableVG` to unequip.
  */
-- (void)unequipGood:(EquippableVG*)good;
-- (void)unequipGood:(EquippableVG*)good withEvent:(BOOL)notify;
+- (void)unequipGood:(NSString*)good;
+- (void)unequipGood:(NSString*)good withEvent:(BOOL)notify;
 
 @end

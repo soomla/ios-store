@@ -23,47 +23,47 @@
 
 @implementation VirtualItemStorage
 
-- (int)balanceForItem:(VirtualItem*)item{
-    LogDebug(tag, ([NSString stringWithFormat:@"trying to fetch balance for virtual item with itemId: %@", item.itemId]));
+- (int)balanceForItem:(NSString*)itemId{
+    LogDebug(tag, ([NSString stringWithFormat:@"trying to fetch balance for virtual item with itemId: %@", itemId]));
     
-    NSString* key = [self keyBalance:item.itemId];
+    NSString* key = [self keyBalance:itemId];
     NSString* val = [KeyValueStorage getValueForKey:key];
     
     if (!val || [val length]==0){
         return 0;
     }
     
-    LogDebug(tag, ([NSString stringWithFormat:@"the balance for %@ is: %d", item.itemId, [val intValue]]));
+    LogDebug(tag, ([NSString stringWithFormat:@"the balance for %@ is: %d", itemId, [val intValue]]));
     
     return [val intValue];
 }
 
-- (int)addAmount:(int)amount toItem:(VirtualItem*)item{
-    return [self addAmount:amount toItem:item withEvent:YES];
+- (int)addAmount:(int)amount toItem:(NSString*)itemId{
+    return [self addAmount:amount toItem:itemId withEvent:YES];
 }
-- (int)addAmount:(int)amount toItem:(VirtualItem*)item withEvent:(BOOL)notify {
-    LogDebug(tag, ([NSString stringWithFormat:@"adding %d %@", amount, item.name]));
+- (int)addAmount:(int)amount toItem:(NSString*)itemId withEvent:(BOOL)notify {
+    LogDebug(tag, ([NSString stringWithFormat:@"adding %d %@", amount, itemId]));
     
-    NSString* key = [self keyBalance:item.itemId];
-    int balance = [self balanceForItem:item] + amount;
+    NSString* key = [self keyBalance:itemId];
+    int balance = [self balanceForItem:itemId] + amount;
     [KeyValueStorage setValue:[NSString stringWithFormat:@"%d",balance] forKey:key];
 
     if (notify) {
-        [self postBalanceChangeToItem:item withBalance:balance andAmountAdded:amount];
+        [self postBalanceChangeToItem:itemId withBalance:balance andAmountAdded:amount];
     }
     
     return balance;
 }
 
-- (int)removeAmount:(int)amount fromItem:(VirtualItem*)item{
-    return [self removeAmount:amount fromItem:item withEvent:YES];
+- (int)removeAmount:(int)amount fromItem:(NSString*)itemId{
+    return [self removeAmount:amount fromItem:itemId withEvent:YES];
 }
 
-- (int)removeAmount:(int)amount fromItem:(VirtualItem*)item withEvent:(BOOL)notify {
-    LogDebug(tag, ([NSString stringWithFormat:@"removing %d %@", amount, item.name]));
+- (int)removeAmount:(int)amount fromItem:(NSString*)itemId withEvent:(BOOL)notify {
+    LogDebug(tag, ([NSString stringWithFormat:@"removing %d %@", amount, itemId]));
     
-    NSString* key = [self keyBalance:item.itemId];
-    int balance = [self balanceForItem:item] - amount;
+    NSString* key = [self keyBalance:itemId];
+    int balance = [self balanceForItem:itemId] - amount;
 	if (balance < 0) {
 	    balance = 0;
 	    amount = 0;
@@ -71,28 +71,28 @@
     [KeyValueStorage setValue:[NSString stringWithFormat:@"%d",balance] forKey:key];
     
     if (notify) {
-        [self postBalanceChangeToItem:item withBalance:balance andAmountAdded:(-1*amount)];
+        [self postBalanceChangeToItem:itemId withBalance:balance andAmountAdded:(-1*amount)];
     }
     
     return balance;
 }
 
-- (int)setBalance:(int)balance toItem:(VirtualItem*)item {
-    return [self setBalance:balance toItem:item withEvent:YES];
+- (int)setBalance:(int)balance toItem:(NSString*)itemId {
+    return [self setBalance:balance toItem:itemId withEvent:YES];
 }
-- (int)setBalance:(int)balance toItem:(VirtualItem*)item withEvent:(BOOL)notify {
-    LogDebug(tag, ([NSString stringWithFormat:@"setting balance %d to %@", balance, item.name]));
+- (int)setBalance:(int)balance toItem:(NSString*)itemId withEvent:(BOOL)notify {
+    LogDebug(tag, ([NSString stringWithFormat:@"setting balance %d to %@", balance, itemId]));
     
-    int oldBalance = [self balanceForItem:item];
+    int oldBalance = [self balanceForItem:itemId];
     if (oldBalance == balance) {
         return balance;
     }
     
-    NSString* key = [self keyBalance:item.itemId];
+    NSString* key = [self keyBalance:itemId];
     [KeyValueStorage setValue:[NSString stringWithFormat:@"%d",balance] forKey:key];
     
     if (notify) {
-        [self postBalanceChangeToItem:item withBalance:balance andAmountAdded:0];
+        [self postBalanceChangeToItem:itemId withBalance:balance andAmountAdded:0];
     }
     
     return balance;
@@ -105,7 +105,7 @@
                                  userInfo:nil];
 }
 
-- (void)postBalanceChangeToItem:(VirtualItem*)item withBalance:(int)balance andAmountAdded:(int)amountAdded {
+- (void)postBalanceChangeToItem:(NSString*)itemId withBalance:(int)balance andAmountAdded:(int)amountAdded {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:[NSString stringWithFormat:@"You must override %@ in a subclass",
                                            NSStringFromSelector(_cmd)]

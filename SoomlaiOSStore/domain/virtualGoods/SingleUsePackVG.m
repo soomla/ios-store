@@ -81,7 +81,7 @@ static NSString* TAG = @"SOOMLA SingleUsePackVG";
         LogError(TAG, ([NSString stringWithFormat:@"SingleUseVG with itemId: %@ doesn't exist! Can't give this pack.", self.goodItemId]));
         return 0;
     }
-    return [[[StorageManager getInstance] virtualGoodStorage] addAmount:self.amount*oAmount toItem:good withEvent:notify];
+    return [[[StorageManager getInstance] virtualGoodStorage] addAmount:self.amount*oAmount toItem:good.itemId withEvent:notify];
 }
 
 /*
@@ -98,7 +98,7 @@ static NSString* TAG = @"SOOMLA SingleUsePackVG";
         LogError(TAG, ([NSString stringWithFormat:@"SingleUseVG with itemId: %@ doesn't exist! Can't take this pack.", self.goodItemId]));
         return 0;
     }
-    return [[[StorageManager getInstance] virtualGoodStorage] removeAmount:self.amount*oAmount fromItem:good withEvent:notify];
+    return [[[StorageManager getInstance] virtualGoodStorage] removeAmount:self.amount*oAmount fromItem:good.itemId withEvent:notify];
 }
 
 /*

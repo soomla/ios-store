@@ -74,7 +74,7 @@ static NSString* TAG = @"SOOMLA VirtualCurrencyPack";
         LogError(TAG, ([NSString stringWithFormat:@"VirtualCurrency with itemId: %@ doesn't exist! Can't give this pack.", self.currencyItemId]));
         return 0;
     }
-    return [[[StorageManager getInstance] virtualCurrencyStorage] addAmount:amount*self.currencyAmount toItem:currency withEvent:notify];
+    return [[[StorageManager getInstance] virtualCurrencyStorage] addAmount:amount*self.currencyAmount toItem:currency.itemId withEvent:notify];
 }
 
 /**
@@ -91,7 +91,7 @@ static NSString* TAG = @"SOOMLA VirtualCurrencyPack";
         LogError(TAG, ([NSString stringWithFormat:@"VirtualCurrency with itemId: %@ doesn't exist! Can't take this pack.", self.currencyItemId]));
         return 0;
     }
-    return [[[StorageManager getInstance] virtualCurrencyStorage] removeAmount:amount*self.currencyAmount fromItem:currency withEvent:notify];
+    return [[[StorageManager getInstance] virtualCurrencyStorage] removeAmount:amount*self.currencyAmount fromItem:currency.itemId withEvent:notify];
 }
 
 /**

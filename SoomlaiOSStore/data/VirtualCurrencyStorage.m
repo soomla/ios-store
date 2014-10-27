@@ -46,8 +46,8 @@
  @param balance The balance that has changed.
  @param amountAdded The amount added to the item's balance.
  */
-- (void)postBalanceChangeToItem:(VirtualItem*)item withBalance:(int)balance andAmountAdded:(int)amountAdded {
-    [StoreEventHandling postChangedBalance:balance forCurrency:(VirtualCurrency*)item withAmount:amountAdded];
+- (void)postBalanceChangeToItem:(NSString*)itemItemId withBalance:(int)balance andAmountAdded:(int)amountAdded {
+    [StoreEventHandling postChangedBalance:balance forCurrency:itemItemId withAmount:amountAdded];
 }
 
 + (NSString*) keyCurrencyBalance:(NSString*)itemId {

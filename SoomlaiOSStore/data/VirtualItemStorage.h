@@ -33,7 +33,7 @@
  @param item The virtual item whose balance is being fetched.
  @return The balance of the given virtual item.
  */
-- (int)balanceForItem:(VirtualItem*)item;
+- (int)balanceForItem:(NSString*)itemId;
 
 /**
  Adds the given amount of the given item to the storage.
@@ -42,8 +42,8 @@
  @param item The virtual item to add the given amount to.
  @return The balance of the given virtual item.
  */
-- (int)addAmount:(int)amount toItem:(VirtualItem*)item;
-- (int)addAmount:(int)amount toItem:(VirtualItem*)item withEvent:(BOOL)notify;
+- (int)addAmount:(int)amount toItem:(NSString*)itemId;
+- (int)addAmount:(int)amount toItem:(NSString*)itemId withEvent:(BOOL)notify;
 
 /**
  Removes the given amount of the given item from the storage.
@@ -52,8 +52,8 @@
  @param item The virtual item to remove the given amount from.
  @return The balance of the given virtual item.
  */
-- (int)removeAmount:(int)amount fromItem:(VirtualItem*)item;
-- (int)removeAmount:(int)amount fromItem:(VirtualItem*)item withEvent:(BOOL)notify;
+- (int)removeAmount:(int)amount fromItem:(NSString*)itemId;
+- (int)removeAmount:(int)amount fromItem:(NSString*)itemId withEvent:(BOOL)notify;
 
 /**
  Sets the balance of the given virtual item.
@@ -62,8 +62,8 @@
  @param item The virtual item whose balance is to be set.
  @return The balance of the given virtual item.
  */
-- (int)setBalance:(int)balance toItem:(VirtualItem*)item;
-- (int)setBalance:(int)balance toItem:(VirtualItem*)item withEvent:(BOOL)notify;
+- (int)setBalance:(int)balance toItem:(NSString*)itemId;
+- (int)setBalance:(int)balance toItem:(NSString*)itemId withEvent:(BOOL)notify;
 
 /**
  Retrieves the balance of the virtual item with the given `itemId` (from the 
@@ -81,6 +81,6 @@
  @param balance The balance that has changed.
  @param amountAdded The amount added to the item's balance.
  */
-- (void)postBalanceChangeToItem:(VirtualItem*)item withBalance:(int)balance andAmountAdded:(int)amountAdded;
+- (void)postBalanceChangeToItem:(NSString*)itemId withBalance:(int)balance andAmountAdded:(int)amountAdded;
 
 @end
