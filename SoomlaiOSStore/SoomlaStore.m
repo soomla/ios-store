@@ -40,15 +40,6 @@
 
 static NSString* TAG = @"SOOMLA SoomlaStore";
 
-- (BOOL)checkInit {
-    if (!self.initialized) {
-        LogDebug(TAG, @"You can't perform any of SoomlaStore's actions before it was initialized. Initialize it once when your game loads.");
-        return NO;
-    }
-
-    return YES;
-}
-
 + (SoomlaStore*)getInstance{
     static SoomlaStore* _instance = nil;
 
@@ -61,20 +52,18 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
     return _instance;
 }
 
-
 - (BOOL)initializeWithStoreAssets:(id<IStoreAssets>)storeAssets {
-
+    if (self.initialized) {
+        LogDebug(TAG, @"SoomlaStore already initialized.");
+        return NO;
+    }
+    
     LogDebug(TAG, @"SoomlaStore Initializing ...");
 
     [StorageManager getInstance];
-    [[StoreInfo getInstance] initializeWithIStoreAssets:storeAssets];
+    [[StoreInfo getInstance] setStoreAssets:storeAssets];
 
-    if ([SKPaymentQueue canMakePayments]) {
-        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-        [StoreEventHandling postBillingSupported];
-    } else {
-        [StoreEventHandling postBillingNotSupported];
-    }
+    [self loadBillingService];
 
     [self refreshMarketItemsDetails];
 
@@ -84,9 +73,17 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
     return YES;
 }
 
+- (void)loadBillingService {
+    if ([SKPaymentQueue canMakePayments]) {
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+        [StoreEventHandling postBillingSupported];
+    } else {
+        [StoreEventHandling postBillingNotSupported];
+    }
+}
+
 static NSString* developerPayload = NULL;
 - (BOOL)buyInMarketWithMarketItem:(MarketItem*)marketItem andPayload:(NSString*)payload{
-    if (![self checkInit]) return NO;
 
     if ([SKPaymentQueue canMakePayments]) {
         SKMutablePayment *payment = [[SKMutablePayment alloc] init] ;
@@ -116,7 +113,6 @@ static NSString* developerPayload = NULL;
 }
 
 - (void)restoreTransactions {
-    if(![self checkInit]) return;
 
     LogDebug(TAG, @"Sending restore transaction request");
     if ([SKPaymentQueue canMakePayments]) {
@@ -130,10 +126,6 @@ static NSString* developerPayload = NULL;
     
     // Defaults to NO
     return [[NSUserDefaults standardUserDefaults] boolForKey:@"RESTORED"];
-}
-
-- (BOOL)isInitialized {
-    return self.initialized;
 }
 
 #pragma mark -

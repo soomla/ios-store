@@ -186,46 +186,34 @@ static int currentAssetsVersion = 0;
     [self save];
 }
 
-- (void)initializeWithIStoreAssets:(id <IStoreAssets>)storeAssets{
+- (void)setStoreAssets:(id <IStoreAssets>)storeAssets{
     if(storeAssets == NULL){
         LogError(TAG, @"The given store assets can't be null !");
         return;
     }
     
     currentAssetsVersion = [storeAssets getVersion];
-    [StoreInfo checkMetadataVersion];
     
     // we prefer initialization from the database (storeAssets are only set on the first time the game is loaded)!
-    if (![self initializeFromDB]){
+    if (![self loadFromDB]){
         [self privInitializeWithIStoreAssets:storeAssets];
     }
 }
 
-- (BOOL)initializeFromDB{
-    [StoreInfo checkMetadataVersion];
-    //if migration process is required we do not initialize from DB.
-    //remove this code when migration process becomes obsolete.
-    if([StoreInfo isMigrationRequired])
-        return NO;
-    
-    NSString* key = [StoreInfo keyMetaStoreInfo];
-    NSString* storeInfoJSON = [KeyValueStorage getValueForKey:key];
-    
-    if(!storeInfoJSON || [storeInfoJSON length] == 0){
-        LogDebug(TAG, @"store json is not in DB yet.")
-        return NO;
+- (void)setStoreAssetsJSON:(NSString*)storeMetaJSON withVersion:(int)version {
+    LogDebug(TAG, ([NSString stringWithFormat:@"trying to set json: %@", storeMetaJSON]));
+    currentAssetsVersion = version;
+    if (![self loadFromDB]) {
+        
+        if (![self fromJSONString: storeMetaJSON]) {
+            LogError(TAG, @"Couldn't load from store meta json.");
+            return;
+        }
+        [self save];
     }
-    
-    // This is done in case old versions of the DB exist (especially from
-    // Cocos2dx) which used jsonType instead of className
-    if ([storeInfoJSON rangeOfString:@"jsonType"].location != NSNotFound) {
-        LogDebug(TAG, @"the StoreInfo JSON is from an older version. we need to delete and let it be recreated.");
-        [KeyValueStorage deleteValueForKey:key];
-        return NO;
-    }
-    
-    LogDebug(TAG, ([NSString stringWithFormat:@"the metadata-economy json (from DB) is %@", storeInfoJSON]));
-    
+}
+
+- (BOOL)fromJSONString:(NSString *)storeInfoJSON {
     @try {
         
         NSDictionary* storeInfo = [SoomlaUtils jsonStringToDict:storeInfoJSON];
@@ -310,6 +298,35 @@ static int currentAssetsVersion = 0;
     } @catch (NSException* ex) {
         LogError(TAG, @"An error occured while trying to parse store info JSON.");
     }
+    return NO;
+}
+
+- (BOOL)loadFromDB{
+    [StoreInfo checkAndResetMetadata];
+    //if migration process is required we do not initialize from DB.
+    //remove this code when migration process becomes obsolete.
+    if([StoreInfo isMigrationRequired])
+        return NO;
+    
+    NSString* key = [StoreInfo keyMetaStoreInfo];
+    NSString* storeInfoJSON = [KeyValueStorage getValueForKey:key];
+    
+    if(!storeInfoJSON || [storeInfoJSON length] == 0){
+        LogDebug(TAG, @"store json is not in DB yet.")
+        return NO;
+    }
+    
+    // This is done in case old versions of the DB exist (especially from
+    // Cocos2dx) which used jsonType instead of className
+    if ([storeInfoJSON rangeOfString:@"jsonType"].location != NSNotFound) {
+        LogDebug(TAG, @"the StoreInfo JSON is from an older version. we need to delete and let it be recreated.");
+        [KeyValueStorage deleteValueForKey:key];
+        return NO;
+    }
+    
+    LogDebug(TAG, ([NSString stringWithFormat:@"the metadata-economy json (from DB) is %@", storeInfoJSON]));
+    
+    [self fromJSONString:storeInfoJSON];
     
     return NO;
 }
@@ -485,7 +502,7 @@ static int currentAssetsVersion = 0;
     return [goodsUpgrades objectForKey:goodItemId] != NULL;
 }
 
-+ (void)checkMetadataVersion {
++ (void)checkAndResetMetadata {
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     
     int mt_ver = (int)[defaults integerForKey:@"MT_VER"]; // Defaults to 0
