@@ -88,7 +88,7 @@
 }
 
 + (void)postItemPurchaseStarted:(NSString*)itemId{
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:itemId forKey:DICT_ELEMENT_PURCHASABLE];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:itemId forKey:DICT_ELEMENT_PURCHASABLE_ID];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_ITEM_PURCHASE_STARTED object:self userInfo:userInfo];
 }
 
@@ -96,7 +96,7 @@
     if (!payload) {
         payload = @"";
     }
-    NSDictionary *userInfo = @{ DICT_ELEMENT_PURCHASABLE: itemId, DICT_ELEMENT_DEVELOPERPAYLOAD: payload };
+    NSDictionary *userInfo = @{ DICT_ELEMENT_PURCHASABLE_ID: itemId, DICT_ELEMENT_DEVELOPERPAYLOAD: payload };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_ITEM_PURCHASED object:self userInfo:userInfo];
 }
 

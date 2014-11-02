@@ -55,6 +55,7 @@
 #define DICT_ELEMENT_EquippableVG      @"EquippableVG"
 #define DICT_ELEMENT_UpgradeVG         @"UpgradeVG"
 #define DICT_ELEMENT_PURCHASABLE       @"PurchasableVirtualItem"
+#define DICT_ELEMENT_PURCHASABLE_ID    @"PurchasableVirtualItemId"
 #define DICT_ELEMENT_DEVELOPERPAYLOAD  @"DeveloperPayload"
 #define DICT_ELEMENT_RECEIPT           @"receipt"
 #define DICT_ELEMENT_TOKEN             @"token"
