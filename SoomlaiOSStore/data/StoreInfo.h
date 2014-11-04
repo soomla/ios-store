@@ -78,7 +78,9 @@
  
  @param storeAssets Your game economy.
  */
-- (void)initializeWithIStoreAssets:(id <IStoreAssets>)storeAssets;
+- (void)setStoreAssets:(id <IStoreAssets>)storeAssets;
+
+- (void)setStoreAssetsJSON:(NSString*)storeMetaJSON withVersion:(int)version;
 
 /**
  Initializes `StoreInfo` from the database.
@@ -88,7 +90,7 @@
  
  @return YES if successful, NO otherwise.
  */
-- (BOOL)initializeFromDB;
+- (BOOL)loadFromDB;
 
 /**
  Converts this to an `NSDictionary`.

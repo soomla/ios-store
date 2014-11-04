@@ -89,7 +89,7 @@ static NSString* TAG = @"SOOMLA UpgradeVG";
         LogError(TAG, ([NSString stringWithFormat:@"VirtualGood with itemId: %@ doesn't exist! Can't upgrade.", self.goodItemId]));
         return 0;
     }
-    [[[StorageManager getInstance] virtualGoodStorage] assignCurrentUpgrade:self toGood:good withEvent:notify];
+    [[[StorageManager getInstance] virtualGoodStorage] assignCurrentUpgrade:self.itemId toGood:good.itemId withEvent:notify];
     
     return [super giveAmount:amount withEvent:notify];
 }
@@ -114,7 +114,13 @@ static NSString* TAG = @"SOOMLA UpgradeVG";
         LogError(TAG, ([NSString stringWithFormat:@"VirtualGood with itemId: %@ doesn't exist! Can't downgrade.", self.goodItemId]));
         return 0;
     }
-    UpgradeVG* upgradeVG = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:good];
+    NSString* upgradeVGItemId = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:good.itemId];
+    UpgradeVG* upgradeVG = NULL;
+    @try {
+        upgradeVG = (UpgradeVG*)[[StoreInfo getInstance] virtualItemWithId:upgradeVGItemId];
+    } @catch (VirtualItemNotFoundException* e) {
+        LogDebug(TAG, ([NSString stringWithFormat:@"This is BAD! Can't find the current upgrade (%@) of: %@", upgradeVGItemId, good.itemId]));
+    }
     if (upgradeVG != self) {
         LogError(TAG, ([NSString stringWithFormat:@"You can't take what's not yours. The UpgradeVG %@ is not assigned to the VirtualGood: %@. (or maybe it's NULL?)", self.name, good.name]));
         return 0;
@@ -130,10 +136,10 @@ static NSString* TAG = @"SOOMLA UpgradeVG";
         }
         
         LogDebug(TAG, ([NSString stringWithFormat:@"Downgrading %@ to %@", good.name, prevUpgradeVG.name]));
-        [[[StorageManager getInstance] virtualGoodStorage] assignCurrentUpgrade:prevUpgradeVG toGood:good withEvent:notify];
+        [[[StorageManager getInstance] virtualGoodStorage] assignCurrentUpgrade:prevUpgradeVG.itemId toGood:good.itemId withEvent:notify];
     } else {
         LogDebug(TAG, ([NSString stringWithFormat:@"Downgrading %@ to NO-UPGRADE", good.name]));
-        [[[StorageManager getInstance] virtualGoodStorage] removeUpgradesFrom:good withEvent:notify];
+        [[[StorageManager getInstance] virtualGoodStorage] removeUpgradesFrom:good.itemId withEvent:notify];
     }
     
     return [super takeAmount:amount withEvent:notify];
@@ -155,7 +161,13 @@ static NSString* TAG = @"SOOMLA UpgradeVG";
         LogError(TAG, ([NSString stringWithFormat:@"VirtualGood with itemId: %@ doesn't exist! Returning NO (can't buy).", self.goodItemId]));
         return NO;
     }
-    UpgradeVG* upgradeVG = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:good];
+    NSString* upgradeVGItemId = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:good.itemId];
+    UpgradeVG* upgradeVG = NULL;
+    @try {
+        upgradeVG = (UpgradeVG*)[[StoreInfo getInstance] virtualItemWithId:upgradeVGItemId];
+    } @catch (VirtualItemNotFoundException* e) {
+        LogDebug(TAG, ([NSString stringWithFormat:@"This is BAD! Can't find the current upgrade (%@) of: %@", upgradeVGItemId, good.itemId]));
+    }
     return (((!upgradeVG && (!self.prevGoodItemId || (self.prevGoodItemId.length == 0))) ||
             (upgradeVG && (([upgradeVG.nextGoodItemId isEqualToString:self.itemId]) || ([upgradeVG.prevGoodItemId isEqualToString:self.itemId]))))
             && [super canBuy]);

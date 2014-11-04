@@ -86,10 +86,10 @@
 - (void)refreshMarketItemsDetails;
 
 /**
- Checks if `SoomlaStore` has already been initialized.
-
- @return YES if initialized, NO otherwise.
- */
-- (BOOL)isInitialized;
+ This function loads the billing service.
+ This is automatically ran when you initialize SoomlaStore and you're usually not supposed to
+ run it manually.
+*/
+- (void)loadBillingService;
 
 @end

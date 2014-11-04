@@ -47,7 +47,7 @@ static NSString* TAG = @"SOOMLA PurchaseWithVirtualItem";
     LogDebug(TAG, ([NSString stringWithFormat:@"Trying to buy a %@ with %d pieces of %@.",
                     self.associatedItem.name, self.amount, self.targetItemId]));
     
-    [StoreEventHandling postItemPurchaseStarted:self.associatedItem];
+    [StoreEventHandling postItemPurchaseStarted:self.associatedItem.itemId];
     
     VirtualItem* item = NULL;
     @try {
@@ -60,15 +60,15 @@ static NSString* TAG = @"SOOMLA PurchaseWithVirtualItem";
     
     assert(storage);
     
-    int balance = [storage balanceForItem:item];
+    int balance = [storage balanceForItem:item.itemId];
     if (balance < amount) {
         @throw [[InsufficientFundsException alloc] initWithItemId:self.targetItemId];
     }
     
-    [storage removeAmount:amount fromItem:item];
+    [storage removeAmount:amount fromItem:item.itemId];
     
     [self.associatedItem giveAmount:1];
-    [StoreEventHandling postItemPurchased:self.associatedItem withPayload:payload];
+    [StoreEventHandling postItemPurchased:self.associatedItem.itemId withPayload:payload];
 }
 
 

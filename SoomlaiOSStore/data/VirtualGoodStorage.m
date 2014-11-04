@@ -34,52 +34,52 @@
     return self;
 }
 
-- (void)removeUpgradesFrom:(VirtualGood*)good {
-    [self removeUpgradesFrom:good withEvent:YES];
+- (void)removeUpgradesFrom:(NSString*)goodItemId {
+    [self removeUpgradesFrom:goodItemId withEvent:YES];
 }
 
-- (void)removeUpgradesFrom:(VirtualGood*)good withEvent:(BOOL)notify {
-    LogDebug(tag, ([NSString stringWithFormat:@"Removing upgrade information from virtual good: %@", good.name]));
+- (void)removeUpgradesFrom:(NSString*)goodItemId withEvent:(BOOL)notify {
+    LogDebug(tag, ([NSString stringWithFormat:@"Removing upgrade information from virtual good: %@", goodItemId]));
     
-    NSString* key = [VirtualGoodStorage keyGoodUpgrade:good.itemId];
+    NSString* key = [VirtualGoodStorage keyGoodUpgrade:goodItemId];
     
     [KeyValueStorage deleteValueForKey:key];
     
-    [StoreEventHandling postGoodUpgrade:good withGoodUpgrade:nil];
+    [StoreEventHandling postGoodUpgrade:goodItemId withGoodUpgrade:nil];
 }
 
-- (void)assignCurrentUpgrade:(UpgradeVG*)upgradeVG toGood:(VirtualGood*)good {
-    [self assignCurrentUpgrade:upgradeVG toGood:good withEvent:YES];
+- (void)assignCurrentUpgrade:(NSString*)upgradeVGItemId toGood:(NSString*)goodItemId {
+    [self assignCurrentUpgrade:upgradeVGItemId toGood:goodItemId withEvent:YES];
 }
 
-- (void)assignCurrentUpgrade:(UpgradeVG*)upgradeVG toGood:(VirtualGood*)good withEvent:(BOOL)notify {
-    if ([[self currentUpgradeOf:good].itemId isEqualToString:upgradeVG.itemId]) {
+- (void)assignCurrentUpgrade:(NSString*)upgradeVGItemId toGood:(NSString*)goodItemId withEvent:(BOOL)notify {
+    if ([[self currentUpgradeOf:goodItemId] isEqualToString:upgradeVGItemId]) {
         return;
     }
     
-    LogDebug(tag, ([NSString stringWithFormat:@"Assigning upgrade %@ to virtual good: %@", upgradeVG.name, good.name]));
+    LogDebug(tag, ([NSString stringWithFormat:@"Assigning upgrade %@ to virtual good: %@", upgradeVGItemId, goodItemId]));
     
-    NSString* key = [VirtualGoodStorage keyGoodUpgrade:good.itemId];
+    NSString* key = [VirtualGoodStorage keyGoodUpgrade:goodItemId];
     
-    [KeyValueStorage setValue:upgradeVG.itemId forKey:key];
+    [KeyValueStorage setValue:upgradeVGItemId forKey:key];
     
-    [StoreEventHandling postGoodUpgrade:good withGoodUpgrade:upgradeVG];
+    [StoreEventHandling postGoodUpgrade:goodItemId withGoodUpgrade:upgradeVGItemId];
 }
 
-- (UpgradeVG*)currentUpgradeOf:(VirtualGood*)good {
-    LogDebug(tag, ([NSString stringWithFormat:@"Fetching upgrade to virtual good: %@", good.name]));
+- (NSString*)currentUpgradeOf:(NSString*)goodItemId {
+    LogDebug(tag, ([NSString stringWithFormat:@"Fetching upgrade to virtual good: %@", goodItemId]));
     
-    NSString* key = [VirtualGoodStorage keyGoodUpgrade:good.itemId];
+    NSString* key = [VirtualGoodStorage keyGoodUpgrade:goodItemId];
     
     NSString* upItemId = [KeyValueStorage getValueForKey:key];
     
     if(!upItemId) {
-        LogDebug(tag, ([NSString stringWithFormat:@"You tried to fetch the current upgrade of %@ but there's no upgrade in the DB for it.", good.name]));
+        LogDebug(tag, ([NSString stringWithFormat:@"You tried to fetch the current upgrade of %@ but there's no upgrade in the DB for it.", goodItemId]));
         return nil;
     }
     
     @try {
-        return (UpgradeVG*)[[StoreInfo getInstance] virtualItemWithId:upItemId];
+        return upItemId;
     } @catch (VirtualItemNotFoundException* ex){
         LogError(tag, @"The current upgrade's itemId from the DB is not found in StoreInfo.");
     } @catch (NSException* e) {
@@ -89,10 +89,10 @@
     return nil;
 }
 
-- (BOOL)isGoodEquipped:(EquippableVG*)good {
-    LogDebug(tag, ([NSString stringWithFormat:@"checking if virtual good with itemId: %@ is equipped", good.itemId]));
+- (BOOL)isGoodEquipped:(NSString*)goodItemId {
+    LogDebug(tag, ([NSString stringWithFormat:@"checking if virtual good with itemId: %@ is equipped", goodItemId]));
     
-    NSString* key = [VirtualGoodStorage keyGoodEquipped:good.itemId];
+    NSString* key = [VirtualGoodStorage keyGoodEquipped:goodItemId];
     NSString* val = [KeyValueStorage getValueForKey:key];
     
     if (!val || [val length]==0){
@@ -103,42 +103,42 @@
     return YES;
 }
 
-- (void)equipGood:(EquippableVG*)good {
-    [self equipGood:good withEvent:YES];
+- (void)equipGood:(NSString*)goodItemId {
+    [self equipGood:goodItemId withEvent:YES];
 }
-- (void)equipGood:(EquippableVG*)good withEvent:(BOOL)notify {
-    if ([self isGoodEquipped:good]) {
+- (void)equipGood:(NSString*)goodItemId withEvent:(BOOL)notify {
+    if ([self isGoodEquipped:goodItemId]) {
         return;
     }
     
-    [self privEquipGood:good withEquipValue:YES withEvent:notify];
+    [self privEquipGood:goodItemId withEquipValue:YES withEvent:notify];
 }
 
-- (void)unequipGood:(EquippableVG*)good {
-    [self unequipGood:good withEvent:YES];
+- (void)unequipGood:(NSString*)goodItemId {
+    [self unequipGood:goodItemId withEvent:YES];
 }
-- (void)unequipGood:(EquippableVG*)good withEvent:(BOOL)notify {
-    if (![self isGoodEquipped:good]) {
+- (void)unequipGood:(NSString*)goodItemId withEvent:(BOOL)notify {
+    if (![self isGoodEquipped:goodItemId]) {
         return;
     }
     
-    [self privEquipGood:good withEquipValue:NO withEvent:notify];
+    [self privEquipGood:goodItemId withEquipValue:NO withEvent:notify];
 }
 
-- (void)privEquipGood:(EquippableVG*)good withEquipValue:(BOOL)equip withEvent:(BOOL)notify{
-    LogDebug(tag, ([NSString stringWithFormat:@"%@ %@.", (equip ? @"equipping" : @"unequipping"), good.name]));
+- (void)privEquipGood:(NSString*)goodItemId withEquipValue:(BOOL)equip withEvent:(BOOL)notify{
+    LogDebug(tag, ([NSString stringWithFormat:@"%@ %@.", (equip ? @"equipping" : @"unequipping"), goodItemId]));
     
-    NSString* key = [VirtualGoodStorage keyGoodEquipped:good.itemId];
+    NSString* key = [VirtualGoodStorage keyGoodEquipped:goodItemId];
     
     if (equip) {
         [KeyValueStorage setValue:@"equipped" forKey:key];
         if (notify) {
-            [StoreEventHandling postGoodEquipped:good];
+            [StoreEventHandling postGoodEquipped:goodItemId];
         }
     } else {
         [KeyValueStorage deleteValueForKey:key];
         if (notify) {
-            [StoreEventHandling postGoodUnEquipped:good];
+            [StoreEventHandling postGoodUnEquipped:goodItemId];
         }
     }
 }
@@ -153,8 +153,8 @@
 /**
  * see parent
  */
-- (void)postBalanceChangeToItem:(VirtualItem*)item withBalance:(int)balance andAmountAdded:(int)amountAdded {
-    [StoreEventHandling postChangedBalance:balance forGood:(VirtualGood*)item withAmount:amountAdded];
+- (void)postBalanceChangeToItem:(NSString*)itemItemId withBalance:(int)balance andAmountAdded:(int)amountAdded {
+    [StoreEventHandling postChangedBalance:balance forGood:itemItemId withAmount:amountAdded];
 }
 
 + (NSString*) keyGoodBalance:(NSString*)itemId {

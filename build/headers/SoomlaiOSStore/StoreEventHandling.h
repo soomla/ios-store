@@ -55,6 +55,7 @@
 #define DICT_ELEMENT_EquippableVG      @"EquippableVG"
 #define DICT_ELEMENT_UpgradeVG         @"UpgradeVG"
 #define DICT_ELEMENT_PURCHASABLE       @"PurchasableVirtualItem"
+#define DICT_ELEMENT_PURCHASABLE_ID    @"PurchasableVirtualItemId"
 #define DICT_ELEMENT_DEVELOPERPAYLOAD  @"DeveloperPayload"
 #define DICT_ELEMENT_RECEIPT           @"receipt"
 #define DICT_ELEMENT_TOKEN             @"token"
@@ -91,19 +92,19 @@
 
 + (void)postBillingNotSupported;
 
-+ (void)postChangedBalance:(int)balance forCurrency:(VirtualCurrency*)currency withAmount:(int)amountAdded;
++ (void)postChangedBalance:(int)balance forCurrency:(NSString*)currencyItemID withAmount:(int)amountAdded;
 
-+ (void)postChangedBalance:(int)balance forGood:(VirtualGood*)good withAmount:(int)amountAdded;
++ (void)postChangedBalance:(int)balance forGood:(NSString*)goodItemId withAmount:(int)amountAdded;
 
-+ (void)postGoodEquipped:(EquippableVG*)good;
++ (void)postGoodEquipped:(NSString*)goodItemId;
 
-+ (void)postGoodUnEquipped:(EquippableVG*)good;
++ (void)postGoodUnEquipped:(NSString*)goodItemId;
 
-+ (void)postGoodUpgrade:(VirtualGood*)good withGoodUpgrade:(UpgradeVG*)goodUpgrade;
++ (void)postGoodUpgrade:(NSString*)goodItemId withGoodUpgrade:(NSString*)goodUpgradeItemId;
 
-+ (void)postItemPurchaseStarted:(PurchasableVirtualItem*)item;
++ (void)postItemPurchaseStarted:(NSString*)itemId;
 
-+ (void)postItemPurchased:(PurchasableVirtualItem*)item withPayload:(NSString*)payload;
++ (void)postItemPurchased:(NSString*)itemId withPayload:(NSString*)payload;
 
 + (void)postMarketPurchaseCancelled:(PurchasableVirtualItem*)purchasableVirtualItem;
 

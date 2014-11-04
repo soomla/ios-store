@@ -30,6 +30,8 @@
 
 @implementation StoreInventory
 
+static NSString* TAG = @"SOOMLA StoreInventory";
+
 + (void)buyItemWithItemId:(NSString*)itemId andPayload:(NSString*)payload{
     PurchasableVirtualItem* pvi = (PurchasableVirtualItem*) [[StoreInfo getInstance] virtualItemWithId:itemId];
     [pvi buyWithPayload:payload];
@@ -37,7 +39,7 @@
 
 + (int)getItemBalance:(NSString*)itemId {
     VirtualItem* item = [[StoreInfo getInstance] virtualItemWithId:itemId];
-    return [[[StorageManager getInstance] virtualItemStorage:item] balanceForItem:item];
+    return [[[StorageManager getInstance] virtualItemStorage:item] balanceForItem:item.itemId];
 }
 
 + (void)giveAmount:(int)amount ofItem:(NSString*)itemId {
@@ -63,21 +65,18 @@
 }
 
 + (BOOL)isVirtualGoodWithItemIdEquipped:(NSString*)goodItemId {
-    EquippableVG* good = (EquippableVG*)[[StoreInfo getInstance] virtualItemWithId:goodItemId];
-    
-    return [[[StorageManager getInstance] virtualGoodStorage] isGoodEquipped:good];
+    return [[[StorageManager getInstance] virtualGoodStorage] isGoodEquipped:goodItemId];
 }
 
 + (int)goodUpgradeLevel:(NSString*)goodItemId {
-    VirtualGood* good = (VirtualGood*)[[StoreInfo getInstance] virtualItemWithId:goodItemId];
-    UpgradeVG* upgradeVG = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:good];
-    if (!upgradeVG) {
+    NSString* upgradeVGItemId = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:goodItemId];
+    if (!upgradeVGItemId || [upgradeVGItemId isEqualToString:@""]) {
         return 0;
     }
     
     UpgradeVG* first = [[StoreInfo getInstance] firstUpgradeForGoodWithItemId:goodItemId];
     int level = 1;
-    while (![first.itemId isEqualToString:upgradeVG.itemId]) {
+    while (![first.itemId isEqualToString:upgradeVGItemId]) {
         first = (UpgradeVG*)[[StoreInfo getInstance] virtualItemWithId:first.nextGoodItemId];
         level++;
     }
@@ -86,18 +85,22 @@
 }
 
 + (NSString*)goodCurrentUpgrade:(NSString*)goodItemId {
-    VirtualGood* good = (VirtualGood*)[[StoreInfo getInstance] virtualItemWithId:goodItemId];
-    UpgradeVG* upgradeVG = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:good];
-    if (!upgradeVG) {
+    NSString* upgradeVGItemId = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:goodItemId];
+    if (!upgradeVGItemId || [upgradeVGItemId isEqualToString:@""]) {
         return @"";
     }
     
-    return upgradeVG.itemId;
+    return upgradeVGItemId;
 }
 
 + (void)upgradeVirtualGood:(NSString*)goodItemId {
-    VirtualGood* good = (VirtualGood*)[[StoreInfo getInstance] virtualItemWithId:goodItemId];
-    UpgradeVG* upgradeVG = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:good];
+    NSString* upgradeVGItemId = [[[StorageManager getInstance] virtualGoodStorage] currentUpgradeOf:goodItemId];
+    UpgradeVG* upgradeVG = NULL;
+    @try {
+        upgradeVG = (UpgradeVG*)[[StoreInfo getInstance] virtualItemWithId:upgradeVGItemId];
+    } @catch (VirtualItemNotFoundException* e) {
+        LogDebug(TAG, ([NSString stringWithFormat:@"This is BAD! Can't find the current upgrade (%@) of: %@", upgradeVGItemId, goodItemId]));
+    }
     if (upgradeVG) {
         NSString* nextItemId = upgradeVG.nextGoodItemId;
         if ((!nextItemId) ||
@@ -130,11 +133,10 @@
 + (void)removeUpgrades:(NSString*)goodItemId {
     NSArray* upgrades = [[StoreInfo getInstance] upgradesForGoodWithItemId:goodItemId];
     for(UpgradeVG* upgrade in upgrades) {
-        [[[StorageManager getInstance] virtualGoodStorage] removeAmount:1 fromItem:upgrade withEvent:YES];
+        [[[StorageManager getInstance] virtualGoodStorage] removeAmount:1 fromItem:upgrade.itemId withEvent:YES];
     }
     
-    VirtualGood* good = (VirtualGood*)[[StoreInfo getInstance] virtualItemWithId:goodItemId];
-    [[[StorageManager getInstance] virtualGoodStorage] removeUpgradesFrom:good];
+    [[[StorageManager getInstance] virtualGoodStorage] removeUpgradesFrom:goodItemId];
 }
 
 @end

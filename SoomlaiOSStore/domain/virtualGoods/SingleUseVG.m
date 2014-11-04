@@ -27,7 +27,7 @@
  @return see parent.
  */
 - (int)giveAmount:(int)amount withEvent:(BOOL)notify {
-    return [[[StorageManager getInstance] virtualGoodStorage] addAmount:amount toItem:self withEvent:notify];
+    return [[[StorageManager getInstance] virtualGoodStorage] addAmount:amount toItem:self.itemId withEvent:notify];
 }
 
 /*
@@ -37,7 +37,7 @@
  @return see parent.
  */
 - (int)takeAmount:(int)amount withEvent:(BOOL)notify {
-    return [[[StorageManager getInstance] virtualGoodStorage] removeAmount:amount fromItem:self withEvent:notify];
+    return [[[StorageManager getInstance] virtualGoodStorage] removeAmount:amount fromItem:self.itemId withEvent:notify];
 }
 
 /*

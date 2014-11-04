@@ -35,9 +35,9 @@ static NSString* TAG = @"SOOMLA LifetimeVG";
         amount = 1;
     }
     
-    int balance = [[[StorageManager getInstance] virtualGoodStorage] balanceForItem:self];
+    int balance = [[[StorageManager getInstance] virtualGoodStorage] balanceForItem:self.itemId];
     if (balance < 1) {
-        return [[[StorageManager getInstance] virtualGoodStorage] addAmount:amount toItem:self withEvent:notify];
+        return [[[StorageManager getInstance] virtualGoodStorage] addAmount:amount toItem:self.itemId withEvent:notify];
     }
     return 1;
 }
@@ -53,9 +53,9 @@ static NSString* TAG = @"SOOMLA LifetimeVG";
         amount = 1;
     }
     
-    int balance = [[[StorageManager getInstance] virtualGoodStorage] balanceForItem:self];
+    int balance = [[[StorageManager getInstance] virtualGoodStorage] balanceForItem:self.itemId];
     if (balance > 0) {
-        return [[[StorageManager getInstance] virtualGoodStorage] removeAmount:amount fromItem:self withEvent:notify];
+        return [[[StorageManager getInstance] virtualGoodStorage] removeAmount:amount fromItem:self.itemId withEvent:notify];
     }
     return 0;
 }
@@ -66,7 +66,7 @@ static NSString* TAG = @"SOOMLA LifetimeVG";
  @return see parent.
  */
 - (BOOL)canBuy {
-    int balance = [[[StorageManager getInstance] virtualGoodStorage] balanceForItem:self];
+    int balance = [[[StorageManager getInstance] virtualGoodStorage] balanceForItem:self.itemId];
     
     return balance < 1;
 }

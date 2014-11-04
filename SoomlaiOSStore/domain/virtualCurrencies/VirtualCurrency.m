@@ -46,15 +46,15 @@
 }
 
 - (int)giveAmount:(int)amount withEvent:(BOOL)notify {
-    return [[StorageManager getInstance].virtualCurrencyStorage addAmount:amount toItem:self withEvent:notify];
+    return [[StorageManager getInstance].virtualCurrencyStorage addAmount:amount toItem:self.itemId withEvent:notify];
 }
 
 - (int)takeAmount:(int)amount withEvent:(BOOL)notify {
-    return [[StorageManager getInstance].virtualCurrencyStorage removeAmount:amount fromItem:self withEvent:notify];
+    return [[StorageManager getInstance].virtualCurrencyStorage removeAmount:amount fromItem:self.itemId withEvent:notify];
 }
 
 - (int)resetBalance:(int)balance withEvent:(BOOL)notify {
-    return [[StorageManager getInstance].virtualCurrencyStorage setBalance:balance toItem:self withEvent:notify];
+    return [[StorageManager getInstance].virtualCurrencyStorage setBalance:balance toItem:self.itemId withEvent:notify];
 }
 
 @end
