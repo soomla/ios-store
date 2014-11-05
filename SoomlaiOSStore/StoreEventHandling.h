@@ -45,6 +45,7 @@
 #define EVENT_MARKET_ITEMS_REFRESH_STARTED  @"MarketItemsRefreshStarted"
 #define EVENT_MARKET_ITEMS_REFRESH_FINISHED @"MarketItemsRefreshFinished"
 #define EVENT_UNEXPECTED_ERROR_IN_STORE     @"UnexpectedErrorInStore"
+#define EVENT_CUSTOM                        @"CustomEvent"
 
 
 // UserInfo Elements
@@ -69,6 +70,8 @@
 #define DICT_ELEMENT_DESCRIPTION       @"description"
 #define DICT_ELEMENT_LOCALE            @"locale"
 #define DICT_ELEMENT_MARKET_ITEMS      @"marketItems"
+#define DICT_ELEMENT_NAME              @"name"
+#define DICT_ELEMENT_EXTRA             @"extra"
 
 
 // Error Codes
@@ -125,5 +128,7 @@
 + (void)postUnexpectedError:(int)code forObject:(id)object;
 
 + (void)postSoomlaStoreInitialized;
+
++ (void)postCustomEventWithName:(NSString*)name andExtraInfo:(NSDictionary*)extra;
 
 @end
