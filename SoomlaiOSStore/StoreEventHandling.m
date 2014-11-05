@@ -109,7 +109,11 @@
     if (!payload) {
         payload = @"";
     }
-    NSDictionary *userInfo = @{DICT_ELEMENT_PURCHASABLE: purchasableVirtualItem, DICT_ELEMENT_RECEIPT: receiptUrl, DICT_ELEMENT_TOKEN: token, DICT_ELEMENT_DEVELOPERPAYLOAD: payload};
+    NSString* urlStr = @"";
+    if (receiptUrl) {
+        urlStr = [receiptUrl absoluteString];
+    }
+    NSDictionary *userInfo = @{DICT_ELEMENT_PURCHASABLE: purchasableVirtualItem, DICT_ELEMENT_RECEIPT: urlStr, DICT_ELEMENT_TOKEN: token, DICT_ELEMENT_DEVELOPERPAYLOAD: payload};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASED object:self userInfo:userInfo];
 }
 
