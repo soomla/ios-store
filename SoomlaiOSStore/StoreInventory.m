@@ -139,4 +139,40 @@ static NSString* TAG = @"SOOMLA StoreInventory";
     [[[StorageManager getInstance] virtualGoodStorage] removeUpgradesFrom:goodItemId];
 }
 
++ (NSDictionary*)allItemsBalances {
+    NSMutableDictionary *itemsDict = [[NSMutableDictionary alloc] init];
+    
+//    Class StoreInfoCls = NSClassFromString(@"StoreInfo");
+//    id StoreInfoInstance = [StoreInfoCls performSelector:@selector(getInstance)];
+//    Class StorageManagerCls = NSClassFromString(@"StorageManager");
+//    id StorageManagerInstance = [StorageManagerCls performSelector:@selector(getInstance)];
+    for (VirtualCurrency* currency in [[StoreInfo getInstance] virtualCurrencies]) {
+        NSMutableDictionary *updatedValues = [NSMutableDictionary dictionary];
+        updatedValues[@"balance"] = @((int)[[[StorageManager getInstance] virtualCurrencyStorage] balanceForItem:currency.itemId]);
+        
+        itemsDict[[currency valueForKey:@"itemId"]] = updatedValues;
+    }
+    
+    for (VirtualGood* good in [[StoreInfo getInstance] virtualGoods]) {
+        if ([good isKindOfClass:NSClassFromString(@"UpgradeVG")]) continue;
+        
+        NSMutableDictionary *updatedValues = [NSMutableDictionary dictionary];
+        VirtualGoodStorage* virtualGoodStorage = [[StorageManager getInstance] virtualGoodStorage];
+        updatedValues[@"balance"] = @([virtualGoodStorage balanceForItem:good.itemId]);
+        
+        if ([good isKindOfClass:NSClassFromString(@"EquippableVG")]) {
+            updatedValues[@"equipped"] = @([virtualGoodStorage isGoodEquipped:good.itemId]);
+        }
+        
+        if ([[StoreInfo getInstance] goodHasUpgrades:good.itemId]) {
+            NSString* vguId = [virtualGoodStorage currentUpgradeOf:good.itemId];
+            updatedValues[@"currentUpgrade"] = (vguId ? vguId : @"none");
+        }
+        
+        itemsDict[[good valueForKey:@"itemId"]] = updatedValues;
+    }
+    
+    return itemsDict;
+}
+
 @end

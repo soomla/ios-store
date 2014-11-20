@@ -196,6 +196,9 @@
 + (void)removeUpgrades:(NSString*)goodItemId;
 
 
-
+/**
+ Retrieves all balances of all items and returns a full picture as a NSDictionary.
+ */
++ (NSDictionary*)allItemsBalances;
 
 @end
