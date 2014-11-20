@@ -150,7 +150,7 @@ static NSString* TAG = @"SOOMLA StoreInventory";
         NSMutableDictionary *updatedValues = [NSMutableDictionary dictionary];
         updatedValues[@"balance"] = @((int)[[[StorageManager getInstance] virtualCurrencyStorage] balanceForItem:currency.itemId]);
         
-        itemsDict[[currency valueForKey:@"itemId"]] = updatedValues;
+        itemsDict[currency.itemId] = updatedValues;
     }
     
     for (VirtualGood* good in [[StoreInfo getInstance] virtualGoods]) {
@@ -169,7 +169,7 @@ static NSString* TAG = @"SOOMLA StoreInventory";
             updatedValues[@"currentUpgrade"] = (vguId ? vguId : @"none");
         }
         
-        itemsDict[[good valueForKey:@"itemId"]] = updatedValues;
+        itemsDict[good.itemId] = updatedValues;
     }
     
     return itemsDict;
