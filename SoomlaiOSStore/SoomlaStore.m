@@ -180,6 +180,7 @@ static NSString* developerPayload = NULL;
 - (void)purchaseVerified:(NSNotification*)notification{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_MARKET_PURCHASE_VERIF object:sv];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_ERROR_IN_STORE object:sv];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_ERROR_IN_STORE_WITH_MSG object:sv];
 
     sv = nil;
 
@@ -200,6 +201,7 @@ static NSString* developerPayload = NULL;
 - (void)unexpectedVerificationError:(NSNotification*)notification{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_MARKET_PURCHASE_VERIF object:sv];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_ERROR_IN_STORE object:sv];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_ERROR_IN_STORE_WITH_MSG object:sv];
 
     sv = nil;
 }
@@ -214,6 +216,7 @@ static NSString* developerPayload = NULL;
 
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseVerified:) name:EVENT_MARKET_PURCHASE_VERIF object:sv];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_ERROR_IN_STORE object:sv];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_ERROR_IN_STORE_WITH_MSG object:sv];
 
             [sv verifyData];
         } else {
@@ -244,7 +247,7 @@ static NSString* developerPayload = NULL;
     if (transaction.error.code != SKErrorPaymentCancelled) {
         LogError(TAG, ([NSString stringWithFormat:@"An error occured for product id \"%@\" with code \"%ld\" and description \"%@\"", transaction.payment.productIdentifier, (long)transaction.error.code, transaction.error.localizedDescription]));
 
-        [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
+        [StoreEventHandling postUnexpectedErrorWithErrorCodeAndMessage:ERR_PURCHASE_FAIL_WITH_MSG forObject:self errorCode:transaction.error.code andMessage:transaction.error.localizedDescription];
     }
     else{
 

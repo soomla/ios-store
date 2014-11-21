@@ -26,25 +26,26 @@
 @class EquippableVG;
 
 // Events
-#define EVENT_BILLING_NOT_SUPPORTED         @"BillingNotSupported"
-#define EVENT_BILLING_SUPPORTED             @"BillingSupported"
-#define EVENT_CURRENCY_BALANCE_CHANGED      @"ChangedCurrencyBalance"
-#define EVENT_GOOD_BALANCE_CHANGED          @"ChangedGoodBalance"
-#define EVENT_GOOD_EQUIPPED                 @"VirtualGoodEquipped"
-#define EVENT_GOOD_UNEQUIPPED               @"VirtualGoodUNEQUIPPED"
-#define EVENT_GOOD_UPGRADE                  @"VirtualGoodUpgrade"
-#define EVENT_ITEM_PURCHASED                @"ItemPurchased"
-#define EVENT_ITEM_PURCHASE_STARTED         @"ItemPurchaseProcessStarted"
-#define EVENT_MARKET_PURCHASE_CANCELLED     @"MarketPurchaseCancelled"
-#define EVENT_MARKET_PURCHASED              @"MarketPurchased"
-#define EVENT_MARKET_PURCHASE_VERIF         @"MarketPurchaseVerification"
-#define EVENT_MARKET_PURCHASE_STARTED       @"MarketPurchaseProcessStarted"
-#define EVENT_RESTORE_TRANSACTIONS_FINISHED @"RestoreTransactionsFinished"
-#define EVENT_RESTORE_TRANSACTIONS_STARTED  @"RestoreTransactionsStarted"
-#define EVENT_SOOMLASTORE_INIT              @"SoomlaStoreInitialized"
-#define EVENT_MARKET_ITEMS_REFRESH_STARTED  @"MarketItemsRefreshStarted"
-#define EVENT_MARKET_ITEMS_REFRESH_FINISHED @"MarketItemsRefreshFinished"
-#define EVENT_UNEXPECTED_ERROR_IN_STORE     @"UnexpectedErrorInStore"
+#define EVENT_BILLING_NOT_SUPPORTED              @"BillingNotSupported"
+#define EVENT_BILLING_SUPPORTED                  @"BillingSupported"
+#define EVENT_CURRENCY_BALANCE_CHANGED           @"ChangedCurrencyBalance"
+#define EVENT_GOOD_BALANCE_CHANGED               @"ChangedGoodBalance"
+#define EVENT_GOOD_EQUIPPED                      @"VirtualGoodEquipped"
+#define EVENT_GOOD_UNEQUIPPED                    @"VirtualGoodUNEQUIPPED"
+#define EVENT_GOOD_UPGRADE                       @"VirtualGoodUpgrade"
+#define EVENT_ITEM_PURCHASED                     @"ItemPurchased"
+#define EVENT_ITEM_PURCHASE_STARTED              @"ItemPurchaseProcessStarted"
+#define EVENT_MARKET_PURCHASE_CANCELLED          @"MarketPurchaseCancelled"
+#define EVENT_MARKET_PURCHASED                   @"MarketPurchased"
+#define EVENT_MARKET_PURCHASE_VERIF              @"MarketPurchaseVerification"
+#define EVENT_MARKET_PURCHASE_STARTED            @"MarketPurchaseProcessStarted"
+#define EVENT_RESTORE_TRANSACTIONS_FINISHED      @"RestoreTransactionsFinished"
+#define EVENT_RESTORE_TRANSACTIONS_STARTED       @"RestoreTransactionsStarted"
+#define EVENT_SOOMLASTORE_INIT                   @"SoomlaStoreInitialized"
+#define EVENT_MARKET_ITEMS_REFRESH_STARTED       @"MarketItemsRefreshStarted"
+#define EVENT_MARKET_ITEMS_REFRESH_FINISHED      @"MarketItemsRefreshFinished"
+#define EVENT_UNEXPECTED_ERROR_IN_STORE          @"UnexpectedErrorInStore"
+#define EVENT_UNEXPECTED_ERROR_IN_STORE_WITH_MSG @"UnexpectedErrorInStoreWithMsg"
 
 
 // UserInfo Elements
@@ -69,6 +70,8 @@
 #define DICT_ELEMENT_DESCRIPTION       @"description"
 #define DICT_ELEMENT_LOCALE            @"locale"
 #define DICT_ELEMENT_MARKET_ITEMS      @"marketItems"
+#define DICT_ELEMENT_STORE_ERROR_CODE  @"storeErrorCode"
+#define DICT_ELEMENT_STORE_ERROR_MSG   @"storeErrorMessage"
 
 
 // Error Codes
@@ -76,6 +79,7 @@
 #define ERR_VERIFICATION_TIMEOUT    1
 #define ERR_VERIFICATION_FAIL       2
 #define ERR_PURCHASE_FAIL           3
+#define ERR_PURCHASE_FAIL_WITH_MSG  4
 
 
 /**
@@ -123,6 +127,8 @@
 + (void)postRestoreTransactionsStarted;
 
 + (void)postUnexpectedError:(int)code forObject:(id)object;
+
++ (void)postUnexpectedErrorWithErrorCodeAndMessage:(int)code forObject:(id)object errorCode:(int)ecode andMessage:(NSString*)message;
 
 + (void)postSoomlaStoreInitialized;
 
