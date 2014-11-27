@@ -29,7 +29,7 @@
  */
 @interface StorageManager : NSObject{
     VirtualGoodStorage* virtualGoodStorage;
-    VirtualCurrencyStorage* virtualCurrenctStorage;
+    VirtualCurrencyStorage* virtualCurrencyStorage;
 }
 
 @property (nonatomic, retain)VirtualGoodStorage* virtualGoodStorage;

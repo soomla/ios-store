@@ -37,9 +37,9 @@
 		C02413EA176F2512007BB351 /* SoomlaStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C0241379176F2512007BB351 /* SoomlaStore.m */; };
 		C02413ED176F2512007BB351 /* StoreInventory.m in Sources */ = {isa = PBXBuildFile; fileRef = C024137B176F2512007BB351 /* StoreInventory.m */; };
 		C02CEC46160DC870000AA0D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02CEC45160DC870000AA0D2 /* Foundation.framework */; };
-		C02CEC79160DCA31000AA0D2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02CEC78160DCA31000AA0D2 /* StoreKit.framework */; };
 		C02CEC7B160DCA3A000AA0D2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02CEC7A160DCA3A000AA0D2 /* Security.framework */; };
 		C02CECF6160DCB4A000AA0D2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02CECF5160DCB4A000AA0D2 /* UIKit.framework */; };
+		C04CCFEF1A24899000027FD3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02CEC78160DCA31000AA0D2 /* StoreKit.framework */; };
 		C054F21417FAB22A006F5B8E /* SoomlaVerification.m in Sources */ = {isa = PBXBuildFile; fileRef = C054F21217FAB22A006F5B8E /* SoomlaVerification.m */; };
 		C097627518FBF277000A4403 /* StoreEventHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = C024135F176F2512007BB351 /* StoreEventHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C097627618FBF277000A4403 /* IStoreAssets.h in Headers */ = {isa = PBXBuildFile; fileRef = C024136D176F2512007BB351 /* IStoreAssets.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -170,10 +170,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C04CCFEF1A24899000027FD3 /* StoreKit.framework in Frameworks */,
 				C018B64F16105F77000FE817 /* CoreFoundation.framework in Frameworks */,
 				C02CECF6160DCB4A000AA0D2 /* UIKit.framework in Frameworks */,
 				C02CEC7B160DCA3A000AA0D2 /* Security.framework in Frameworks */,
-				C02CEC79160DCA31000AA0D2 /* StoreKit.framework in Frameworks */,
 				C02CEC46160DC870000AA0D2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

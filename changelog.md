@@ -1,8 +1,14 @@
+### v3.6.0 [view commit logs](https://github.com/soomla/ios-store/compare/v3.5.0...v3.6.0)
+
+* Changes
+  * Removed NonConsumables in favor of the better usage of them with LifetimeVGs.
+  * Changed the API of storages to work with itemIds instead of actual model objects - Simplification.
+
 ### v3.5.0 [view commit logs](https://github.com/soomla/ios-store/compare/v3.4.1...v3.5.0)
 
 ***Important***: this is a breaking release. Read the changes carefully.
 
-* Changes: 
+* Changes:
     * **BREAKING**: `NonConsumableItem` class was **removed**. To create non-consumable item, use `LifeTimeVG` instead.
 
 * Fixes:
