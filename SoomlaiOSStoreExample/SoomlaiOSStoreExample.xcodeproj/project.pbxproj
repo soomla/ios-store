@@ -115,8 +115,6 @@
 		C08CF2FC164321F7007603E8 /* iOS Simulator Screen shot Nov 1, 2012 11.31.54 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iOS Simulator Screen shot Nov 1, 2012 11.31.54 PM.png"; sourceTree = "<group>"; };
 		C08CF30416432235007603E8 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../../Icon.png; sourceTree = "<group>"; };
 		C08CF30616432239007603E8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../../Icon@2x.png"; sourceTree = "<group>"; };
-		C0969D1519545AFB007349A3 /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-cplyvflfgyicwuehqavfnigqnefb/Build/Products/Debug-iphoneos/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
-		C0969D1619545AFB007349A3 /* libSoomlaiOSStore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSStore.a; path = "../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-cplyvflfgyicwuehqavfnigqnefb/Build/Products/Debug-iphoneos/libSoomlaiOSStore.a"; sourceTree = "<group>"; };
 		C0969D361956CF3F007349A3 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		C0969D381956CF44007349A3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C0969D3A1956CF4A007349A3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -183,8 +181,6 @@
 				C0969D3A1956CF4A007349A3 /* AVFoundation.framework */,
 				C0969D381956CF44007349A3 /* AudioToolbox.framework */,
 				C0969D361956CF3F007349A3 /* AdSupport.framework */,
-				C0969D1519545AFB007349A3 /* libSoomlaiOSCore.a */,
-				C0969D1619545AFB007349A3 /* libSoomlaiOSStore.a */,
 				C08CF2CF1641D004007603E8 /* Security.framework */,
 				C08CF2CD1641CFFE007603E8 /* libsqlite3.0.dylib */,
 				C08CF2CB1641CFF3007603E8 /* StoreKit.framework */,
