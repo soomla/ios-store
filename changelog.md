@@ -1,3 +1,9 @@
+### v3.6.1 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.0...v3.6.1)
+
+* New Features
+  * Added a helper function in StoreInventory to fetch the state of balances in the game
+
+
 ### v3.6.0 [view commit logs](https://github.com/soomla/ios-store/compare/v3.5.0...v3.6.0)
 
 * Changes

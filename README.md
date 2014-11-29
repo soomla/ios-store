@@ -29,6 +29,12 @@ ios-store is the iOS flavor of SOOMLA's Store Module.
 
 Check out our [Wiki] (https://github.com/soomla/ios-store/wiki) for more information about the project and how to use it better.
 
+## Download
+
+####Pre baked jars:
+
+[ios-store 3.6.1](http://library.soom.la/fetch/ios-store/3.6.1?cf=github)
+
 Getting Started
 ---
 
@@ -37,7 +43,7 @@ Getting Started
 
 Before doing anything, SOOMLA recommends that you go through [Selling with In-App Purchase](https://developer.apple.com/appstore/in-app-purchase/index.html).
 
-1. The static libs and headers you need are in the folder [build](https://github.com/soomla/ios-store/tree/master/build).
+1. The static libs and headers you need are in the zip you downloaded from the link above.
 
   * Set your project's "Library Search Paths" and "Header Search Paths" to that folder.
   * Add `-ObjC -lSoomlaiOSStore -lSoomlaiOSCore` to the project's "Other Linker Flags".
