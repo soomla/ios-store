@@ -31,7 +31,7 @@ Check out our [Wiki] (https://github.com/soomla/ios-store/wiki) for more informa
 
 ## Download
 
-####Pre baked jars:
+####Pre baked libraries:
 
 [ios-store 3.6.1](http://library.soom.la/fetch/ios-store/3.6.1?cf=github)
 
