@@ -19,7 +19,7 @@
 @implementation VirtualItemNotFoundException
 
 - (id)initWithLookupField:(NSString*)lookupField andLookupValue:(NSString*)lookupVal{
-    NSString* reason = [[[@"Virtual item was not found when searching with " stringByAppendingString:lookupField] stringByAppendingString:@"="] stringByAppendingString: lookupVal];
+    NSString* reason = [NSString stringWithFormat:@"Virtual item was not found when searching with %@ = %@", lookupField, lookupVal];
     self = [super initWithName:@"VirtualItemNotFoundException" reason:reason userInfo:nil];
     if (self){
         
