@@ -42,6 +42,7 @@
 
 static NSString* TAG = @"SOOMLA StoreInfo";
 static int currentAssetsVersion = 0;
+static BOOL nonConsumableMigrationNeeded = NO;
 
 + (StoreInfo*)getInstance{
     static StoreInfo* _instance = nil;
@@ -180,8 +181,12 @@ static int currentAssetsVersion = 0;
         }
     }
     
-    //Disable the function call when migration process is no longer required.
-    [self migrateNonConsumableItems];
+    // This is only for NonConsumable balance migration to LifetimeVGs.
+    // Remove this code when no longer needed.
+    if (nonConsumableMigrationNeeded) {
+        LogDebug(TAG, @"NonConsumables balance migration is required. Doing it now.");
+        [self nonConsBalancesToLTVGs];
+    }
     
     [self save];
 }
@@ -303,10 +308,6 @@ static int currentAssetsVersion = 0;
 
 - (BOOL)loadFromDB{
     [StoreInfo checkAndResetMetadata];
-    //if migration process is required we do not initialize from DB.
-    //remove this code when migration process becomes obsolete.
-    if([StoreInfo isMigrationRequired])
-        return NO;
     
     NSString* key = [StoreInfo keyMetaStoreInfo];
     NSString* storeInfoJSON = [KeyValueStorage getValueForKey:key];
@@ -383,50 +384,23 @@ static int currentAssetsVersion = 0;
     return dict;
 }
 
--(void) migrateNonConsumableItems{
-    NSString *storeInfoJSON = [KeyValueStorage getValueForKey:[StoreInfo keyMetaStoreInfo]];
-    if (!storeInfoJSON)
-        return;
-    
-    NSString* storeNonConsumables = @"nonConsumables";
-    NSMutableDictionary* storeInfo = [SoomlaUtils jsonStringToDict:storeInfoJSON];
-    
-    @try{
-        NSArray* nonConsumablesDicts = [storeInfo objectForKey:storeNonConsumables];
-        for(NSDictionary* nonConsumableDict in nonConsumablesDicts){
-            LifetimeVG* migratedNonCons = [[LifetimeVG alloc] initWithDictionary: nonConsumableDict];
-            VirtualItem *correspondingVirtualItem = [self.virtualItems objectForKey:[migratedNonCons itemId]];
-            if (correspondingVirtualItem
-                && [correspondingVirtualItem isKindOfClass:[LifetimeVG class]]
-                && ([[(LifetimeVG*)correspondingVirtualItem purchaseType] isKindOfClass:[PurchaseWithMarket class]])){
-                NSString* keyNonConsExist = [NSString stringWithFormat:@"nonconsumable.%@.exists", [migratedNonCons itemId]];
-                if ([KeyValueStorage getValueForKey:keyNonConsExist]){
-                    [migratedNonCons giveAmount:1];
-                    [KeyValueStorage deleteValueForKey:keyNonConsExist];
-                }
+-(void) nonConsBalancesToLTVGs{
+    for (VirtualGood* good in virtualGoods) {
+        if ([good isKindOfClass:[LifetimeVG class]] &&
+            [[good purchaseType] isKindOfClass:[PurchaseWithMarket class]]) {
+            NSString* keyNonConsExist = [NSString stringWithFormat:@"nonconsumable.%@.exists", [good itemId]];
+            if ([KeyValueStorage getValueForKey:keyNonConsExist]){
+                [good giveAmount:1];
+                [KeyValueStorage deleteValueForKey:keyNonConsExist];
             }
         }
-        
-    }@catch (NSException* ex){
-        LogDebug(TAG, ([NSString stringWithFormat:@"Migration process failed with error: %@",
-                        [ex reason]]));
-        
-    }@finally{
-        //mark migration process as finished and delete database
-        [StoreInfo setMigrationIndicator:NO];
-        [KeyValueStorage deleteValueForKey:[StoreInfo keyMetaStoreInfo]];
     }
+    nonConsumableMigrationNeeded = NO;
 }
 
 +(BOOL)isMigrationRequired{
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     return [defaults boolForKey:@"MIGRATE_NONCONSUMABLES"];
-}
-
-+(void)setMigrationIndicator:(BOOL) indicator {
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:indicator forKey:@"MIGRATE_NONCONSUMABLES"];
-    [defaults synchronize];
 }
 
 - (VirtualItem*)virtualItemWithId:(NSString*)itemId {
@@ -508,13 +482,16 @@ static int currentAssetsVersion = 0;
     int mt_ver = (int)[defaults integerForKey:@"MT_VER"]; // Defaults to 0
     int sa_ver_old = [defaults objectForKey:@"SA_VER_OLD"] == nil ? -1 : (int)[defaults integerForKey:@"SA_VER_OLD"]; //Defaults to -1
     
+    if (mt_ver < METADATA_VERSION){
+        nonConsumableMigrationNeeded = YES;
+    }
+    
     if (mt_ver < METADATA_VERSION || sa_ver_old < currentAssetsVersion) {
         [defaults setInteger:METADATA_VERSION forKey:@"MT_VER"];
         [defaults setInteger:currentAssetsVersion forKey:@"SA_VER_OLD"];
         [defaults synchronize];
         
-        [StoreInfo setMigrationIndicator:YES];
-//        [KeyValueStorage deleteValueForKey:[self keyMetaStoreInfo]];
+        [KeyValueStorage deleteValueForKey:[self keyMetaStoreInfo]];
     }
 }
 
