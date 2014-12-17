@@ -61,10 +61,10 @@
              JSON_MARKETITEM_CONSUMABLE: [NSNumber numberWithInt:self.consumable],
              JSON_MARKETITEM_IOS_ID: self.productId,
              JSON_MARKETITEM_PRICE: [NSNumber numberWithDouble:self.price],
-             JSON_MARKETITEM_MARKETPRICE: (self.marketPriceAndCurrency ? self.marketPriceAndCurrency : [NSNull null]),
-             JSON_MARKETITEM_MARKETTITLE: (self.marketTitle ? self.marketTitle : [NSNull null]),
-             JSON_MARKETITEM_MARKETDESC: (self.marketDescription ? self.marketDescription : [NSNull null]),
-             JSON_MARKETITEM_MARKETCURRENCYCODE: (self.marketCurrencyCode ? self.marketCurrencyCode : [NSNull null]),
+             JSON_MARKETITEM_MARKETPRICE: (self.marketPriceAndCurrency ? self.marketPriceAndCurrency : @""),
+             JSON_MARKETITEM_MARKETTITLE: (self.marketTitle ? self.marketTitle : @""),
+             JSON_MARKETITEM_MARKETDESC: (self.marketDescription ? self.marketDescription : @""),
+             JSON_MARKETITEM_MARKETCURRENCYCODE: (self.marketCurrencyCode ? self.marketCurrencyCode : @""),
              JSON_MARKETITEM_MARKETPRICEMICROS: [NSNumber numberWithLong:marketPriceMicros]
              };
 }

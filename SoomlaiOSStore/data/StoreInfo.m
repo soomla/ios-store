@@ -327,9 +327,7 @@ static BOOL nonConsumableMigrationNeeded = NO;
     
     LogDebug(TAG, ([NSString stringWithFormat:@"the metadata-economy json (from DB) is %@", storeInfoJSON]));
     
-    [self fromJSONString:storeInfoJSON];
-    
-    return NO;
+    return ([self fromJSONString:storeInfoJSON]);
 }
 
 - (NSDictionary*)toDictionary{
