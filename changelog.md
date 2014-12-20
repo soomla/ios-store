@@ -1,3 +1,8 @@
+### v3.6.3 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.2...v3.6.3)
+
+* Fixes
+  * loadFromDB always returns NO, using empty string as default dictionary value a MarketItem
+
 ### v3.6.2 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.1...v3.6.2)
 
 * Fixes
