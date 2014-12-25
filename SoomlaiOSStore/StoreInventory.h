@@ -201,4 +201,12 @@
  */
 + (NSDictionary*)allItemsBalances;
 
+/**
+ Resets the inventory's state according to the provided balances
+ 
+ @param replaceBalances The replacement balances to reset with
+ @return YES if the operation succeeded, NO otherwise
+ */
++ (BOOL)resetAllItemsBalances:(NSDictionary *)replaceBalances;
+
 @end
