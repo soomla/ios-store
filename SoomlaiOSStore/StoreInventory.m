@@ -186,7 +186,7 @@ static NSString* TAG = @"SOOMLA StoreInventory";
             
             VirtualItem *item = nil;
             @try {
-                VirtualItem *item = [[StoreInfo getInstance] virtualItemWithId:itemId];
+                item = [[StoreInfo getInstance] virtualItemWithId:itemId];
             }
             @catch (NSException *exception) {
                 LogError(TAG, ([NSString stringWithFormat:@"The given itemId %@ was not found. Can't force it.", itemId]));
@@ -195,7 +195,7 @@ static NSString* TAG = @"SOOMLA StoreInventory";
             
             NSNumber *updatedBalance = updatedValues[@"balance"];
             if (updatedBalance) {
-                [item resetBalance:[updatedBalance intValue]];
+                [item resetBalance:[updatedBalance intValue] withEvent:NO];
                 LogDebug(TAG, ([NSString stringWithFormat:@"finished balance sync for itemId: %@", itemId]));
             }
             
