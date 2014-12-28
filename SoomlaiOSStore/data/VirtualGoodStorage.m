@@ -63,7 +63,9 @@
     
     [KeyValueStorage setValue:upgradeVGItemId forKey:key];
     
-    [StoreEventHandling postGoodUpgrade:goodItemId withGoodUpgrade:upgradeVGItemId];
+    if (notify) {
+        [StoreEventHandling postGoodUpgrade:goodItemId withGoodUpgrade:upgradeVGItemId];
+    }
 }
 
 - (NSString*)currentUpgradeOf:(NSString*)goodItemId {

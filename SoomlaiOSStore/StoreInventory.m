@@ -222,7 +222,7 @@ static NSString* TAG = @"SOOMLA StoreInventory";
             NSString *currentUpgradeId = updatedValues[@"currentUpgrade"];
             if (currentUpgradeId && (currentUpgradeId.length != 0)) {
                 @try {
-                    UpgradeVG *upgradeVG = [[StoreInfo getInstance] virtualItemWithId:currentUpgradeId];
+                    UpgradeVG *upgradeVG = (UpgradeVG*)[[StoreInfo getInstance] virtualItemWithId:currentUpgradeId];
                     [upgradeVG giveAmount:1 withEvent:NO];
                     LogDebug(TAG, ([NSString stringWithFormat:@"finished upgrade balance sync for itemId: %@", currentUpgradeId]));
                 }
