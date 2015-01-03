@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "VirtualItemStorage.h"
 
+#define DB_KEY_GOOD_PREFIX @"good."
+
 @class VirtualGood;
 @class UpgradeVG;
 @class EquippableVG;

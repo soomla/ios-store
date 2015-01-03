@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "VirtualItemStorage.h"
 
+#define DB_CURRENCY_KEY_PREFIX @"currency."
+
 @class VirtualCurrency;
 
 /**

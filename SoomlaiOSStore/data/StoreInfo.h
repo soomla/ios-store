@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "IStoreAssets.h"
 
+#define DB_NONCONSUMABLE_KEY_PREFIX @"nonconsumable."
+
 @class VirtualCategory;
 @class VirtualCurrency;
 @class VirtualGood;

@@ -160,15 +160,15 @@
 }
 
 + (NSString*) keyGoodBalance:(NSString*)itemId {
-    return [NSString stringWithFormat:@"good.%@.balance", itemId];
+    return [NSString stringWithFormat:@"%@%@.balance", DB_KEY_GOOD_PREFIX, itemId];
 }
 
 + (NSString*) keyGoodEquipped:(NSString*)itemId {
-    return [NSString stringWithFormat:@"good.%@.equipped", itemId];
+    return [NSString stringWithFormat:@"%@%@.equipped", DB_KEY_GOOD_PREFIX, itemId];
 }
 
 + (NSString*) keyGoodUpgrade:(NSString*)itemId {
-    return [NSString stringWithFormat:@"good.%@.currentUpgrade", itemId];
+    return [NSString stringWithFormat:@"%@%@.currentUpgrade", DB_KEY_GOOD_PREFIX, itemId];
 }
 
 @end

@@ -386,7 +386,7 @@ static BOOL nonConsumableMigrationNeeded = NO;
     for (VirtualGood* good in virtualGoods) {
         if ([good isKindOfClass:[LifetimeVG class]] &&
             [[good purchaseType] isKindOfClass:[PurchaseWithMarket class]]) {
-            NSString* keyNonConsExist = [NSString stringWithFormat:@"nonconsumable.%@.exists", [good itemId]];
+            NSString* keyNonConsExist = [NSString stringWithFormat:@"%@%@.exists", DB_NONCONSUMABLE_KEY_PREFIX, [good itemId]];
             if ([KeyValueStorage getValueForKey:keyNonConsExist]){
                 [good giveAmount:1];
                 [KeyValueStorage deleteValueForKey:keyNonConsExist];

@@ -51,7 +51,7 @@
 }
 
 + (NSString*) keyCurrencyBalance:(NSString*)itemId {
-    return [NSString stringWithFormat:@"currency.%@.balance", itemId];
+    return [NSString stringWithFormat:@"%@%@.balance", DB_CURRENCY_KEY_PREFIX, itemId];
 }
 
 @end

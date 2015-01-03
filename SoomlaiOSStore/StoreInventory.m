@@ -26,6 +26,7 @@
 #import "EquippableVG.h"
 #import "VirtualItemNotFoundException.h"
 #import "SoomlaUtils.h"
+#import "KeyValueStorage.h"
 
 
 @implementation StoreInventory
@@ -180,6 +181,12 @@ static NSString* TAG = @"SOOMLA StoreInventory";
         return NO;
     }
     
+    LogDebug(TAG, @"Resetting balances");
+    
+    [self clearCurrentState];
+    
+    LogDebug(TAG, @"Current state was cleared");
+    
     @try {
         for (NSString *itemId in replaceBalances) {
             NSDictionary *updatedValues = replaceBalances[itemId];
@@ -239,6 +246,17 @@ static NSString* TAG = @"SOOMLA StoreInventory";
     }
     
     return NO;
+}
+
++ (void)clearCurrentState {
+    NSArray *allKeys = [KeyValueStorage getAllKeysUnencrypted];
+    for (NSString *key in allKeys) {
+        if (([key rangeOfString:DB_NONCONSUMABLE_KEY_PREFIX].length > 0) ||
+            ([key rangeOfString:DB_CURRENCY_KEY_PREFIX].length > 0) ||
+            ([key rangeOfString:DB_KEY_GOOD_PREFIX].length > 0)) {
+            [KeyValueStorage deleteValueForKey:key];
+        }
+    }
 }
 
 @end
