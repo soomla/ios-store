@@ -249,7 +249,7 @@ static NSString* TAG = @"SOOMLA StoreInventory";
 }
 
 + (void)clearCurrentState {
-    NSArray *allKeys = [KeyValueStorage getAllKeysUnencrypted];
+    NSArray *allKeys = [KeyValueStorage getEncryptedKeys];
     for (NSString *key in allKeys) {
         if (([key rangeOfString:DB_NONCONSUMABLE_KEY_PREFIX].length > 0) ||
             ([key rangeOfString:DB_CURRENCY_KEY_PREFIX].length > 0) ||
