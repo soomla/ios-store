@@ -33,7 +33,7 @@ Check out our [Wiki] (https://github.com/soomla/ios-store/wiki) for more informa
 
 ####Pre baked libraries:
 
-[ios-store 3.6.3](http://library.soom.la/fetch/ios-store/3.6.3?cf=github)
+[ios-store 3.6.4](http://library.soom.la/fetch/ios-store/3.6.4?cf=github)
 
 Getting Started
 ---
