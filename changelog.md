@@ -1,3 +1,8 @@
+### v3.6.5 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.4...v3.6.5)
+
+* Changes
+  * Upgrading submodules
+
 ### v3.6.4 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.3...v3.6.4)
 
 * New Features
