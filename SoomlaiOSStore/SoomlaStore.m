@@ -285,6 +285,7 @@ static NSString* developerPayload = NULL;
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
+    NSMutableArray* virtualItems = [NSMutableArray array];
     NSMutableArray* marketItems = [NSMutableArray array];
     NSArray *products = response.products;
     for(SKProduct* product in products) {
@@ -308,6 +309,7 @@ static NSString* developerPayload = NULL;
                           andPriceMicros:(product.price.floatValue * 1000000)];
 
                 [marketItems addObject:mi];
+                [virtualItems addObject:pvi];
             }
         }
         @catch (VirtualItemNotFoundException* e) {
@@ -328,8 +330,18 @@ static NSString* developerPayload = NULL;
     {
         LogError(TAG, ([NSString stringWithFormat: @"Expecting %d products but only fetched %d from iTunes Store" , (int)idsCount, (int)productsCount]));
     }
+    
+    if (virtualItems.count > 0) {
+        [[StoreInfo getInstance] saveWithVirtualItems:virtualItems];
+    }
 
     [StoreEventHandling postMarketItemsRefreshFinished:marketItems];
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
+    LogError(TAG, ([NSString stringWithFormat:@"Market items details failed to refresh: %@", error.localizedDescription]));
+    
+    [StoreEventHandling postMarketItemsRefreshFailed:error.localizedDescription];
 }
 
 

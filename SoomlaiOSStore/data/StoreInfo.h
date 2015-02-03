@@ -186,6 +186,15 @@
  @param virtualItem The virtual item to save.
  */
 - (void)save:(VirtualItem*)virtualItem;
+- (void)save:(VirtualItem*)virtualItem andSaveToDB:(BOOL)saveToDB;
+
+/**
+ Replaces the given virtual items, and then saves the store's metadata.
+ 
+ @param virtualItem The virtual item to save.
+ */
+- (void)saveWithVirtualItems:(NSArray*)virtualItemsToSave;
+- (void)saveWithVirtualItems:(NSArray*)virtualItemsToSave andSaveToDB:(BOOL)saveToDB;
 
 /**
  Replaces an old virtual item with a new one by doing the following:

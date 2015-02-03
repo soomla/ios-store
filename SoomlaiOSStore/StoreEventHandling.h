@@ -44,6 +44,7 @@
 #define EVENT_SOOMLASTORE_INIT              @"SoomlaStoreInitialized"
 #define EVENT_MARKET_ITEMS_REFRESH_STARTED  @"MarketItemsRefreshStarted"
 #define EVENT_MARKET_ITEMS_REFRESH_FINISHED @"MarketItemsRefreshFinished"
+#define EVENT_MARKET_ITEMS_REFRESH_FAILED   @"MarketItemsRefreshFailed"
 #define EVENT_UNEXPECTED_ERROR_IN_STORE     @"UnexpectedErrorInStore"
 
 
@@ -63,6 +64,7 @@
 #define DICT_ELEMENT_VERIFIED          @"verified"
 #define DICT_ELEMENT_TRANSACTION       @"transaction"
 #define DICT_ELEMENT_ERROR_CODE        @"error_code"
+#define DICT_ELEMENT_ERROR_MESSAGE     @"error_msg"
 #define DICT_ELEMENT_PRODUCTID         @"productId"
 #define DICT_ELEMENT_PRICE             @"price"
 #define DICT_ELEMENT_TITLE             @"title"
@@ -117,6 +119,8 @@
 + (void)postMarketItemsRefreshStarted;
 
 + (void)postMarketItemsRefreshFinished:(NSArray*)marketItems;
+
++ (void)postMarketItemsRefreshFailed:(NSString*)errorMessage;
 
 + (void)postRestoreTransactionsFinished:(BOOL)success;
 

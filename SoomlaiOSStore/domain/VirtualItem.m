@@ -16,6 +16,7 @@
 
 #import "VirtualItem.h"
 #import "StoreJSONConsts.h"
+#import "StoreInfo.h"
 
 @implementation VirtualItem
 
@@ -95,6 +96,13 @@
                                    reason:[NSString stringWithFormat:@"You must override %@ in a subclass",
                                            NSStringFromSelector(_cmd)]
                                  userInfo:nil];
+}
+
+- (void)save {
+    [self save:YES];
+}
+- (void)save:(BOOL)saveToDB {
+    [[StoreInfo getInstance] save:self andSaveToDB:saveToDB];
 }
 
 @end

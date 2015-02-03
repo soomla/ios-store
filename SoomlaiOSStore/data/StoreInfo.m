@@ -83,8 +83,33 @@ static BOOL nonConsumableMigrationNeeded = NO;
 }
 
 - (void)save:(VirtualItem*)virtualItem {
+    [self save:virtualItem andSaveToDB:YES];
+}
+
+- (void)save:(VirtualItem*)virtualItem andSaveToDB:(BOOL)saveToDB {
     [self replaceVirtualItem:virtualItem];
-    [self save];
+    
+    if (saveToDB) {
+        [self save];
+    }
+}
+
+- (void)saveWithVirtualItems:(NSArray*)virtualItemsToSave {
+    [self saveWithVirtualItems:virtualItemsToSave andSaveToDB:YES];
+}
+
+- (void)saveWithVirtualItems:(NSArray*)virtualItemsToSave andSaveToDB:(BOOL)saveToDB {
+    if (!virtualItemsToSave || (virtualItemsToSave.count == 0)) {
+        return;
+    }
+    
+    for (VirtualItem *virtualItem in virtualItemsToSave) {
+        [self replaceVirtualItem:virtualItem];
+    }
+    
+    if (saveToDB) {
+        [self save];
+    }
 }
 
 - (void)replaceVirtualItem:(VirtualItem*)virtualItem {

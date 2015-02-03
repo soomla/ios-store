@@ -88,4 +88,10 @@
  */
 - (int)resetBalance:(int)balance;
 - (int)resetBalance:(int)balance withEvent:(BOOL)notify;
+
+/**
+ Saves the item updates to `StoreInfo` and to internal DB.
+ */
+- (void)save;
+- (void)save:(BOOL)saveToDB;
 @end

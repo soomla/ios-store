@@ -41,6 +41,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_SOOMLASTORE_INIT object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_ITEMS_REFRESH_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_ITEMS_REFRESH_FINISHED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_ITEMS_REFRESH_FAILED object:nil];
 }
 
 + (void)postBillingSupported{
@@ -137,6 +138,11 @@
 + (void)postMarketItemsRefreshFinished:(NSArray*)marketItems {
     NSDictionary *userInfo = @{DICT_ELEMENT_MARKET_ITEMS: marketItems};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_ITEMS_REFRESH_FINISHED object:self userInfo:userInfo];
+}
+
++ (void)postMarketItemsRefreshFailed:(NSString*)errorMessage {
+    NSDictionary *userInfo = @{DICT_ELEMENT_ERROR_MESSAGE: errorMessage};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_ITEMS_REFRESH_FAILED object:self userInfo:userInfo];
 }
 
 + (void)postRestoreTransactionsFinished:(BOOL)success {
