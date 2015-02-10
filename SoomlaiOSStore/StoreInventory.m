@@ -143,10 +143,6 @@ static NSString* TAG = @"SOOMLA StoreInventory";
 + (NSDictionary*)allItemsBalances {
     NSMutableDictionary *itemsDict = [[NSMutableDictionary alloc] init];
     
-//    Class StoreInfoCls = NSClassFromString(@"StoreInfo");
-//    id StoreInfoInstance = [StoreInfoCls performSelector:@selector(getInstance)];
-//    Class StorageManagerCls = NSClassFromString(@"StorageManager");
-//    id StorageManagerInstance = [StorageManagerCls performSelector:@selector(getInstance)];
     for (VirtualCurrency* currency in [[StoreInfo getInstance] virtualCurrencies]) {
         NSMutableDictionary *updatedValues = [NSMutableDictionary dictionary];
         updatedValues[@"balance"] = @((int)[[[StorageManager getInstance] virtualCurrencyStorage] balanceForItem:currency.itemId]);
@@ -155,7 +151,6 @@ static NSString* TAG = @"SOOMLA StoreInventory";
     }
     
     for (VirtualGood* good in [[StoreInfo getInstance] virtualGoods]) {
-        if ([good isKindOfClass:NSClassFromString(@"UpgradeVG")]) continue;
         
         NSMutableDictionary *updatedValues = [NSMutableDictionary dictionary];
         VirtualGoodStorage* virtualGoodStorage = [[StorageManager getInstance] virtualGoodStorage];
