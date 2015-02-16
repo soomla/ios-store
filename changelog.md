@@ -1,3 +1,9 @@
+### v3.6.7 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.6...v3.6.7)
+
+* Fixes
+  * Current state balances will now include upgrades balances
+  * Fixing KVS issues from submodule
+
 ### v3.6.6 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.5...v3.6.6)
 
 * New Features
