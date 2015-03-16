@@ -178,12 +178,12 @@ static NSString* developerPayload = NULL;
 }
 
 - (void)purchaseVerified:(NSNotification*)notification{
+    NSDictionary* userInfo = notification.userInfo;
+    
+    id sv = [userInfo objectForKey:DICT_ELEMENT_VERIFICATION_INSTANCE];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_MARKET_PURCHASE_VERIF object:sv];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_ERROR_IN_STORE object:sv];
-
-    sv = nil;
-
-    NSDictionary* userInfo = notification.userInfo;
+    
     PurchasableVirtualItem* purchasable = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
     BOOL verified = [(NSNumber*)[userInfo objectForKey:DICT_ELEMENT_VERIFIED] boolValue];
     SKPaymentTransaction* transaction = [userInfo objectForKey:DICT_ELEMENT_TRANSACTION];
@@ -198,10 +198,11 @@ static NSString* developerPayload = NULL;
 }
 
 - (void)unexpectedVerificationError:(NSNotification*)notification{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_MARKET_PURCHASE_VERIF object:sv];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_ERROR_IN_STORE object:sv];
-
-    sv = nil;
+    NSDictionary* userInfo = notification.userInfo;
+    
+    id svObj = [userInfo objectForKey:DICT_ELEMENT_VERIFICATION_INSTANCE];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_MARKET_PURCHASE_VERIF object:svObj];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_ERROR_IN_STORE object:svObj];
 }
 
 - (void)givePurchasedItem:(SKPaymentTransaction *)transaction
@@ -210,7 +211,7 @@ static NSString* developerPayload = NULL;
         PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
 
         if (VERIFY_PURCHASES) {
-            sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi];
+            SoomlaVerification *sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi];
 
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseVerified:) name:EVENT_MARKET_PURCHASE_VERIF object:sv];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_ERROR_IN_STORE object:sv];

@@ -71,6 +71,7 @@
 #define DICT_ELEMENT_DESCRIPTION       @"description"
 #define DICT_ELEMENT_LOCALE            @"locale"
 #define DICT_ELEMENT_MARKET_ITEMS      @"marketItems"
+#define DICT_ELEMENT_VERIFICATION_INSTANCE   @"verifyInstance"
 
 
 // Error Codes
