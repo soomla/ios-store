@@ -155,7 +155,9 @@
 }
 
 + (void)postUnexpectedError:(int)code forObject:(id)object{
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:code] forKey:DICT_ELEMENT_ERROR_CODE];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:code], DICT_ELEMENT_ERROR_CODE,
+                              nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UNEXPECTED_ERROR_IN_STORE object:object userInfo:userInfo];
 }
 
