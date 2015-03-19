@@ -123,7 +123,6 @@
                               purchasableVirtualItem, DICT_ELEMENT_PURCHASABLE,
                               [NSNumber numberWithBool:verified], DICT_ELEMENT_VERIFIED,
                               transaction, DICT_ELEMENT_TRANSACTION,
-                              object, DICT_ELEMENT_VERIFICATION_INSTANCE,
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASE_VERIF object:object userInfo:userInfo];
 }
@@ -158,7 +157,6 @@
 + (void)postUnexpectedError:(int)code forObject:(id)object{
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithInt:code], DICT_ELEMENT_ERROR_CODE,
-                              object, DICT_ELEMENT_VERIFICATION_INSTANCE,
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UNEXPECTED_ERROR_IN_STORE object:object userInfo:userInfo];
 }
