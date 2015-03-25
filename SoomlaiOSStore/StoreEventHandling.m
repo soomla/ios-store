@@ -141,7 +141,10 @@
 }
 
 + (void)postMarketItemsRefreshFailed:(NSString*)errorMessage {
-    NSDictionary *userInfo = @{DICT_ELEMENT_ERROR_MESSAGE: errorMessage};
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    if (errorMessage) {
+        userInfo[DICT_ELEMENT_ERROR_MESSAGE] = errorMessage;
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_ITEMS_REFRESH_FAILED object:self userInfo:userInfo];
 }
 
