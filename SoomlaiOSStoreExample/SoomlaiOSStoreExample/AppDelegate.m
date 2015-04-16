@@ -20,11 +20,14 @@
 #import "MuffinRushAssets.h"
 #import "StoreInventory.h"
 #import "VirtualCurrency.h"
+#import "SoomlaConfig.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    DEBUG_LOG = YES;
+    
     [[UIApplication sharedApplication]setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     
     /**

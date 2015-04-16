@@ -76,18 +76,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C03169111ADFFC7400AE4790 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C0B3C5EE168C6D0C00161FAA;
+			remoteInfo = SoomlaiOSCore;
+		};
 		EF6F64551962FFCB0044608D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C0B3C5EF168C6D0C00161FAA;
-			remoteInfo = SoomlaiOSCore;
-		};
-		EF6F64571962FFD00044608D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C0B3C5EE168C6D0C00161FAA;
 			remoteInfo = SoomlaiOSCore;
 		};
 /* End PBXContainerItemProxy section */
@@ -401,7 +401,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				EF6F64581962FFD00044608D /* PBXTargetDependency */,
+				C03169121ADFFC7400AE4790 /* PBXTargetDependency */,
 			);
 			name = SoomlaiOSStore;
 			productName = SoomlaiOSStore;
@@ -507,10 +507,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		EF6F64581962FFD00044608D /* PBXTargetDependency */ = {
+		C03169121ADFFC7400AE4790 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SoomlaiOSCore;
-			targetProxy = EF6F64571962FFD00044608D /* PBXContainerItemProxy */;
+			targetProxy = C03169111ADFFC7400AE4790 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

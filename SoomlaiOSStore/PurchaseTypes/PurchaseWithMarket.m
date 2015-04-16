@@ -29,7 +29,7 @@ static NSString* TAG = @"SOOMLA PurchaseWithMarket";
 
 - (id)initWithProductId:(NSString*)oProductId andPrice:(double)oPrice {
     if (self = [super init]) {
-        self.marketItem = [[MarketItem alloc] initWithProductId:oProductId andConsumable:kConsumable andPrice:oPrice];
+        self.marketItem = [[MarketItem alloc] initWithProductId:oProductId andPrice:oPrice];
     }
     return self;
 }

@@ -21,13 +21,12 @@
 
 @implementation MarketItem
 
-@synthesize price, productId, consumable, marketPriceAndCurrency, marketTitle, marketDescription, marketCurrencyCode, marketPriceMicros;
+@synthesize price, productId, marketPriceAndCurrency, marketTitle, marketDescription, marketCurrencyCode, marketPriceMicros;
 
-- (id)initWithProductId:(NSString*)oProductId andConsumable:(Consumable)oConsumable andPrice:(double)oPrice{
+- (id)initWithProductId:(NSString*)oProductId andPrice:(double)oPrice{
     self = [super init];
     if (self){
         self.productId = oProductId;
-        self.consumable = oConsumable;
         self.price = oPrice;
     }
     
@@ -37,7 +36,6 @@
 - (id)initWithDictionary:(NSDictionary*)dict{
     self = [super init];
     if (self) {
-        self.consumable = [[dict valueForKey:JSON_MARKETITEM_CONSUMABLE] intValue];
         if ([[dict allKeys] containsObject:JSON_MARKETITEM_IOS_ID]) {
             self.productId = [dict objectForKey:JSON_MARKETITEM_IOS_ID];
         } else {
@@ -58,7 +56,6 @@
 - (NSDictionary*)toDictionary{
     return @{
              SOOM_CLASSNAME : [SoomlaUtils getClassName:self],
-             JSON_MARKETITEM_CONSUMABLE: [NSNumber numberWithInt:self.consumable],
              JSON_MARKETITEM_IOS_ID: self.productId,
              JSON_MARKETITEM_PRICE: [NSNumber numberWithDouble:self.price],
              JSON_MARKETITEM_MARKETPRICE: (self.marketPriceAndCurrency ? self.marketPriceAndCurrency : @""),

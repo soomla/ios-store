@@ -220,6 +220,7 @@ static NSString* developerPayload = NULL;
         LogError(TAG, ([NSString stringWithFormat:@"An error occured when handling copmleted purchase for PurchasableVirtualItem with productId: %@"
                         @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
         [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
+        [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
     }
 }
 
@@ -227,6 +228,10 @@ static NSString* developerPayload = NULL;
 {
     LogDebug(TAG, ([NSString stringWithFormat:@"Transaction completed for product: %@", transaction.payment.productIdentifier]));
     [self givePurchasedItem:transaction];
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue removedTransactions:(NSArray *)transactions {
+    LogDebug(TAG, @"removedTransactions was called");
 }
 
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction
@@ -238,7 +243,7 @@ static NSString* developerPayload = NULL;
 - (void) failedTransaction: (SKPaymentTransaction *)transaction
 {
     if (transaction.error.code != SKErrorPaymentCancelled) {
-        LogError(TAG, ([NSString stringWithFormat:@"An error occured for product id \"%@\" with code \"%ld\" and description \"%@\"", transaction.payment.productIdentifier, (long)transaction.error.code, transaction.error.localizedDescription]));
+        LogError(TAG, ([NSString stringWithFormat:@"An error occured for product id \"%@\" with code \"%ld\" and description \"%@\"", transaction.payment.productIdentifier, (long)transaction.error.code, transaction.error.debugDescription]));
 
         [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
     }

@@ -116,13 +116,13 @@ VirtualCurrencyPack* _1000_MUFFINS_PACK;
     
     /** Virtual Currency Packs **/
     
-    _10_MUFFINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"10 Muffins" andDescription:@"Test refund of an item" andItemId:_10_MUFFINS_PACK_ITEM_ID andCurrencyAmount:10 andCurrency:MUFFINS_CURRENCY_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:_10_MUFFINS_PRODUCT_ID andConsumable:kConsumable andPrice:0.99]]];
+    _10_MUFFINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"10 Muffins" andDescription:@"Test refund of an item" andItemId:_10_MUFFINS_PACK_ITEM_ID andCurrencyAmount:10 andCurrency:MUFFINS_CURRENCY_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:_10_MUFFINS_PRODUCT_ID andPrice:0.99]]];
     
-    _50_MUFFINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"50 Muffins" andDescription:@"Test cancellation of an item" andItemId:_50_MUFFINS_PACK_ITEM_ID andCurrencyAmount:50 andCurrency:MUFFINS_CURRENCY_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:_50_MUFFINS_PRODUCT_ID andConsumable:kConsumable andPrice:1.99]]];
+    _50_MUFFINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"50 Muffins" andDescription:@"Test cancellation of an item" andItemId:_50_MUFFINS_PACK_ITEM_ID andCurrencyAmount:50 andCurrency:MUFFINS_CURRENCY_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:_50_MUFFINS_PRODUCT_ID andPrice:1.99]]];
     
-    _400_MUFFINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"400 Muffins" andDescription:@"Test purchase of an item" andItemId:_400_MUFFINS_PACK_ITEM_ID andCurrencyAmount:400 andCurrency:MUFFINS_CURRENCY_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:_400_MUFFINS_PRODUCT_ID andConsumable:kConsumable andPrice:4.99]]];
+    _400_MUFFINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"400 Muffins" andDescription:@"Test purchase of an item" andItemId:_400_MUFFINS_PACK_ITEM_ID andCurrencyAmount:400 andCurrency:MUFFINS_CURRENCY_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:_400_MUFFINS_PRODUCT_ID andPrice:4.99]]];
     
-    _1000_MUFFINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"1000 Muffins" andDescription:@"Test item unavailable" andItemId:_1000_MUFFINS_PACK_ITEM_ID andCurrencyAmount:1000 andCurrency:MUFFINS_CURRENCY_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:_1000_MUFFINS_PRODUCT_ID andConsumable:kConsumable andPrice:8.99]]];
+    _1000_MUFFINS_PACK = [[VirtualCurrencyPack alloc] initWithName:@"1000 Muffins" andDescription:@"Test item unavailable" andItemId:_1000_MUFFINS_PACK_ITEM_ID andCurrencyAmount:1000 andCurrency:MUFFINS_CURRENCY_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:_1000_MUFFINS_PRODUCT_ID andPrice:8.99]]];
     
     
     /** Virtual Goods **/
@@ -139,7 +139,7 @@ VirtualCurrencyPack* _1000_MUFFINS_PACK;
     
     /* LifetimeVGs */
     
-    MARRIAGE_GOOD = [[LifetimeVG alloc] initWithName:@"Marriage" andDescription:@"This is a LIFETIME thing." andItemId:MARRIAGE_GOOD_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:MARRIAGE_PRODUCT_ID andConsumable:kNonConsumable andPrice:9.99]]];
+    MARRIAGE_GOOD = [[LifetimeVG alloc] initWithName:@"Marriage" andDescription:@"This is a LIFETIME thing." andItemId:MARRIAGE_GOOD_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:MARRIAGE_PRODUCT_ID andPrice:9.99]]];
     
     /* EquippableVGs */
     

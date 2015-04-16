@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C031690E1ADE834300AE4790 /* libSoomlaiOSStore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0704D651ACE91BC0019195F /* libSoomlaiOSStore.a */; };
+		C03169101ADE834300AE4790 /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C031690F1ADE834300AE4790 /* libSoomlaiOSCore.a */; };
 		C08CF20C1641C68D007603E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08CF20B1641C68D007603E8 /* UIKit.framework */; };
 		C08CF20E1641C68D007603E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08CF20D1641C68D007603E8 /* Foundation.framework */; };
 		C08CF2101641C68D007603E8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08CF20F1641C68D007603E8 /* CoreGraphics.framework */; };
@@ -61,7 +63,27 @@
 		C0969D471956CF75007349A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0969D461956CF75007349A3 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C03169131ADFFC8200AE4790 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0704D5F1ACE91BC0019195F /* SoomlaiOSStore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C02CEC41160DC870000AA0D2;
+			remoteInfo = SoomlaiOSStore;
+		};
+		C0704D641ACE91BC0019195F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0704D5F1ACE91BC0019195F /* SoomlaiOSStore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C02CEC42160DC870000AA0D2;
+			remoteInfo = SoomlaiOSStore;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		C031690F1ADE834300AE4790 /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-gyfmkmdyhelmnmdemlfywkmdgacc/Build/Products/Debug-iphoneos/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
+		C0704D5F1ACE91BC0019195F /* SoomlaiOSStore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSStore.xcodeproj; path = ../SoomlaiOSStore.xcodeproj; sourceTree = "<group>"; };
+		C0704D671ACE91E20019195F /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../submodules/soomla-ios-core/out/Debug-iphoneos/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
 		C08CF2071641C68D007603E8 /* SoomlaiOSStoreExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoomlaiOSStoreExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C08CF20B1641C68D007603E8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C08CF20D1641C68D007603E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -131,6 +153,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C03169101ADE834300AE4790 /* libSoomlaiOSCore.a in Frameworks */,
+				C031690E1ADE834300AE4790 /* libSoomlaiOSStore.a in Frameworks */,
 				C0969D471956CF75007349A3 /* SystemConfiguration.framework in Frameworks */,
 				C0969D451956CF6B007349A3 /* QuartzCore.framework in Frameworks */,
 				C0969D431956CF66007349A3 /* MediaPlayer.framework in Frameworks */,
@@ -152,9 +176,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C0704D601ACE91BC0019195F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C0704D651ACE91BC0019195F /* libSoomlaiOSStore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C08CF1FC1641C68D007603E8 = {
 			isa = PBXGroup;
 			children = (
+				C0704D5F1ACE91BC0019195F /* SoomlaiOSStore.xcodeproj */,
 				C08CF2111641C68D007603E8 /* SoomlaiOSStoreExample */,
 				C08CF20A1641C68D007603E8 /* Frameworks */,
 				C08CF2081641C68D007603E8 /* Products */,
@@ -172,6 +205,8 @@
 		C08CF20A1641C68D007603E8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C031690F1ADE834300AE4790 /* libSoomlaiOSCore.a */,
+				C0704D671ACE91E20019195F /* libSoomlaiOSCore.a */,
 				C0969D461956CF75007349A3 /* SystemConfiguration.framework */,
 				C0969D441956CF6B007349A3 /* QuartzCore.framework */,
 				C0969D421956CF66007349A3 /* MediaPlayer.framework */,
@@ -282,6 +317,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C03169141ADFFC8200AE4790 /* PBXTargetDependency */,
 			);
 			name = SoomlaiOSStoreExample;
 			productName = SoomlaiOSStoreExample;
@@ -296,6 +332,11 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = SOOMLA;
+				TargetAttributes = {
+					C08CF2061641C68D007603E8 = {
+						DevelopmentTeam = DS7QA8Y758;
+					};
+				};
 			};
 			buildConfigurationList = C08CF2011641C68D007603E8 /* Build configuration list for PBXProject "SoomlaiOSStoreExample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -307,12 +348,28 @@
 			mainGroup = C08CF1FC1641C68D007603E8;
 			productRefGroup = C08CF2081641C68D007603E8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C0704D601ACE91BC0019195F /* Products */;
+					ProjectRef = C0704D5F1ACE91BC0019195F /* SoomlaiOSStore.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C08CF2061641C68D007603E8 /* SoomlaiOSStoreExample */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C0704D651ACE91BC0019195F /* libSoomlaiOSStore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSoomlaiOSStore.a;
+			remoteRef = C0704D641ACE91BC0019195F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C08CF2051641C68D007603E8 /* Resources */ = {
@@ -370,6 +427,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C03169141ADFFC8200AE4790 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SoomlaiOSStore;
+			targetProxy = C03169131ADFFC8200AE4790 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C08CF2141641C68D007603E8 /* InfoPlist.strings */ = {
@@ -457,12 +522,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"../build/**",
+					"/Users/refaelos/work/soomla/framework/ios/ios-store/submodules/soomla-ios-core/out/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-gyfmkmdyhelmnmdemlfywkmdgacc/Build/Products/Debug-iphoneos",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lSoomlaiOSStore",
-					"-lSoomlaiOSCore",
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -484,12 +547,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"../build/**",
+					"/Users/refaelos/work/soomla/framework/ios/ios-store/submodules/soomla-ios-core/out/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-gyfmkmdyhelmnmdemlfywkmdgacc/Build/Products/Debug-iphoneos",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lSoomlaiOSStore",
-					"-lSoomlaiOSCore",
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

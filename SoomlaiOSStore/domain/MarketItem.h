@@ -15,25 +15,12 @@
  */
 
 /**
- Every item offered in the App Store has one of the five following purchase 
- types.
- */
-typedef enum {
-    kConsumable = 1,
-    kNonConsumable = 2,
-    kAutoRenewableSubscription = 3,
-    kNonRenewableSubscription = 4,
-    kFreeSubscription = 5
-} Consumable;
-
-/**
  This class represents an item in the App Store.
  Every `PurchasableVirtualItem` with `PurchaseType` of `PurchaseWithMarket`
  has an instance of this class.
  */
 @interface MarketItem : NSObject{
     NSString* productId;
-    Consumable      consumable;
     double          price;
 
     NSString        *marketPriceAndCurrency;
@@ -44,7 +31,6 @@ typedef enum {
 }
 
 @property (nonatomic, retain) NSString* productId;
-@property Consumable      consumable;
 @property double          price;
 @property (nonatomic, retain) NSString        *marketPriceAndCurrency;
 @property (nonatomic, retain) NSString        *marketTitle;
@@ -52,14 +38,14 @@ typedef enum {
 @property (nonatomic, retain) NSString        *marketCurrencyCode;
 @property (nonatomic)         long            marketPriceMicros;
 
-/** 
+/**
  Constructor
  
  @param oProductId The id of this `MarketItem` in the App Store.
  @param oConsumable The type of this `MarketItem` item in the App Store.
  @param oPrice The actual $$ cost of this `MarketItem` item in the App Store.
  */
-- (id)initWithProductId:(NSString*)oProductId andConsumable:(Consumable)oConsumable andPrice:(double)oPrice;
+- (id)initWithProductId:(NSString*)oProductId andPrice:(double)oPrice;
 
 /**
  Constructor
