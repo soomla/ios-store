@@ -21,6 +21,10 @@
 #import "StoreConfig.h"
 #import "FBEncryptorAES.h"
 
+@interface SoomlaVerification () <NSURLConnectionDelegate, SKRequestDelegate> {
+    BOOL tryAgain;
+}
+@end
 
 @implementation SoomlaVerification
 
@@ -30,6 +34,7 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
     if (self = [super init]) {
         transaction = t;
         purchasable = pvi;
+        tryAgain = YES;
     }
     
     return self;
@@ -52,9 +57,19 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
     
     if (data) {
         
-        NSDictionary* postDict = [NSDictionary dictionaryWithObjectsAndKeys:
+        NSMutableDictionary* postDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                   [data base64Encoding], @"receipt_base64",
+                                  transaction.payment.productIdentifier, @"productId",
                                   nil];
+
+        NSString* extraDataS = [[NSUserDefaults standardUserDefaults] stringForKey:@"EXTRA_SEND_RECEIPT"];
+        if (extraDataS && [extraDataS length]>0) {
+            NSDictionary* extraData = [SoomlaUtils jsonStringToDict:extraDataS];
+            for(NSString* key in [extraData allKeys]) {
+                [postDict setObject:[extraData objectForKey:key] forKey:key];
+            }
+        }
+        
 
         NSData *postData = [[SoomlaUtils dictToJsonString:postDict] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         
@@ -96,21 +111,54 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString* dataStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     NSNumber* verifiedNum = nil;
-    if (![dataStr isEqualToString:@""]) {
-        @try {
-            NSDictionary* responseDict = [SoomlaUtils jsonStringToDict:dataStr];
-            verifiedNum = (NSNumber*)[responseDict objectForKey:@"verified"];
-        } @catch (NSException* e) {
-            LogError(TAG, @"There was a problem when verifying when handling response.");
-        }
+    if ([dataStr isEqualToString:@""]) {
+        LogError(TAG, @"There was a problem when verifying. Got an empty response. Will try again later.");
+        [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
+        return;
     }
 
+    NSDictionary* responseDict = NULL;
+    @try {
+        responseDict = [SoomlaUtils jsonStringToDict:dataStr];
+        verifiedNum = (NSNumber*)[responseDict objectForKey:@"verified"];
+    } @catch (NSException* e) {
+        LogError(TAG, @"There was a problem when verifying when handling response.");
+    }
+    
     BOOL verified = NO;
     if (responseCode==200 && verifiedNum) {
+        
         verified = [verifiedNum boolValue];
+        if (!verified) {
+            NSNumber* emptyResponse = (NSNumber*)[responseDict objectForKey:@"emptyResponse"];
+            BOOL needRefresh = [emptyResponse boolValue];
+            if (needRefresh && tryAgain) {
+                LogDebug(TAG, @"Receipt refresh needed.");
+                tryAgain = NO;
+                SKReceiptRefreshRequest *req = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:nil];
+                req.delegate = self;
+                [req start];
+                
+                // we return here ...
+                return;
+            }
+        }
         [StoreEventHandling postMarketPurchaseVerification:verified forItem:purchasable andTransaction:transaction forObject:self];
     } else {
-        LogError(TAG, @"There was a problem when verifying. Will try again later.");
+        NSString* errorMsg = @"";
+        if (responseDict) {
+            @try {
+                errorMsg = [responseDict objectForKey:@"error"];
+            } @catch (NSException* e) {
+                LogError(TAG, @"There was a problem when verifying when handling response.");
+            }
+        }
+        
+        if ([errorMsg isEqualToString:@"ECONNRESET"]) {
+            LogError(TAG, @"It appears that the iTunes servers are down. We can't verify this receipt.");
+        }
+        
+        LogError(TAG, ([NSString stringWithFormat:@"There was a problem when verifying (%@). Will try again later.", errorMsg]));
         [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_TIMEOUT forObject:self];
     }
 }
@@ -121,15 +169,16 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
     [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_TIMEOUT forObject:self];
 }
 
-// - (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
-//     return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
-// }
-// 
-// - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-//     if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
-//             [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
-//     
-//     [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
-// }
+#pragma mark SKRequestDelegate methods
+
+- (void)requestDidFinish:(SKRequest *)request {
+    LogDebug(TAG, @"The refresh request for a receipt completed.");
+    [self verifyData];
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
+    LogDebug(TAG, ([NSString stringWithFormat:@"Error trying to request receipt: %@", error]));
+    [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
+}
 
 @end

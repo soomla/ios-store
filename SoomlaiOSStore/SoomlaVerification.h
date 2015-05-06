@@ -19,7 +19,7 @@
 
 @class PurchasableVirtualItem;
 
-@interface SoomlaVerification : NSObject <NSURLConnectionDelegate>{
+@interface SoomlaVerification : NSObject <NSURLConnectionDelegate, SKRequestDelegate>{
     NSMutableData *responseData;
     int responseCode;
     PurchasableVirtualItem *purchasable;
