@@ -168,7 +168,11 @@ static NSString* developerPayload = NULL;
         receiptUrl = [[NSBundle mainBundle] appStoreReceiptURL];
     }
 
-    [StoreEventHandling postMarketPurchase:pvi withReceiptUrl:receiptUrl andPurchaseToken:transaction.transactionIdentifier andPayload:developerPayload];
+    bool isRestore = transaction.transactionState == SKPaymentTransactionStateRestored;
+    NSString* purchaseToken = isRestore
+        ? transaction.originalTransaction.transactionIdentifier
+        : transaction.transactionIdentifier;
+    [StoreEventHandling postMarketPurchase:pvi withReceiptUrl:receiptUrl andPurchaseToken:purchaseToken andPayload:developerPayload];
     [pvi giveAmount:1];
     [StoreEventHandling postItemPurchased:pvi.itemId withPayload:developerPayload];
     developerPayload = NULL;
