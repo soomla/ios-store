@@ -168,7 +168,7 @@ static NSString* developerPayload = NULL;
         receiptUrl = [[NSBundle mainBundle] appStoreReceiptURL];
     }
 
-    bool isRestore = transaction.transactionState == SKPaymentTransactionStateRestored;
+    bool isRestore = transaction.originalTransaction != nil;
     NSString* purchaseToken = isRestore
         ? transaction.originalTransaction.transactionIdentifier
         : transaction.transactionIdentifier;
