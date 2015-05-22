@@ -1,8 +1,14 @@
+### v3.6.9 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.8...v3.6.9)
+
+* Changes
+  * Removed Consumable struct from MarketItem   (***breaking change***)
+  * Supporting new type of verification
+
 ### v3.6.8 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.7...v3.6.8)
 
 * Fixes
   * Fixing restore transactions not working when verification is used
-  * Guarding against nil error message in refresh failed (iOS6 only) 
+  * Guarding against nil error message in refresh failed (iOS6 only)
 
 ### v3.6.7 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.6...v3.6.7)
 
