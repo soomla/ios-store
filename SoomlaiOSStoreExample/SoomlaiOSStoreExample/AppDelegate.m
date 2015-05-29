@@ -26,6 +26,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSNumber* n = [NSNumber numberWithInt:0];
+    if (n) {
+        NSLog(@"It's true");
+    }
+    
     DEBUG_LOG = YES;
     
     [[UIApplication sharedApplication]setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];

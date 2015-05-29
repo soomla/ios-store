@@ -106,15 +106,15 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASE_CANCELLED object:self userInfo:userInfo];
 }
 
-+ (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem withReceiptUrl:(NSURL*)receiptUrl andPurchaseToken:(NSString*)token andPayload:(NSString*)payload{
++ (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem withExtraInfo:(NSDictionary*)extraInfo andPayload:(NSString*)payload {
     if (!payload) {
         payload = @"";
     }
-    NSString* urlStr = @"";
-    if (receiptUrl) {
-        urlStr = [receiptUrl absoluteString];
-    }
-    NSDictionary *userInfo = @{DICT_ELEMENT_PURCHASABLE: purchasableVirtualItem, DICT_ELEMENT_RECEIPT: urlStr, DICT_ELEMENT_TOKEN: token, DICT_ELEMENT_DEVELOPERPAYLOAD: payload};
+//    NSString* urlStr = @"";
+//    if (receiptUrl) {
+//        urlStr = [receiptUrl absoluteString];
+//    }
+    NSDictionary *userInfo = @{DICT_ELEMENT_PURCHASABLE: purchasableVirtualItem, DICT_ELEMENT_EXTRA_INFO:extraInfo, DICT_ELEMENT_DEVELOPERPAYLOAD: payload};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASED object:self userInfo:userInfo];
 }
 

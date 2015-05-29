@@ -58,8 +58,7 @@
 #define DICT_ELEMENT_PURCHASABLE       @"PurchasableVirtualItem"
 #define DICT_ELEMENT_PURCHASABLE_ID    @"PurchasableVirtualItemId"
 #define DICT_ELEMENT_DEVELOPERPAYLOAD  @"DeveloperPayload"
-#define DICT_ELEMENT_RECEIPT           @"receipt"
-#define DICT_ELEMENT_TOKEN             @"token"
+#define DICT_ELEMENT_EXTRA_INFO        @"extraInfo"
 #define DICT_ELEMENT_SUCCESS           @"success"
 #define DICT_ELEMENT_VERIFIED          @"verified"
 #define DICT_ELEMENT_TRANSACTION       @"transaction"
@@ -110,7 +109,7 @@
 
 + (void)postMarketPurchaseCancelled:(PurchasableVirtualItem*)purchasableVirtualItem;
 
-+ (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem withReceiptUrl:(NSURL*)receiptUrl andPurchaseToken:(NSString*)token andPayload:(NSString*)payload;
++ (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem withExtraInfo:(NSDictionary*)extraInfo andPayload:(NSString*)payload;
 
 + (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction forObject:(id)object;
 
