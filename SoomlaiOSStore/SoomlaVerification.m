@@ -29,13 +29,28 @@
 @implementation SoomlaVerification
 
 static NSString* TAG = @"SOOMLA SoomlaVerification";
+static SoomlaVerification* _instance = nil;
+
+
++ (SoomlaVerification*)getInstance{
+
+    
+    @synchronized( self ) {
+        if( _instance == nil ) {
+            _instance = [[SoomlaVerification alloc] init];
+        }
+    }
+    
+    return _instance;
+}
 
 - (id) initWithTransaction:(SKPaymentTransaction*)t andPurchasable:(PurchasableVirtualItem*)pvi {
-    if (self = [super init]) {
-        transaction = t;
-        purchasable = pvi;
-        tryAgain = YES;
-    }
+    if(_instance == nil)
+      self = [SoomlaVerification getInstance];
+
+    transaction = t;
+    purchasable = pvi;
+    tryAgain = YES;
     
     return self;
 }
@@ -138,7 +153,7 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
                 SKReceiptRefreshRequest *req = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:nil];
                 req.delegate = self;
                 [req start];
-                
+
                 // we return here ...
                 return;
             }

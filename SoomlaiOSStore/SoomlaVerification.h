@@ -29,5 +29,5 @@
 - (id) initWithTransaction:(SKPaymentTransaction*)t andPurchasable:(PurchasableVirtualItem*)pvi;
 
 - (void)verifyData;
-
++ (SoomlaVerification*)getInstance;
 @end
