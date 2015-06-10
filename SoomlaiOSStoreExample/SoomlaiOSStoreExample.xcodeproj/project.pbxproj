@@ -519,12 +519,7 @@
 					"../build/headers/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSStoreExample/SoomlaiOSStoreExample-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"../build/**",
-					"/Users/refaelos/work/soomla/framework/ios/ios-store/submodules/soomla-ios-core/out/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-gyfmkmdyhelmnmdemlfywkmdgacc/Build/Products/Debug-iphoneos",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -544,12 +539,7 @@
 					"../build/headers/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSStoreExample/SoomlaiOSStoreExample-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"../build/**",
-					"/Users/refaelos/work/soomla/framework/ios/ios-store/submodules/soomla-ios-core/out/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSStoreExample-gyfmkmdyhelmnmdemlfywkmdgacc/Build/Products/Debug-iphoneos",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

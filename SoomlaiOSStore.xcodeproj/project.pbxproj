@@ -71,19 +71,12 @@
 		C097629A18FBF2D9000A4403 /* VirtualCurrencyStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = C024133C176F2512007BB351 /* VirtualCurrencyStorage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C097629B18FBF2D9000A4403 /* VirtualGoodStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = C024133E176F2512007BB351 /* VirtualGoodStorage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C097629C18FBF2D9000A4403 /* VirtualItemStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = C0241340176F2512007BB351 /* VirtualItemStorage.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		C0DA654C1B18780500DFF6D9 /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF6F64561962FFCB0044608D /* libSoomlaiOSCore.a */; };
+		C0DA654C1B18780500DFF6D9 /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF6F64561962FFCB0044608D /* libSoomlaiOSCore.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EF4CDD2F194F20C7008B1CF2 /* VirtualItemReward.h in Headers */ = {isa = PBXBuildFile; fileRef = EF4CDD2D194F20C7008B1CF2 /* VirtualItemReward.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF4CDD30194F20C7008B1CF2 /* VirtualItemReward.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4CDD2E194F20C7008B1CF2 /* VirtualItemReward.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C0DA654D1B18782900DFF6D9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C0B3C5EE168C6D0C00161FAA;
-			remoteInfo = SoomlaiOSCore;
-		};
 		EF6F64551962FFCB0044608D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EF6F64511962FFCB0044608D /* SoomlaiOSCore.xcodeproj */;
@@ -403,7 +396,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				C0DA654E1B18782900DFF6D9 /* PBXTargetDependency */,
 			);
 			name = SoomlaiOSStore;
 			productName = SoomlaiOSStore;
@@ -507,14 +499,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C0DA654E1B18782900DFF6D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SoomlaiOSCore;
-			targetProxy = C0DA654D1B18782900DFF6D9 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C02CEC65160DC870000AA0D2 /* Debug */ = {

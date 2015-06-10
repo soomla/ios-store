@@ -34,6 +34,12 @@
 
 #import "SoomlaVerification.h"
 
+@interface SoomlaStore (){
+    NSMutableArray* verifications;
+}
+@end
+
+
 @implementation SoomlaStore
 
 @synthesize initialized;
@@ -59,7 +65,7 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
     }
     
     LogDebug(TAG, @"SoomlaStore Initializing ...");
-
+    
     [StorageManager getInstance];
     [[StoreInfo getInstance] setStoreAssets:storeAssets];
 
@@ -77,6 +83,9 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
     if ([SKPaymentQueue canMakePayments]) {
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
         [StoreEventHandling postBillingSupported];
+        if (!verifications) {
+            verifications = [NSMutableArray array];
+        }
     } else {
         [StoreEventHandling postBillingNotSupported];
     }
@@ -239,11 +248,14 @@ static NSString* developerPayload = NULL;
         [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
         [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
     }
+    
+    [verifications removeObject:notification.object];
 }
 
 - (void)unexpectedVerificationError:(NSNotification*)notification{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_MARKET_PURCHASE_VERIF object:notification.object];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_ERROR_IN_STORE object:notification.object];
+    [verifications removeObject:notification.object];
 }
 
 - (void)givePurchasedItem:(SKPaymentTransaction *)transaction
@@ -258,6 +270,8 @@ static NSString* developerPayload = NULL;
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_ERROR_IN_STORE object:sv];
 
             [sv verifyData];
+            
+            [verifications addObject:sv];
         } else {
             [self finalizeTransaction:transaction forPurchasable:pvi];
         }
