@@ -220,8 +220,8 @@ static NSString* developerPayload = NULL;
                                                                @"transactionIdentifier": transaction.transactionIdentifier,
                                                                @"receiptBase64": receiptString,
                                                                @"transactionDate": transaction.transactionDate,
-                                                               @"originalTransactionDate": transaction.originalTransaction.transactionDate,
-                                                               @"originalTransactionIdentifier": transaction.originalTransaction.transactionIdentifier
+                                                               @"originalTransactionDate": transaction.originalTransaction ? transaction.originalTransaction.transactionDate : transaction.transactionDate,
+                                                               @"originalTransactionIdentifier": transaction.originalTransaction ? transaction.originalTransaction.transactionIdentifier : transaction.transactionIdentifier
                                                                }
                                 andPayload:developerPayload];
     [pvi giveAmount:1];
