@@ -98,6 +98,11 @@ static SoomlaVerification* _instance = nil;
         [request setHTTPMethod:@"POST"];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        
+        if( SERVER_AUTHORIZATION_TOKEN && ![SERVER_AUTHORIZATION_TOKEN isEqualToString:@""]  ) {
+            [request setValue:SERVER_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+        }
+        
         [request setHTTPBody:postData];
         
         NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
@@ -163,7 +168,17 @@ static SoomlaVerification* _instance = nil;
         NSString* errorMsg = @"";
         if (responseDict) {
             @try {
-                errorMsg = [responseDict objectForKey:@"error"];
+                id errorObject = [responseDict objectForKey:@"error"];
+                if([errorObject isKindOfClass:[NSDictionary class]]) {
+                    errorMsg = [errorObject objectForKey:@"message"];
+                }
+                else if([errorObject isKindOfClass:[NSString class]]){
+                    errorMsg = (NSString *) errorObject;
+                }
+                else {
+                    errorMsg = @"Unknown Error";
+                }
+
             } @catch (NSException* e) {
                 LogError(TAG, @"There was a problem when verifying when handling response.");
             }
