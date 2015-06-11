@@ -29,28 +29,18 @@
 @implementation SoomlaVerification
 
 static NSString* TAG = @"SOOMLA SoomlaVerification";
-static SoomlaVerification* _instance = nil;
-
-
-+ (SoomlaVerification*)getInstance{
-
-    
-    @synchronized( self ) {
-        if( _instance == nil ) {
-            _instance = [[SoomlaVerification alloc] init];
-        }
-    }
-    
-    return _instance;
-}
+static NSMutableArray* cacheRetryRequestReceipt;
 
 - (id) initWithTransaction:(SKPaymentTransaction*)t andPurchasable:(PurchasableVirtualItem*)pvi {
-    if(_instance == nil)
-      self = [SoomlaVerification getInstance];
-
-    transaction = t;
-    purchasable = pvi;
-    tryAgain = YES;
+    
+    if(cacheRetryRequestReceipt == nil)
+        cacheRetryRequestReceipt = [[NSMutableArray alloc] init];
+    
+    if (self = [super init]) {
+        transaction = t;
+        purchasable = pvi;
+        tryAgain = YES;
+    }
     
     return self;
 }
@@ -157,6 +147,7 @@ static SoomlaVerification* _instance = nil;
                 tryAgain = NO;
                 SKReceiptRefreshRequest *req = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:nil];
                 req.delegate = self;
+                [cacheRetryRequestReceipt addObject:self];
                 [req start];
 
                 // we return here ...
@@ -204,11 +195,17 @@ static SoomlaVerification* _instance = nil;
 - (void)requestDidFinish:(SKRequest *)request {
     LogDebug(TAG, @"The refresh request for a receipt completed.");
     [self verifyData];
+    if([cacheRetryRequestReceipt containsObject:self])
+        [cacheRetryRequestReceipt removeObject:self];
+
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     LogDebug(TAG, ([NSString stringWithFormat:@"Error trying to request receipt: %@", error]));
     [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
+    if([cacheRetryRequestReceipt containsObject:self])
+        [cacheRetryRequestReceipt removeObject:self];
+
 }
 
 @end

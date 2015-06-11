@@ -20,14 +20,13 @@
 @class PurchasableVirtualItem;
 
 @interface SoomlaVerification : NSObject <NSURLConnectionDelegate, SKRequestDelegate>{
-    NSMutableData *responseData;
+    __strong NSMutableData *responseData;
     int responseCode;
-    PurchasableVirtualItem *purchasable;
-    SKPaymentTransaction* transaction;
+    __strong PurchasableVirtualItem *purchasable;
+    __strong SKPaymentTransaction* transaction;
 }
 
 - (id) initWithTransaction:(SKPaymentTransaction*)t andPurchasable:(PurchasableVirtualItem*)pvi;
 
 - (void)verifyData;
-+ (SoomlaVerification*)getInstance;
 @end
