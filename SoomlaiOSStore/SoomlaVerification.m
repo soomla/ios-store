@@ -29,8 +29,13 @@
 @implementation SoomlaVerification
 
 static NSString* TAG = @"SOOMLA SoomlaVerification";
+static NSMutableArray* cacheRetryRequestReceipt;
 
 - (id) initWithTransaction:(SKPaymentTransaction*)t andPurchasable:(PurchasableVirtualItem*)pvi {
+    
+    if(cacheRetryRequestReceipt == nil)
+        cacheRetryRequestReceipt = [[NSMutableArray alloc] init];
+    
     if (self = [super init]) {
         transaction = t;
         purchasable = pvi;
@@ -56,7 +61,6 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
     }
     
     if (data) {
-        
         NSMutableDictionary* postDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                   [data base64Encoding], @"receipt_base64",
                                   transaction.payment.productIdentifier, @"productId",
@@ -83,6 +87,11 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
         [request setHTTPMethod:@"POST"];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        
+        if( SERVER_AUTHORIZATION_TOKEN && ![SERVER_AUTHORIZATION_TOKEN isEqualToString:@""]  ) {
+            [request setValue:SERVER_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+        }
+        
         [request setHTTPBody:postData];
         
         NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
@@ -111,6 +120,8 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString* dataStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     NSNumber* verifiedNum = nil;
+    NSNumber* successNum = nil;
+    
     if ([dataStr isEqualToString:@""]) {
         LogError(TAG, @"There was a problem when verifying. Got an empty response. Will try again later.");
         [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
@@ -121,6 +132,7 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
     @try {
         responseDict = [SoomlaUtils jsonStringToDict:dataStr];
         verifiedNum = (NSNumber*)[responseDict objectForKey:@"verified"];
+        successNum = (NSNumber*)[responseDict objectForKey:@"success"];
     } @catch (NSException* e) {
         LogError(TAG, @"There was a problem when verifying when handling response.");
     }
@@ -137,8 +149,9 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
                 tryAgain = NO;
                 SKReceiptRefreshRequest *req = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:nil];
                 req.delegate = self;
+                [cacheRetryRequestReceipt addObject:self];
                 [req start];
-                
+
                 // we return here ...
                 return;
             }
@@ -148,7 +161,17 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
         NSString* errorMsg = @"";
         if (responseDict) {
             @try {
-                errorMsg = [responseDict objectForKey:@"error"];
+                id errorObject = [responseDict objectForKey:@"error"];
+                if([errorObject isKindOfClass:[NSDictionary class]]) {
+                    errorMsg = [errorObject objectForKey:@"message"];
+                }
+                else if([errorObject isKindOfClass:[NSString class]]){
+                    errorMsg = (NSString *) errorObject;
+                }
+                else {
+                    errorMsg = @"Unknown Error";
+                }
+
             } @catch (NSException* e) {
                 LogError(TAG, @"There was a problem when verifying when handling response.");
             }
@@ -174,11 +197,17 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
 - (void)requestDidFinish:(SKRequest *)request {
     LogDebug(TAG, @"The refresh request for a receipt completed.");
     [self verifyData];
+    if([cacheRetryRequestReceipt containsObject:self])
+        [cacheRetryRequestReceipt removeObject:self];
+
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     LogDebug(TAG, ([NSString stringWithFormat:@"Error trying to request receipt: %@", error]));
     [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
+    if([cacheRetryRequestReceipt containsObject:self])
+        [cacheRetryRequestReceipt removeObject:self];
+
 }
 
 @end

@@ -22,4 +22,4 @@ BOOL VERIFY_PURCHASES = NO;
 
 NSString* VERIFY_URL = @"https://verify.soom.la/verify_ios";
 
-
+NSString* SERVER_AUTHORIZATION_TOKEN;

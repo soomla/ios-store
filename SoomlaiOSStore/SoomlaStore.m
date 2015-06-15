@@ -214,13 +214,20 @@ static NSString* developerPayload = NULL;
             receiptString = @"";
         }
     }
-
+    
+    NSString *transactionDate = transaction.transactionDate ? [NSDateFormatter localizedStringFromDate:transaction.transactionDate
+                                                                                             dateStyle:NSDateFormatterShortStyle
+                                                                                             timeStyle:NSDateFormatterFullStyle] : @"";
+    NSString *transactionDateOriginal = transaction.originalTransaction ? [NSDateFormatter localizedStringFromDate:[transaction.originalTransaction transactionDate]
+                                                                                                         dateStyle:NSDateFormatterShortStyle
+                                                                                                         timeStyle:NSDateFormatterFullStyle] : transactionDate;
+    
     [StoreEventHandling postMarketPurchase:pvi withExtraInfo:@{
-                                                               @"receiptUrl": receiptUrl,
+                                                               @"receiptUrl": [receiptUrl absoluteString],
                                                                @"transactionIdentifier": transaction.transactionIdentifier,
                                                                @"receiptBase64": receiptString,
-                                                               @"transactionDate": transaction.transactionDate,
-                                                               @"originalTransactionDate": transaction.originalTransaction ? transaction.originalTransaction.transactionDate : transaction.transactionDate,
+                                                               @"transactionDate": transactionDate,
+                                                               @"originalTransactionDate": transactionDateOriginal,
                                                                @"originalTransactionIdentifier": transaction.originalTransaction ? transaction.originalTransaction.transactionIdentifier : transaction.transactionIdentifier
                                                                }
                                 andPayload:developerPayload];
@@ -245,7 +252,10 @@ static NSString* developerPayload = NULL;
         [self finalizeTransaction:transaction forPurchasable:purchasable];
     } else {
         LogError(TAG, @"Failed to verify transaction receipt. The user will not get what he just bought.");
-        [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+        if (transaction) {
+            [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+        }
+
         [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
     }
     
