@@ -138,7 +138,7 @@ static NSMutableArray* cacheRetryRequestReceipt;
     }
     
     BOOL verified = NO;
-    if (responseCode==200 && successNum && [successNum boolValue] && verifiedNum) {
+    if (responseCode==200 && verifiedNum) {
         
         verified = [verifiedNum boolValue];
         if (!verified) {
