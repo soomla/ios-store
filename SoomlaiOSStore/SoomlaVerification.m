@@ -61,7 +61,6 @@ static NSMutableArray* cacheRetryRequestReceipt;
     }
     
     if (data) {
-        
         NSMutableDictionary* postDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                   [data base64Encoding], @"receipt_base64",
                                   transaction.payment.productIdentifier, @"productId",
@@ -121,6 +120,8 @@ static NSMutableArray* cacheRetryRequestReceipt;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString* dataStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     NSNumber* verifiedNum = nil;
+    NSNumber* successNum = nil;
+    
     if ([dataStr isEqualToString:@""]) {
         LogError(TAG, @"There was a problem when verifying. Got an empty response. Will try again later.");
         [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
@@ -131,12 +132,13 @@ static NSMutableArray* cacheRetryRequestReceipt;
     @try {
         responseDict = [SoomlaUtils jsonStringToDict:dataStr];
         verifiedNum = (NSNumber*)[responseDict objectForKey:@"verified"];
+        successNum = (NSNumber*)[responseDict objectForKey:@"success"];
     } @catch (NSException* e) {
         LogError(TAG, @"There was a problem when verifying when handling response.");
     }
     
     BOOL verified = NO;
-    if (responseCode==200 && verifiedNum) {
+    if (responseCode==200 && successNum && [successNum boolValue] && verifiedNum) {
         
         verified = [verifiedNum boolValue];
         if (!verified) {

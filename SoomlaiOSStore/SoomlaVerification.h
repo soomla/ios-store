@@ -20,7 +20,7 @@
 @class PurchasableVirtualItem;
 
 @interface SoomlaVerification : NSObject <NSURLConnectionDelegate, SKRequestDelegate>{
-    __strong NSMutableData *responseData;
+    NSMutableData *responseData;
     int responseCode;
     __strong PurchasableVirtualItem *purchasable;
     __strong SKPaymentTransaction* transaction;
