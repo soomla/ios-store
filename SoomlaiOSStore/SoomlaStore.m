@@ -86,9 +86,16 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
         if (!verifications) {
             verifications = [NSMutableArray array];
         }
+        [self retryUnfinishedTransactions];
     } else {
         [StoreEventHandling postBillingNotSupported];
     }
+}
+
+- (void)retryUnfinishedTransactions {
+    NSArray* transactions = [[SKPaymentQueue defaultQueue] transactions];
+    LogDebug(TAG, ([NSString stringWithFormat:@"Retrying any unfinished transactions: %lu", (unsigned long)transactions.count]));
+    [self paymentQueue:[SKPaymentQueue defaultQueue] updatedTransactions:transactions];
 }
 
 static NSString* developerPayload = NULL;
