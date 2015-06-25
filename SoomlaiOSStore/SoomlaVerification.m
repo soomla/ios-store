@@ -158,7 +158,7 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
             LogError(TAG, @"It appears that the iTunes servers are down. We can't verify this receipt.");
             if (VERIFY_ON_ITUNES_FAILURE) {
                 LogDebug(TAG, @"You decided you want to allow situations where Itunes is down for verification. finalizing the purchase now.");
-                [StoreEventHandling postMarketPurchaseVerification:verified forItem:purchasable andTransaction:transaction forObject:self];
+                [StoreEventHandling postMarketPurchaseVerification:YES forItem:purchasable andTransaction:transaction forObject:self];
                 return;
             }
         }
