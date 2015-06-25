@@ -35,4 +35,14 @@ extern const int METADATA_VERSION;
  */
 extern BOOL VERIFY_PURCHASES;
 
+/**
+ When set to 'YES', this will tell the verification process to mark a purchase 
+ as successful in cases where itunes servers are down or unresponsive.
+ 
+ @warning SOOMLA recommends that you leave this value set to 'NO'. Itunes 
+            services are usually UP. If you're still testing (Sandbox) then 
+            you might want to turn this on to get your purchases running.
+ */
+extern BOOL VERIFY_ON_ITUNES_FAILURE;
+
 extern NSString* VERIFY_URL;

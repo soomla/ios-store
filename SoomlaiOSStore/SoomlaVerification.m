@@ -156,6 +156,11 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
         
         if ([errorMsg isEqualToString:@"ECONNRESET"]) {
             LogError(TAG, @"It appears that the iTunes servers are down. We can't verify this receipt.");
+            if (VERIFY_ON_ITUNES_FAILURE) {
+                LogDebug(TAG, @"You decided you want to allow situations where Itunes is down for verification. finalizing the purchase now.");
+                [StoreEventHandling postMarketPurchaseVerification:verified forItem:purchasable andTransaction:transaction forObject:self];
+                return;
+            }
         }
         
         LogError(TAG, ([NSString stringWithFormat:@"There was a problem when verifying (%@). Will try again later.", errorMsg]));
@@ -163,11 +168,6 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
     }
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    LogError(TAG, @"Failed to connect to verification server. Not doing anything ... the purchasing process will happen again next time the service is initialized.");
-    LogDebug(TAG, [error description]);
-    [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_TIMEOUT forObject:self];
-}
 
 #pragma mark SKRequestDelegate methods
 

@@ -20,6 +20,8 @@ const int METADATA_VERSION          = 3;
 
 BOOL VERIFY_PURCHASES = NO;
 
+BOOL VERIFY_ON_ITUNES_FAILURE = NO;
+
 NSString* VERIFY_URL = @"https://verify.soom.la/verify_ios";
 
 
