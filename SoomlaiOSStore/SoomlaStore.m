@@ -86,9 +86,16 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
         if (!verifications) {
             verifications = [NSMutableArray array];
         }
+        [self retryUnfinishedTransactions];
     } else {
         [StoreEventHandling postBillingNotSupported];
     }
+}
+
+- (void)retryUnfinishedTransactions {
+    NSArray* transactions = [[SKPaymentQueue defaultQueue] transactions];
+    LogDebug(TAG, ([NSString stringWithFormat:@"Retrying any unfinished transactions: %lu", (unsigned long)transactions.count]));
+    [self paymentQueue:[SKPaymentQueue defaultQueue] updatedTransactions:transactions];
 }
 
 static NSString* developerPayload = NULL;
@@ -203,6 +210,10 @@ static NSString* developerPayload = NULL;
     if (version >= 7) {
         receiptUrl = [[NSBundle mainBundle] appStoreReceiptURL];
     }
+    NSString* receiptUrlStr = @"";
+    if (receiptUrl) {
+        receiptUrlStr = [receiptUrl absoluteString];
+    }
     
     NSString *receiptString = @"";
     if ([[NSFileManager defaultManager] fileExistsAtPath:[receiptUrl path]]) {
@@ -215,12 +226,18 @@ static NSString* developerPayload = NULL;
         }
     }
 
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    NSString* transactionDateStr = [dateFormatter stringFromDate:transaction.transactionDate];
+    
+    NSString* originalDateStr = transaction.originalTransaction ? [dateFormatter stringFromDate:transaction.originalTransaction.transactionDate] : transactionDateStr;
+    
+    
     [StoreEventHandling postMarketPurchase:pvi withExtraInfo:@{
-                                                               @"receiptUrl": receiptUrl,
+                                                               @"receiptUrl": receiptUrlStr,
                                                                @"transactionIdentifier": transaction.transactionIdentifier,
                                                                @"receiptBase64": receiptString,
-                                                               @"transactionDate": transaction.transactionDate,
-                                                               @"originalTransactionDate": transaction.originalTransaction ? transaction.originalTransaction.transactionDate : transaction.transactionDate,
+                                                               @"transactionDate": transactionDateStr,
+                                                               @"originalTransactionDate": originalDateStr,
                                                                @"originalTransactionIdentifier": transaction.originalTransaction ? transaction.originalTransaction.transactionIdentifier : transaction.transactionIdentifier
                                                                }
                                 andPayload:developerPayload];
