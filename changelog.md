@@ -1,3 +1,13 @@
+### v3.6.10 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.9...v3.6.10)
+
+* Changes
+  * Added method to retry unfinished transactions after billing service is loaded.
+  * Allowing to force verification on purchases that failed verification b/c of itunes servers didn't work properly.
+  * For MarketPurchaseEvent we bundle the specific provider extra params inside a Hash
+
+* Fixes
+  * Saving SoomlaVerification objects' pointers until they are not needed anymore.
+
 ### v3.6.9 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.8...v3.6.9)
 
 * Changes
