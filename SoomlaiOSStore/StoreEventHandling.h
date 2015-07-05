@@ -45,7 +45,7 @@
 #define EVENT_MARKET_ITEMS_REFRESH_STARTED  @"MarketItemsRefreshStarted"
 #define EVENT_MARKET_ITEMS_REFRESH_FINISHED @"MarketItemsRefreshFinished"
 #define EVENT_MARKET_ITEMS_REFRESH_FAILED   @"MarketItemsRefreshFailed"
-#define EVENT_UNEXPECTED_ERROR_IN_STORE     @"UnexpectedErrorInStore"
+#define EVENT_UNEXPECTED_STORE_ERROR        @"UnexpectedStoreError"
 
 
 // UserInfo Elements
