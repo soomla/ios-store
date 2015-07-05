@@ -37,7 +37,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_PURCHASE_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_RESTORE_TRANSACTIONS_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_RESTORE_TRANSACTIONS_STARTED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UNEXPECTED_ERROR_IN_STORE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UNEXPECTED_STORE_ERROR object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_SOOMLASTORE_INIT object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_ITEMS_REFRESH_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_ITEMS_REFRESH_FINISHED object:nil];
@@ -158,10 +158,10 @@
 }
 
 + (void)postUnexpectedError:(int)code forObject:(id)object{
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [NSNumber numberWithInt:code], DICT_ELEMENT_ERROR_CODE,
-                              nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UNEXPECTED_ERROR_IN_STORE object:object userInfo:userInfo];
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_ERROR_CODE : @(code)
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UNEXPECTED_STORE_ERROR object:object userInfo:userInfo];
 }
 
 + (void) postSoomlaStoreInitialized {
