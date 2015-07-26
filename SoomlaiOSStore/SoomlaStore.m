@@ -231,22 +231,31 @@ static NSString* developerPayload = NULL;
     
     NSString* originalDateStr = transaction.originalTransaction ? [dateFormatter stringFromDate:transaction.originalTransaction.transactionDate] : transactionDateStr;
     
-    
-    [StoreEventHandling postMarketPurchase:pvi withExtraInfo:@{
-                                                               @"receiptUrl": receiptUrlStr,
-                                                               @"transactionIdentifier": transaction.transactionIdentifier,
-                                                               @"receiptBase64": receiptString,
-                                                               @"transactionDate": transactionDateStr,
-                                                               @"originalTransactionDate": originalDateStr,
-                                                               @"originalTransactionIdentifier": transaction.originalTransaction ? transaction.originalTransaction.transactionIdentifier : transaction.transactionIdentifier
-                                                               }
-                                andPayload:developerPayload];
-    [pvi giveAmount:1];
-    [StoreEventHandling postItemPurchased:pvi.itemId withPayload:developerPayload];
-    developerPayload = NULL;
-
-    // Remove the transaction from the payment queue.
-    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    if (receiptUrlStr && transaction.transactionIdentifier && receiptString && transactionDateStr) {
+        
+        [StoreEventHandling postMarketPurchase:pvi withExtraInfo:@{
+                                                                   @"receiptUrl": receiptUrlStr,
+                                                                   @"transactionIdentifier": transaction.transactionIdentifier,
+                                                                   @"receiptBase64": receiptString,
+                                                                   @"transactionDate": transactionDateStr,
+                                                                   @"originalTransactionDate": originalDateStr,
+                                                                   @"originalTransactionIdentifier": transaction.originalTransaction ? transaction.originalTransaction.transactionIdentifier : transaction.transactionIdentifier
+                                                                   }
+                                    andPayload:developerPayload];
+        
+        [pvi giveAmount:1];
+        [StoreEventHandling postItemPurchased:pvi.itemId withPayload:developerPayload];
+        developerPayload = NULL;
+        
+        // Remove the transaction from the payment queue.
+        [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+        
+    } else {
+        
+        LogError(TAG, ([NSString stringWithFormat:@"Transaction for %@ has missing info! The user will not get what he just bought.", transaction.payment.productIdentifier]));
+        [self finishFailedTransaction:transaction];
+        
+    }
 }
 
 - (void)purchaseVerified:(NSNotification*)notification{
@@ -261,12 +270,16 @@ static NSString* developerPayload = NULL;
     if (verified) {
         [self finalizeTransaction:transaction forPurchasable:purchasable];
     } else {
-        LogError(TAG, @"Failed to verify transaction receipt. The user will not get what he just bought.");
-        [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
-        [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
+        LogError(TAG, ([NSString stringWithFormat:@"Failed to verify transaction receipt for %@. The user will not get what he just bought.", purchasable]));
+        [self finishFailedTransaction:transaction];
     }
     
     [verifications removeObject:notification.object];
+}
+
+- (void)finishFailedTransaction:(SKPaymentTransaction *)transaction {
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    [StoreEventHandling postUnexpectedError:ERR_VERIFICATION_FAIL forObject:self];
 }
 
 - (void)unexpectedVerificationError:(NSNotification*)notification{
@@ -282,7 +295,7 @@ static NSString* developerPayload = NULL;
 
         if (VERIFY_PURCHASES) {
             SoomlaVerification *sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi];
-            
+                   
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseVerified:) name:EVENT_MARKET_PURCHASE_VERIF object:sv];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_STORE_ERROR object:sv];
 
@@ -294,7 +307,7 @@ static NSString* developerPayload = NULL;
         }
 
     } @catch (VirtualItemNotFoundException* e) {
-        LogError(TAG, ([NSString stringWithFormat:@"An error occured when handling copmleted purchase for PurchasableVirtualItem with productId: %@"
+        LogError(TAG, ([NSString stringWithFormat:@"An error occured when handling completed purchase for PurchasableVirtualItem with productId: %@"
                         @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
         [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
         [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
@@ -334,6 +347,7 @@ static NSString* developerPayload = NULL;
         @catch (VirtualItemNotFoundException* e) {
             LogError(TAG, ([NSString stringWithFormat:@"Couldn't find the CANCELLED VirtualCurrencyPack OR MarketItem with productId: %@"
                             @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
+            
             [StoreEventHandling postUnexpectedError:ERR_GENERAL forObject:self];
         }
 
