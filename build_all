@@ -1,5 +1,13 @@
 rm -rf build
 mkdir build
 
+build_failed=0
 xcodebuild -configuration Release -sdk iphoneos -project submodules/soomla-ios-core/SoomlaiOSCore.xcodeproj -target SoomlaiOSCore clean build CREATING_UNIVERSAL_DIR=$PWD/build
+if [ $? != 0 ]; then
+    build_failed=1
+fi
 xcodebuild -configuration Release -sdk iphoneos -project SoomlaiOSStore.xcodeproj -target SoomlaiOSStore clean build CREATING_UNIVERSAL_DIR=$PWD/build
+if [ $? != 0 ]; then
+    build_failed=1
+fi
+exit $build_failed
