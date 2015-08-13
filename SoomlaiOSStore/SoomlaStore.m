@@ -34,6 +34,8 @@
 
 #import "SoomlaVerification.h"
 
+#define SOOMLA_STORE_VERSION @"3.6.12"
+
 @interface SoomlaStore (){
     NSMutableArray* verifications;
 }
@@ -56,6 +58,10 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
     }
 
     return _instance;
+}
+
++ (NSString*)getVersion {
+    return SOOMLA_STORE_VERSION;
 }
 
 - (BOOL)initializeWithStoreAssets:(id<IStoreAssets>)storeAssets {
