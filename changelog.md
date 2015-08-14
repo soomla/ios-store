@@ -1,3 +1,8 @@
+### v3.6.12 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.11...v3.6.12)
+
+* Changes
+  * Added version in code
+
 ### v3.6.11 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.10...v3.6.11)
 
 * Fixes
