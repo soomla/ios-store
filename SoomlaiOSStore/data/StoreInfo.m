@@ -216,31 +216,31 @@ static BOOL nonConsumableMigrationNeeded = NO;
     [self save];
 }
 
+-(BOOL)checkAssetsArrayForMarketIdDuplicates:(NSArray *)assetsArray {
+    NSMutableSet *marketItemIds = [NSMutableSet new];
+    for (PurchasableVirtualItem *pvi in assetsArray) {
+        if ([pvi.purchaseType isKindOfClass:[PurchaseWithMarket class]]) {
+            NSString *currentMarketId = ((PurchaseWithMarket *)pvi.purchaseType).marketItem.productId;
+            if ([marketItemIds containsObject:currentMarketId]) {
+                return NO;
+
+            } else {
+                [marketItemIds addObject:currentMarketId];
+            }
+        }
+    }
+    return YES;
+}
+
 -(BOOL)validateStoreAssets:(id<IStoreAssets>)storeAssets {
     if (storeAssets == nil) {
         LogError(TAG, @"The given store assets can't be null!");
         return NO;
     }
-
-    NSMutableSet *marketItemIds = [NSMutableSet new],
-            *virtualItemIds = [NSMutableSet new];
-    for (VirtualGood *virtualGood in storeAssets.virtualGoods) {
-        if ([virtualGood.purchaseType isKindOfClass:[PurchaseWithMarket class]]) {
-            NSString *currentMarketId = ((PurchaseWithMarket *)virtualGood.purchaseType).marketItem.productId;
-            if ([marketItemIds containsObject:currentMarketId]) {
-                LogError(TAG, @"The given store assets has duplicates at marketItem productId!");
-            } else {
-                [marketItemIds addObject:currentMarketId];
-            }
-        }
-        if ([virtualGood.purchaseType isKindOfClass:[PurchaseWithVirtualItem class]]) {
-            NSString *currentVirtualId = ((PurchaseWithVirtualItem *)virtualGood.purchaseType).targetItemId;
-            if ([virtualItemIds containsObject:currentVirtualId]) {
-                LogError(TAG, @"The given store assets has duplicates at targetItemId!");
-            } else {
-                [virtualItemIds addObject:currentVirtualId];
-            }
-        }
+    if (![self checkAssetsArrayForMarketIdDuplicates:storeAssets.virtualGoods]
+            || ![self checkAssetsArrayForMarketIdDuplicates:storeAssets.virtualCurrencyPacks]) {
+        LogError(TAG, @"The given store assets has duplicates at marketItem productId!");
+        return NO;
     }
     return YES;
 }
