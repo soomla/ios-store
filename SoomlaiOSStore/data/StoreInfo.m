@@ -216,12 +216,40 @@ static BOOL nonConsumableMigrationNeeded = NO;
     [self save];
 }
 
+-(BOOL)validateStoreAssets:(id<IStoreAssets>)storeAssets {
+    if (storeAssets == nil) {
+        LogError(TAG, @"The given store assets can't be null!");
+        return NO;
+    }
+
+    NSMutableSet *marketItemIds = [NSMutableSet new],
+            *virtualItemIds = [NSMutableSet new];
+    for (VirtualGood *virtualGood in storeAssets.virtualGoods) {
+        if ([virtualGood.purchaseType isKindOfClass:[PurchaseWithMarket class]]) {
+            NSString *currentMarketId = ((PurchaseWithMarket *)virtualGood.purchaseType).marketItem.productId;
+            if ([marketItemIds containsObject:currentMarketId]) {
+                LogError(TAG, @"The given store assets has duplicates at marketItem productId!");
+            } else {
+                [marketItemIds addObject:currentMarketId];
+            }
+        }
+        if ([virtualGood.purchaseType isKindOfClass:[PurchaseWithVirtualItem class]]) {
+            NSString *currentVirtualId = ((PurchaseWithVirtualItem *)virtualGood.purchaseType).targetItemId;
+            if ([virtualItemIds containsObject:currentVirtualId]) {
+                LogError(TAG, @"The given store assets has duplicates at targetItemId!");
+            } else {
+                [virtualItemIds addObject:currentVirtualId];
+            }
+        }
+    }
+    return YES;
+}
+
 - (void)setStoreAssets:(id <IStoreAssets>)storeAssets{
-    if(storeAssets == NULL){
-        LogError(TAG, @"The given store assets can't be null !");
+    if ([self validateStoreAssets:storeAssets]) {
         return;
     }
-    
+
     currentAssetsVersion = [storeAssets getVersion];
     
     // we prefer initialization from the database (storeAssets are only set on the first time the game is loaded)!
