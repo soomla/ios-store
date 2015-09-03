@@ -57,6 +57,7 @@
 #define DICT_ELEMENT_UpgradeVG         @"UpgradeVG"
 #define DICT_ELEMENT_PURCHASABLE       @"PurchasableVirtualItem"
 #define DICT_ELEMENT_PURCHASABLE_ID    @"PurchasableVirtualItemId"
+#define DICT_ELEMENT_FRAUD_PROTECTION  @"fraudProtection"
 #define DICT_ELEMENT_DEVELOPERPAYLOAD  @"DeveloperPayload"
 #define DICT_ELEMENT_EXTRA_INFO        @"extraInfo"
 #define DICT_ELEMENT_SUCCESS           @"success"
