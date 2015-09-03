@@ -19,6 +19,8 @@
 #import "MarketItem.h"
 #import "VirtualGood.h"
 
+extern BOOL VERIFY_PURCHASES;
+
 @implementation StoreEventHandling
 
 + (void)observeAllEventsWithObserver:(id)observer withSelector:(SEL)selector{
@@ -128,7 +130,10 @@
 }
 
 + (void)postMarketPurchaseStarted:(PurchasableVirtualItem*)purchasableVirtualItem{
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:purchasableVirtualItem forKey:DICT_ELEMENT_PURCHASABLE];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              purchasableVirtualItem, DICT_ELEMENT_PURCHASABLE,
+                              [NSNumber numberWithBool:VERIFY_PURCHASES], DICT_ELEMENT_FRAUD_PROTECTION,
+                              nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASE_STARTED object:self userInfo:userInfo];
 }
 

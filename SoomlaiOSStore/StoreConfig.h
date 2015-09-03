@@ -26,12 +26,7 @@
 extern const int METADATA_VERSION;
 
 /**
- When set to 'YES', this removes the need to verify purchases when there's no
- signature.
- NOTE: This is useful while you are in development and testing stages of your 
- game.
-
- @warning Set to 'NO' before you publish your app!!!
+ When set to 'YES', this will verify purchases on the SOOMLA server
  */
 extern BOOL VERIFY_PURCHASES;
 

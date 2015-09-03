@@ -34,7 +34,7 @@
 
 #import "SoomlaVerification.h"
 
-#define SOOMLA_STORE_VERSION @"3.6.12"
+#define SOOMLA_STORE_VERSION @"3.6.13"
 
 @interface SoomlaStore (){
     NSMutableArray* verifications;
