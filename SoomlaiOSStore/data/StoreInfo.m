@@ -223,10 +223,8 @@ static BOOL nonConsumableMigrationNeeded = NO;
             NSString *currentMarketId = ((PurchaseWithMarket *)pvi.purchaseType).marketItem.productId;
             if ([marketItemIds containsObject:currentMarketId]) {
                 return NO;
-
-            } else {
-                [marketItemIds addObject:currentMarketId];
             }
+            [marketItemIds addObject:currentMarketId];
         }
     }
     return YES;
