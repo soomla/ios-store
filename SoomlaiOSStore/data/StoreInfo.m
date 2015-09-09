@@ -246,7 +246,7 @@ static BOOL nonConsumableMigrationNeeded = NO;
 }
 
 - (void)setStoreAssets:(id <IStoreAssets>)storeAssets{
-    if ([self validateStoreAssets:storeAssets]) {
+    if (![self validateStoreAssets:storeAssets]) {
         return;
     }
 
