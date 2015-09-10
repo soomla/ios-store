@@ -216,38 +216,12 @@ static BOOL nonConsumableMigrationNeeded = NO;
     [self save];
 }
 
--(BOOL)checkAssetsArrayForMarketIdDuplicates:(NSArray *)assetsArray {
-    NSMutableSet *marketItemIds = [NSMutableSet new];
-    for (PurchasableVirtualItem *pvi in assetsArray) {
-        if ([pvi.purchaseType isKindOfClass:[PurchaseWithMarket class]]) {
-            NSString *currentMarketId = ((PurchaseWithMarket *)pvi.purchaseType).marketItem.productId;
-            if ([marketItemIds containsObject:currentMarketId]) {
-                return NO;
-            }
-            [marketItemIds addObject:currentMarketId];
-        }
-    }
-    return YES;
-}
-
--(BOOL)validateStoreAssets:(id<IStoreAssets>)storeAssets {
-    if (storeAssets == nil) {
-        LogError(TAG, @"The given store assets can't be null!");
-        return NO;
-    }
-    if (![self checkAssetsArrayForMarketIdDuplicates:storeAssets.virtualGoods]
-            || ![self checkAssetsArrayForMarketIdDuplicates:storeAssets.virtualCurrencyPacks]) {
-        LogError(TAG, @"The given store assets has duplicates at marketItem productId!");
-        return NO;
-    }
-    return YES;
-}
-
 - (void)setStoreAssets:(id <IStoreAssets>)storeAssets{
-    if (![self validateStoreAssets:storeAssets]) {
+    if(storeAssets == NULL){
+        LogError(TAG, @"The given store assets can't be null !");
         return;
     }
-
+    
     currentAssetsVersion = [storeAssets getVersion];
     
     // we prefer initialization from the database (storeAssets are only set on the first time the game is loaded)!
