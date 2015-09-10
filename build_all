@@ -7,7 +7,9 @@ rm -rf build
 mkdir build
 
 submodules/build_all
-cp -r submodules/soomla-ios-core/build/* build/
+
 xcodebuild -configuration Release -sdk iphoneos -project SoomlaiOSStore.xcodeproj -target SoomlaiOSStore clean build CREATING_UNIVERSAL_DIR=$PWD/build
+
+cp -r submodules/soomla-ios-core/build/* build/
 
 cd - > /dev/null
