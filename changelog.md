@@ -1,8 +1,18 @@
+### v3.6.13 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.12...v3.6.13)
+
+* Changes
+  * Added Fraud Protection flag to OnMarketPurchaseStarted event
+
+### v3.6.12 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.11...v3.6.12)
+
+* Changes
+  * Added version in code
+
 ### v3.6.11 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.10...v3.6.11)
 
 * Fixes
   * Fixed crash when using LocaliAPStore and getting verification confirmation from server
-  
+
 * Changes
   * Added refresh of receipt in case it doesn't exist, and finalize transaction if still doesn't exist after refresh
 
