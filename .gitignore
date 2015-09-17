@@ -16,3 +16,4 @@ DerivedData/*
 .DS_Store
 out
 build.log
+build/
