@@ -1,3 +1,11 @@
+### v3.6.14 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.13...v3.6.14)
+
+* Changes
+  * Removed binaries and improved build scripts
+
+* Fixes
+  * Wrong behaviour if purchasable items have the same product ID
+
 ### v3.6.13 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.12...v3.6.13)
 
 * Changes
