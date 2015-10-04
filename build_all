@@ -1,5 +1,13 @@
+#!/bin/sh
+set -e
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR
+
 rm -rf build
 mkdir build
 
-xcodebuild -configuration Release -sdk iphoneos -project submodules/soomla-ios-core/SoomlaiOSCore.xcodeproj -target SoomlaiOSCore clean build CREATING_UNIVERSAL_DIR=$PWD/build
+submodules/build_all
+
 xcodebuild -configuration Release -sdk iphoneos -project SoomlaiOSStore.xcodeproj -target SoomlaiOSStore clean build CREATING_UNIVERSAL_DIR=$PWD/build
+
+cd - > /dev/null

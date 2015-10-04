@@ -46,7 +46,7 @@
 #define EVENT_MARKET_ITEMS_REFRESH_STARTED  @"MarketItemsRefreshStarted"
 #define EVENT_MARKET_ITEMS_REFRESH_FINISHED @"MarketItemsRefreshFinished"
 #define EVENT_MARKET_ITEMS_REFRESH_FAILED   @"MarketItemsRefreshFailed"
-#define EVENT_UNEXPECTED_ERROR_IN_STORE     @"UnexpectedErrorInStore"
+#define EVENT_UNEXPECTED_STORE_ERROR        @"UnexpectedStoreError"
 
 
 // UserInfo Elements
@@ -58,13 +58,14 @@
 #define DICT_ELEMENT_UpgradeVG         @"UpgradeVG"
 #define DICT_ELEMENT_PURCHASABLE       @"PurchasableVirtualItem"
 #define DICT_ELEMENT_PURCHASABLE_ID    @"PurchasableVirtualItemId"
+#define DICT_ELEMENT_FRAUD_PROTECTION  @"fraudProtection"
 #define DICT_ELEMENT_DEVELOPERPAYLOAD  @"DeveloperPayload"
 #define DICT_ELEMENT_EXTRA_INFO        @"extraInfo"
 #define DICT_ELEMENT_SUCCESS           @"success"
 #define DICT_ELEMENT_VERIFIED          @"verified"
 #define DICT_ELEMENT_TRANSACTION       @"transaction"
-#define DICT_ELEMENT_ERROR_CODE        @"error_code"
-#define DICT_ELEMENT_ERROR_MESSAGE     @"error_msg"
+#define DICT_ELEMENT_ERROR_CODE        @"errorCode"
+#define DICT_ELEMENT_ERROR_MESSAGE     @"errorMessage"
 #define DICT_ELEMENT_PRODUCTID         @"productId"
 #define DICT_ELEMENT_PRICE             @"price"
 #define DICT_ELEMENT_TITLE             @"title"
