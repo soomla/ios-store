@@ -80,12 +80,12 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_GOOD_UNEQUIPPED object:self userInfo:userInfo];
 }
 
-+ (void)postGoodUpgrade:(NSString*)goodItemId withGoodUpgrade:(NSString*)goodUpgradeItemId{
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              goodItemId, DICT_ELEMENT_GOOD,
-                              goodUpgradeItemId, DICT_ELEMENT_UpgradeVG,
-                              nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_GOOD_UPGRADE object:self userInfo:userInfo];
++ (void)postGoodUpgrade:(NSString*)goodItemId withGoodUpgrade:(NSString*)goodUpgradeItemId {
+    NSMutableDictionary *mutableUserInfo = [NSMutableDictionary dictionaryWithDictionary: @{DICT_ELEMENT_GOOD: goodItemId}];
+    if (goodUpgradeItemId) {
+        mutableUserInfo[DICT_ELEMENT_UpgradeVG] = goodUpgradeItemId;
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_GOOD_UPGRADE object:self userInfo:mutableUserInfo.copy];
 }
 
 + (void)postItemPurchaseStarted:(NSString*)itemId{
