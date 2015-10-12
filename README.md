@@ -25,9 +25,14 @@ Check out our [Wiki] (https://github.com/soomla/ios-store/wiki) for more informa
 
 ## Download
 
-####Pre baked libraries:
+#### Pre baked libraries:
 
-[ios-store 3.6.14](http://library.soom.la/fetch/ios-store/3.6.14?cf=github)
+The latest [ios-store](http://library.soom.la/fetch/ios-store/latest?cf=github) release.
+
+#### From sources:
+ - Clone this repository;
+ - Run `./build_all` from project directory;
+ - Take created binaries from `build` directory and use it!
 
 Getting Started
 ---
