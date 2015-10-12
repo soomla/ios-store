@@ -1,3 +1,8 @@
+### v3.6.15 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.14...v3.6.15)
+
+* Fixes
+  * StoreInventory.RemoveGoodUpgrades crash when upgrade id is null
+
 ### v3.6.14 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.13...v3.6.14)
 
 * Changes

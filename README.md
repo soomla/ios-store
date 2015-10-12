@@ -27,7 +27,7 @@ Check out our [Wiki] (https://github.com/soomla/ios-store/wiki) for more informa
 
 ####Pre baked libraries:
 
-[ios-store 3.6.14](http://library.soom.la/fetch/ios-store/3.6.14?cf=github)
+[ios-store 3.6.15](http://library.soom.la/fetch/ios-store/3.6.15?cf=github)
 
 Getting Started
 ---
