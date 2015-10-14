@@ -167,6 +167,10 @@ static NSString* developerPayload = NULL;
                 break;
             case SKPaymentTransactionStateRestored:
                 [self restoreTransaction:transaction];
+            case SKPaymentTransactionStateDeferred:
+                // Do not block your UI. Allow the user to continue using your app.
+                [self deferTransaction:transaction];
+                break;
             default:
                 break;
         }
@@ -359,6 +363,20 @@ static NSString* developerPayload = NULL;
 
     }
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) deferTransaction: (SKPaymentTransaction *)transaction {
+    LogDebug(TAG, ([NSString stringWithFormat:@"Defer transaction for product: %@", transaction.payment.productIdentifier]));
+    @try {
+        PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
+        [StoreEventHandling postMarketPurchaseDeferred:pvi andPayload:developerPayload];
+    } @catch (VirtualItemNotFoundException* e) {
+        LogError(TAG, ([NSString stringWithFormat:@"Couldn't find the DEFERRED VirtualCurrencyPack OR MarketItem with productId: %@"
+                        @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
+        [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
+        [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    }
+    
 }
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
