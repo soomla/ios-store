@@ -36,6 +36,7 @@
 #define EVENT_ITEM_PURCHASED                @"ItemPurchased"
 #define EVENT_ITEM_PURCHASE_STARTED         @"ItemPurchaseProcessStarted"
 #define EVENT_MARKET_PURCHASE_CANCELLED     @"MarketPurchaseCancelled"
+#define EVENT_MARKET_PURCHASE_DEFERRED      @"MarketPurchaseDeferred"
 #define EVENT_MARKET_PURCHASED              @"MarketPurchased"
 #define EVENT_MARKET_PURCHASE_VERIF         @"MarketPurchaseVerification"
 #define EVENT_MARKET_PURCHASE_STARTED       @"MarketPurchaseProcessStarted"
@@ -109,6 +110,8 @@
 + (void)postItemPurchased:(NSString*)itemId withPayload:(NSString*)payload;
 
 + (void)postMarketPurchaseCancelled:(PurchasableVirtualItem*)purchasableVirtualItem;
+
++ (void)postMarketPurchaseDeferred:(PurchasableVirtualItem*)purchasableVirtualItem andPayload:(NSString*)payload;
 
 + (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem withExtraInfo:(NSDictionary*)extraInfo andPayload:(NSString*)payload;
 
