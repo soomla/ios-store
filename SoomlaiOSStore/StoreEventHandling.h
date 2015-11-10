@@ -47,6 +47,7 @@
 #define EVENT_MARKET_ITEMS_REFRESH_FINISHED @"MarketItemsRefreshFinished"
 #define EVENT_MARKET_ITEMS_REFRESH_FAILED   @"MarketItemsRefreshFailed"
 #define EVENT_UNEXPECTED_STORE_ERROR        @"UnexpectedStoreError"
+#define EVENT_VERIFICATION_STARTED          @"VerificationStarted"
 
 
 // UserInfo Elements
@@ -130,6 +131,8 @@
 + (void)postRestoreTransactionsStarted;
 
 + (void)postUnexpectedError:(int)code forObject:(id)object;
+
++ (void)postVerificationStarted:(PurchasableVirtualItem*)purchasableVirtualItem;
 
 + (void)postSoomlaStoreInitialized;
 

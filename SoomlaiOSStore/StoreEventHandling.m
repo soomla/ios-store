@@ -45,6 +45,7 @@ extern BOOL VERIFY_PURCHASES;
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_ITEMS_REFRESH_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_ITEMS_REFRESH_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_MARKET_ITEMS_REFRESH_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_VERIFICATION_STARTED object:nil];
 }
 
 + (void)postBillingSupported{
@@ -176,6 +177,11 @@ extern BOOL VERIFY_PURCHASES;
             DICT_ELEMENT_ERROR_CODE : @(code)
     };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UNEXPECTED_STORE_ERROR object:object userInfo:userInfo];
+}
+
++ (void)postVerificationStarted:(PurchasableVirtualItem*)purchasableVirtualItem {
+    NSDictionary *userInfo = @{ DICT_ELEMENT_PURCHASABLE: purchasableVirtualItem };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_VERIFICATION_STARTED object:self userInfo:userInfo];
 }
 
 + (void) postSoomlaStoreInitialized {
