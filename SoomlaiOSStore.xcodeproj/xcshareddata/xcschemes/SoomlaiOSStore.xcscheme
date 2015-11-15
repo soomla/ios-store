@@ -20,20 +20,6 @@
                ReferencedContainer = "container:SoomlaiOSStore.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "NO"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C02CEC52160DC870000AA0D2"
-               BuildableName = "SoomlaiOSStoreTests.octest"
-               BlueprintName = "SoomlaiOSStoreTests"
-               ReferencedContainer = "container:SoomlaiOSStore.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
