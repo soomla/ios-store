@@ -3,5 +3,6 @@ sudo: false
 install: true
 before_script:
     - ./submodules/build_all
-xcode_project: SoomlaiOSStore.xcodeproj
-xcode_scheme: SoomlaiOSStore
+script: xctool -project SoomlaiOSStore.xcodeproj -scheme SoomlaiOSStore build
+# xcode_project: SoomlaiOSStore.xcodeproj
+# xcode_scheme: SoomlaiOSStore
