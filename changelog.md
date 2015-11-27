@@ -1,3 +1,8 @@
+### v3.6.17 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.16...v3.6.17)
+
+* New Features
+  * Add Verification Started Event to signal when the verification has begun
+
 ### v3.6.16 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.15...v3.6.16)
 
 * Features
