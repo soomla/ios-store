@@ -250,9 +250,9 @@ static BOOL nonConsumableMigrationNeeded = NO;
     return YES;
 }
 
-- (BOOL)setStoreAssets:(id <IStoreAssets>)storeAssets{
+- (void)setStoreAssets:(id <IStoreAssets>)storeAssets{
     if (![self validateStoreAssets:storeAssets]) {
-        return NO;
+        return;
     }
 
     currentAssetsVersion = [storeAssets getVersion];
@@ -261,7 +261,6 @@ static BOOL nonConsumableMigrationNeeded = NO;
     if (![self loadFromDB]){
         [self privInitializeWithIStoreAssets:storeAssets];
     }
-    return YES;
 }
 
 - (void)setStoreAssetsJSON:(NSString*)storeMetaJSON withVersion:(int)version {
