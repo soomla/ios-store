@@ -74,7 +74,7 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
     
     [StorageManager getInstance];
 
-    if ([[StoreInfo getInstance] setStoreAssets:storeAssets]) {
+    if (![[StoreInfo getInstance] setStoreAssets:storeAssets]) {
         LogError(TAG, @"Can't initialize StoreInfo, see description above! SOOMLA Store initialization failed.");
         return NO;
     }
