@@ -80,7 +80,7 @@
  
  @param storeAssets Your game economy.
  */
-- (void)setStoreAssets:(id <IStoreAssets>)storeAssets;
+- (BOOL)setStoreAssets:(id <IStoreAssets>)storeAssets;
 
 - (void)setStoreAssetsJSON:(NSString*)storeMetaJSON withVersion:(int)version;
 
