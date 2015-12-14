@@ -235,6 +235,13 @@ static BOOL nonConsumableMigrationNeeded = NO;
         LogError(TAG, @"The given store assets can't be null!");
         return NO;
     }
+    if (![storeAssets virtualCurrencies] ||
+            ![storeAssets virtualCurrencyPacks] ||
+            ![storeAssets virtualGoods] ||
+            ![storeAssets virtualCategories]) {
+        LogError(TAG, @"All IStoreAssets methods shouldn't return NULL-pointer references!");
+        return NO;
+    }
     if (![self checkAssetsArrayForMarketIdDuplicates:storeAssets.virtualGoods]
             || ![self checkAssetsArrayForMarketIdDuplicates:storeAssets.virtualCurrencyPacks]) {
         LogError(TAG, @"The given store assets has duplicates at marketItem productId!");
