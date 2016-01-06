@@ -1,3 +1,8 @@
+### v3.6.18 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.17...v3.6.18)
+
+* Changes
+  * Added validation - not allowing null pointers in IStoreAssets
+
 ### v3.6.17 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.16...v3.6.17)
 
 * New Features

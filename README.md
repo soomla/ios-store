@@ -27,7 +27,7 @@ Check out our [Wiki] (https://github.com/soomla/ios-store/wiki) for more informa
 
 #### Pre baked libraries:
 
-- [ios-store 3.6.17](http://library.soom.la/fetch/ios-store/3.6.17?cf=github)
+- [ios-store 3.6.18](http://library.soom.la/fetch/ios-store/3.6.18?cf=github)
 
 #### From sources:
  - Clone this repository recursively: `git clone --recursive https://github.com/soomla/ios-store.git`
