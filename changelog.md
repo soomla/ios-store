@@ -1,3 +1,8 @@
+### v3.6.19 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.18...v3.6.19)
+
+* Changes
+  * Removed binaries from repo
+
 ### v3.6.18 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.17...v3.6.18)
 
 * Changes
