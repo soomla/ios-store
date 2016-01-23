@@ -19,7 +19,6 @@
 #import "PurchasableVirtualItem.h"
 #import "StoreEventHandling.h"
 #import "StoreConfig.h"
-#import "FBEncryptorAES.h"
 
 @interface SoomlaVerification () <NSURLConnectionDelegate, SKRequestDelegate> {
     BOOL tryAgain;
