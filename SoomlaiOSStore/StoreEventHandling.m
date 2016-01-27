@@ -139,12 +139,13 @@ extern BOOL VERIFY_PURCHASES;
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASED object:self userInfo:userInfo];
 }
 
-+ (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction forObject:(id)object {
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              purchasableVirtualItem, DICT_ELEMENT_PURCHASABLE,
-                              [NSNumber numberWithBool:verified], DICT_ELEMENT_VERIFIED,
-                              transaction, DICT_ELEMENT_TRANSACTION,
-                              nil];
++ (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction isRestored:(BOOL)isRestored forObject:(id)object {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PURCHASABLE : purchasableVirtualItem,
+            DICT_ELEMENT_IS_RESTORED: @(isRestored),
+            DICT_ELEMENT_VERIFIED : @(verified),
+            DICT_ELEMENT_TRANSACTION : transaction
+    };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASE_VERIF object:object userInfo:userInfo];
 }
 

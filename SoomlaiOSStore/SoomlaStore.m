@@ -269,16 +269,17 @@ static NSString* developerPayload = NULL;
 }
 
 - (void)purchaseVerified:(NSNotification*)notification {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_MARKET_PURCHASE_VERIF object:notification.object[@"verification"]];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_STORE_ERROR object:notification.object[@"verification"]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_MARKET_PURCHASE_VERIF object:notification.object];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_STORE_ERROR object:notification.object];
     
     NSDictionary* userInfo = notification.userInfo;
     PurchasableVirtualItem* purchasable = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
     BOOL verified = [(NSNumber*)[userInfo objectForKey:DICT_ELEMENT_VERIFIED] boolValue];
     SKPaymentTransaction* transaction = [userInfo objectForKey:DICT_ELEMENT_TRANSACTION];
+    BOOL isRestored = [(NSNumber *)userInfo[DICT_ELEMENT_IS_RESTORED] boolValue];
 
     if (verified) {
-        [self finalizeTransaction:transaction isRestored:[notification.object[@"isRestored"] boolValue] forPurchasable:purchasable];
+        [self finalizeTransaction:transaction isRestored:isRestored forPurchasable:purchasable];
     } else {
         LogError(TAG, ([NSString stringWithFormat:@"Failed to verify transaction receipt for %@. The user will not get what he just bought.", purchasable]));
         [self finishFailedTransaction:transaction];
@@ -305,12 +306,9 @@ static NSString* developerPayload = NULL;
         if (VERIFY_PURCHASES) {
             [StoreEventHandling postVerificationStarted:pvi];
 
-            SoomlaVerification *sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi];
+            SoomlaVerification *sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi isRestored:isRestored];
 
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseVerified:) name:EVENT_MARKET_PURCHASE_VERIF object:@{
-                    @"verification": sv,
-                    @"isRestored": @(isRestored)
-            }];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseVerified:) name:EVENT_MARKET_PURCHASE_VERIF object:sv];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_STORE_ERROR object:sv];
 
             [sv verifyData];

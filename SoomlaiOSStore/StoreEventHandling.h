@@ -117,7 +117,7 @@
 
 + (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem isRestored:(BOOL)isRestored withExtraInfo:(NSDictionary*)extraInfo andPayload:(NSString*)payload;
 
-+ (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction forObject:(id)object;
++ (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction isRestored:(BOOL)isRestored forObject:(id)object;
 
 + (void)postMarketPurchaseStarted:(PurchasableVirtualItem*)purchasableVirtualItem;
 

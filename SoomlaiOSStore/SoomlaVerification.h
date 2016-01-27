@@ -26,7 +26,7 @@
     SKPaymentTransaction* transaction;
 }
 
-- (id) initWithTransaction:(SKPaymentTransaction*)t andPurchasable:(PurchasableVirtualItem*)pvi;
+- (id)initWithTransaction:(SKPaymentTransaction*)t andPurchasable:(PurchasableVirtualItem*)pvi isRestored:(BOOL)isRestored;
 
 - (void)verifyData;
 
