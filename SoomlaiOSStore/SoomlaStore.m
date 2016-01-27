@@ -33,6 +33,8 @@
 #import "PurchaseWithMarket.h"
 
 #import "SoomlaVerification.h"
+#import "NSData-Base64.h"
+#import "SubscriptionVG.h"
 
 #define SOOMLA_STORE_VERSION @"3.6.19"
 
@@ -205,6 +207,25 @@ static NSString* developerPayload = NULL;
 }
 
 - (void)finalizeTransaction:(SKPaymentTransaction *)transaction isRestored:(BOOL)isRestored forPurchasable:(PurchasableVirtualItem*)pvi {
+
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+
+    if ([pvi isKindOfClass:[SubscriptionVG class]]) {
+        NSData *receiptData = version >= 7 ? [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] : transaction.transactionReceipt;
+
+        NSDictionary *unparsedReceipt = [NSPropertyListSerialization propertyListWithData:receiptData
+                                                                                  options:NSPropertyListImmutable
+                                                                                   format:nil
+                                                                                    error:nil];
+        NSDictionary *purchaseInfo = [NSPropertyListSerialization propertyListWithData:[NSData dataFromBase64String_soomla:unparsedReceipt[@"purchase-info"]]
+                                                                               options:NSPropertyListImmutable
+                                                                                format:nil
+                                                                                 error:nil];
+        ((SubscriptionVG *)pvi).dueDate = [NSDate dateWithTimeIntervalSince1970:
+                ([[[NSNumberFormatter alloc] init] numberFromString:purchaseInfo[@"expires-date"]].doubleValue / 1000)
+        ];
+    }
+
     if ([StoreInfo isItemNonConsumable:pvi]){
         int balance = [[[StorageManager getInstance] virtualItemStorage:pvi] balanceForItem:pvi.itemId];
         if (balance == 1){
@@ -213,8 +234,6 @@ static NSString* developerPayload = NULL;
             return;
         }
     }
-
-    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
 
     NSURL* receiptUrl = [NSURL URLWithString:@"file:///"];
     if (version >= 7) {
