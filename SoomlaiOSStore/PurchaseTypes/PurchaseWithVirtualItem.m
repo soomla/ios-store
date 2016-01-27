@@ -68,7 +68,7 @@ static NSString* TAG = @"SOOMLA PurchaseWithVirtualItem";
     [storage removeAmount:amount fromItem:item.itemId];
     
     [self.associatedItem giveAmount:1];
-    [StoreEventHandling postItemPurchased:self.associatedItem.itemId withPayload:payload];
+    [StoreEventHandling postItemPurchased:self.associatedItem.itemId isRestored:NO withPayload:payload];
 }
 
 

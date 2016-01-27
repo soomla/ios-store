@@ -22,6 +22,7 @@
 
 @interface SoomlaVerification () <NSURLConnectionDelegate, SKRequestDelegate> {
     BOOL tryAgain;
+    BOOL purchaseRestored;
 }
 @end
 
@@ -29,11 +30,12 @@
 
 static NSString* TAG = @"SOOMLA SoomlaVerification";
 
-- (id) initWithTransaction:(SKPaymentTransaction*)t andPurchasable:(PurchasableVirtualItem*)pvi {
+- (id)initWithTransaction:(SKPaymentTransaction*)t andPurchasable:(PurchasableVirtualItem*)pvi isRestored:(BOOL)isRestored {
     if (self = [super init]) {
         transaction = t;
         purchasable = pvi;
         tryAgain = YES;
+        purchaseRestored = isRestored;
     }
     
     return self;
@@ -93,7 +95,7 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
             [self refreshReceipt];
         } else {
             LogError(TAG, ([NSString stringWithFormat:@"An error occured while trying to get receipt data. Stopping the purchasing process for: %@", transaction.payment.productIdentifier]));
-            [StoreEventHandling postMarketPurchaseVerification:NO forItem:purchasable andTransaction:transaction forObject:self];
+            [StoreEventHandling postMarketPurchaseVerification:NO forItem:purchasable andTransaction:transaction isRestored:purchaseRestored forObject:self];
         }
     }
 }
@@ -154,7 +156,7 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
         } else {
             LogDebug(TAG, @"purchase verified");
         }
-        [StoreEventHandling postMarketPurchaseVerification:verified forItem:purchasable andTransaction:transaction forObject:self];
+        [StoreEventHandling postMarketPurchaseVerification:verified forItem:purchasable andTransaction:transaction isRestored:purchaseRestored forObject:self];
     } else {
         NSString* errorMsg = @"";
         if (responseDict) {
@@ -169,7 +171,7 @@ static NSString* TAG = @"SOOMLA SoomlaVerification";
             LogError(TAG, @"It appears that the iTunes servers are down. We can't verify this receipt.");
             if (VERIFY_ON_ITUNES_FAILURE) {
                 LogDebug(TAG, @"You decided you want to allow situations where Itunes is down for verification. finalizing the purchase now.");
-                [StoreEventHandling postMarketPurchaseVerification:YES forItem:purchasable andTransaction:transaction forObject:self];
+                [StoreEventHandling postMarketPurchaseVerification:YES forItem:purchasable andTransaction:transaction isRestored:purchaseRestored forObject:self];
                 return;
             }
         }

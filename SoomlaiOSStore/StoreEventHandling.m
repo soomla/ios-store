@@ -97,11 +97,15 @@ extern BOOL VERIFY_PURCHASES;
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_ITEM_PURCHASE_STARTED object:self userInfo:userInfo];
 }
 
-+ (void)postItemPurchased:(NSString*)itemId withPayload:(NSString*)payload{
++ (void)postItemPurchased:(NSString*)itemId isRestored:(BOOL)isRestored withPayload:(NSString*)payload{
     if (!payload) {
         payload = @"";
     }
-    NSDictionary *userInfo = @{ DICT_ELEMENT_PURCHASABLE_ID: itemId, DICT_ELEMENT_DEVELOPERPAYLOAD: payload };
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PURCHASABLE_ID: itemId,
+            DICT_ELEMENT_IS_RESTORED: @(isRestored),
+            DICT_ELEMENT_DEVELOPERPAYLOAD: payload
+    };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_ITEM_PURCHASED object:self userInfo:userInfo];
 }
 
@@ -118,7 +122,7 @@ extern BOOL VERIFY_PURCHASES;
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASE_DEFERRED object:self userInfo:userInfo];
 }
 
-+ (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem withExtraInfo:(NSDictionary*)extraInfo andPayload:(NSString*)payload {
++ (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem isRestored:(BOOL)isRestored withExtraInfo:(NSDictionary*)extraInfo andPayload:(NSString*)payload {
     if (!payload) {
         payload = @"";
     }
@@ -126,16 +130,22 @@ extern BOOL VERIFY_PURCHASES;
 //    if (receiptUrl) {
 //        urlStr = [receiptUrl absoluteString];
 //    }
-    NSDictionary *userInfo = @{DICT_ELEMENT_PURCHASABLE: purchasableVirtualItem, DICT_ELEMENT_EXTRA_INFO:extraInfo, DICT_ELEMENT_DEVELOPERPAYLOAD: payload};
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PURCHASABLE: purchasableVirtualItem,
+            DICT_ELEMENT_IS_RESTORED: @(isRestored),
+            DICT_ELEMENT_EXTRA_INFO:extraInfo,
+            DICT_ELEMENT_DEVELOPERPAYLOAD: payload
+    };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASED object:self userInfo:userInfo];
 }
 
-+ (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction forObject:(id)object {
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              purchasableVirtualItem, DICT_ELEMENT_PURCHASABLE,
-                              [NSNumber numberWithBool:verified], DICT_ELEMENT_VERIFIED,
-                              transaction, DICT_ELEMENT_TRANSACTION,
-                              nil];
++ (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction isRestored:(BOOL)isRestored forObject:(id)object {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PURCHASABLE : purchasableVirtualItem,
+            DICT_ELEMENT_IS_RESTORED: @(isRestored),
+            DICT_ELEMENT_VERIFIED : @(verified),
+            DICT_ELEMENT_TRANSACTION : transaction
+    };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_MARKET_PURCHASE_VERIF object:object userInfo:userInfo];
 }
 
