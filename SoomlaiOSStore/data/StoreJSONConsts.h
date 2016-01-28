@@ -27,6 +27,7 @@ extern NSString *const JSON_STORE_GOODS_SU;
 extern NSString *const JSON_STORE_GOODS_PA;
 extern NSString *const JSON_STORE_GOODS_UP;
 extern NSString *const JSON_STORE_GOODS_LT;
+extern NSString *const JSON_STORE_GOODS_SB;
 extern NSString *const JSON_STORE_GOODS_EQ;
 
 extern NSString *const JSON_CATEGORY_NAME;

@@ -15,10 +15,10 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "VirtualGood.h"
+#import "LifetimeVG.h"
 
 
-@interface SubscriptionVG : VirtualGood
+@interface SubscriptionVG : LifetimeVG
 
 @property (nonatomic, strong) NSDate *dueDate;
 

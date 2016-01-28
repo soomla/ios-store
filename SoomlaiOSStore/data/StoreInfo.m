@@ -35,6 +35,7 @@
 #import "UpgradeVG.h"
 #import "KeyValueStorage.h"
 #import "StoreConfig.h"
+#import "SubscriptionVG.h"
 
 @implementation StoreInfo
 
@@ -308,12 +309,17 @@ static BOOL nonConsumableMigrationNeeded = NO;
         
         
         NSDictionary* goodsDict = [storeInfo objectForKey:JSON_STORE_GOODS];
-        NSArray* suGoods = [goodsDict objectForKey:JSON_STORE_GOODS_SU];
-        NSArray* ltGoods = [goodsDict objectForKey:JSON_STORE_GOODS_LT];
-        NSArray* eqGoods = [goodsDict objectForKey:JSON_STORE_GOODS_EQ];
-        NSArray* upGoods = [goodsDict objectForKey:JSON_STORE_GOODS_UP];
-        NSArray* paGoods = [goodsDict objectForKey:JSON_STORE_GOODS_PA];
+        NSArray* suGoods = goodsDict[JSON_STORE_GOODS_SU];
+        NSArray* ltGoods = goodsDict[JSON_STORE_GOODS_LT];
+        NSArray* eqGoods = goodsDict[JSON_STORE_GOODS_EQ];
+        NSArray* upGoods = goodsDict[JSON_STORE_GOODS_UP];
+        NSArray* paGoods = goodsDict[JSON_STORE_GOODS_PA];
+        NSArray* sbGoods = goodsDict[JSON_STORE_GOODS_SB];
         self.virtualGoods = [[NSMutableArray alloc] init];
+        for (NSDictionary *gDict in sbGoods) {
+            SubscriptionVG * g = [[SubscriptionVG alloc] initWithDictionary:gDict];
+            [self addVirtualGood:g];
+        }
         for(NSDictionary* gDict in suGoods){
             SingleUseVG* g = [[SingleUseVG alloc] initWithDictionary: gDict];
             [self addVirtualGood:g];
@@ -405,6 +411,7 @@ static BOOL nonConsumableMigrationNeeded = NO;
     NSMutableArray* eqGoods = [NSMutableArray array];
     NSMutableArray* upGoods = [NSMutableArray array];
     NSMutableArray* paGoods = [NSMutableArray array];
+    NSMutableArray *sbGoods = [NSMutableArray array];
     for(VirtualGood* g in self.virtualGoods){
         if ([g isKindOfClass:[SingleUseVG class]]) {
             [suGoods addObject:[g toDictionary]];
@@ -412,18 +419,24 @@ static BOOL nonConsumableMigrationNeeded = NO;
             [upGoods addObject:[g toDictionary]];
         } else if ([g isKindOfClass:[EquippableVG class]]) {
             [eqGoods addObject:[g toDictionary]];
+        } else if ([g isKindOfClass:[SubscriptionVG class]]) {
+            [sbGoods addObject:[g toDictionary]];
         } else if ([g isKindOfClass:[SingleUsePackVG class]]) {
             [paGoods addObject:[g toDictionary]];
         } else if ([g isKindOfClass:[LifetimeVG class]]) {
             [ltGoods addObject:[g toDictionary]];
+        } else if ([g isKindOfClass:[SubscriptionVG class]]) {
+            [sbGoods addObject:[g toDictionary]];
         }
     }
-    NSDictionary* goods = [NSDictionary dictionaryWithObjectsAndKeys:
-                           suGoods, JSON_STORE_GOODS_SU,
-                           ltGoods, JSON_STORE_GOODS_LT,
-                           eqGoods, JSON_STORE_GOODS_EQ,
-                           upGoods, JSON_STORE_GOODS_UP,
-                           paGoods, JSON_STORE_GOODS_PA, nil];
+    NSDictionary* goods = @{
+            JSON_STORE_GOODS_SU : suGoods,
+            JSON_STORE_GOODS_LT : ltGoods,
+            JSON_STORE_GOODS_EQ : eqGoods,
+            JSON_STORE_GOODS_UP : upGoods,
+            JSON_STORE_GOODS_PA : paGoods,
+            JSON_STORE_GOODS_SB : sbGoods
+    };
     
     NSMutableArray* categories = [NSMutableArray array];
     for(VirtualCategory* c in self.virtualCategories){
@@ -432,10 +445,10 @@ static BOOL nonConsumableMigrationNeeded = NO;
     
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
     
-    [dict setObject:categories forKey:JSON_STORE_CATEGORIES];
-    [dict setObject:currencies forKey:JSON_STORE_CURRENCIES];
-    [dict setObject:packs forKey:JSON_STORE_CURRENCYPACKS];
-    [dict setObject:goods forKey:JSON_STORE_GOODS];
+    dict[JSON_STORE_CATEGORIES] = categories;
+    dict[JSON_STORE_CURRENCIES] = currencies;
+    dict[JSON_STORE_CURRENCYPACKS] = packs;
+    dict[JSON_STORE_GOODS] = goods;
     
     return dict;
 }

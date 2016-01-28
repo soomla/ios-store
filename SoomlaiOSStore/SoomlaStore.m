@@ -211,7 +211,7 @@ static NSString* developerPayload = NULL;
     float version = [[[UIDevice currentDevice] systemVersion] floatValue];
 
     if ([pvi isKindOfClass:[SubscriptionVG class]]) {
-        NSData *receiptData = version >= 7 ? [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] : transaction.transactionReceipt;
+        NSData *receiptData = transaction.transactionReceipt;
 
         NSDictionary *unparsedReceipt = [NSPropertyListSerialization propertyListWithData:receiptData
                                                                                   options:NSPropertyListImmutable

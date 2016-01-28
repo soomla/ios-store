@@ -24,6 +24,7 @@ NSString *const JSON_STORE_GOODS_SU           = @"singleUse";
 NSString *const JSON_STORE_GOODS_PA           = @"goodPacks";
 NSString *const JSON_STORE_GOODS_UP           = @"goodUpgrades";
 NSString *const JSON_STORE_GOODS_LT           = @"lifetime";
+NSString *const JSON_STORE_GOODS_SB           = @"subscription";
 NSString *const JSON_STORE_GOODS_EQ           = @"equippable";
 
 NSString *const JSON_CATEGORY_NAME            = @"name";

@@ -24,6 +24,14 @@
 
 }
 
+- (id)initWithName:(NSString *)oName andDescription:(NSString *)oDescription
+         andItemId:(NSString *)oItemId andPurchaseType:(PurchaseType *)oPurchaseType andDueDate:(NSDate *)dueDate {
+    if (self = [super initWithName:oName andDescription:oDescription andItemId:oItemId andPurchaseType:oPurchaseType]) {
+        self.dueDate = dueDate;
+    }
+    return self;
+}
+
 static NSString* TAG = @"SOOMLA SubscriptionVG";
 
 /*
@@ -42,26 +50,8 @@ static NSString* TAG = @"SOOMLA SubscriptionVG";
         return [[[StorageManager getInstance] virtualGoodStorage] addAmount:amount toItem:self.itemId withEvent:notify];
     } else {
         LogDebug(TAG, @"You can't buy SubscriptionVG right now, because current SubscriptionVG is still active.");
-        return 0;
+        return 1;
     }
-}
-
-/*
- see parent
-
- @param amount see parent.
- @return see parent.
- */
-- (int)takeAmount:(int)amount withEvent:(BOOL)notify {
-    if (amount > 1) {
-        amount = 1;
-    }
-
-    int balance = [[[StorageManager getInstance] virtualGoodStorage] balanceForItem:self.itemId];
-    if (balance > 0) {
-        return [[[StorageManager getInstance] virtualGoodStorage] removeAmount:amount fromItem:self.itemId withEvent:notify];
-    }
-    return 0;
 }
 
 /*
@@ -70,9 +60,7 @@ static NSString* TAG = @"SOOMLA SubscriptionVG";
  @return see parent.
  */
 - (BOOL)canBuy {
-    int balance = [[[StorageManager getInstance] virtualGoodStorage] balanceForItem:self.itemId];
-
-    return balance < 1 && [self.dueDate compare:[NSDate date]] == NSOrderedDescending;
+    return [super canBuy] && (self.dueDate == nil || [self.dueDate compare:[NSDate date]] == NSOrderedDescending);
 }
 
 -(void)setDueDate:(NSDate *)dueDate {

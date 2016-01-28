@@ -148,7 +148,8 @@
 - (void)setDueDate:(NSDate *)dueDate forGood:(NSString *)good {
     NSString *key = [VirtualGoodStorage keyGoodDueDate:good];
     if (dueDate) {
-        [KeyValueStorage setValue:[[[NSDateFormatter alloc] init] stringFromDate:dueDate] forKey:key];
+        [KeyValueStorage setValue:[[[NSNumberFormatter alloc] init] stringFromNumber:@([dueDate timeIntervalSince1970])]
+                           forKey:key];
     } else {
         [KeyValueStorage deleteValueForKey:key];
     }
@@ -156,7 +157,11 @@
 
 - (NSDate *)dueDateForGood:(NSString *)good {
     NSString *key = [VirtualGoodStorage keyGoodDueDate:good];
-    return [[[NSDateFormatter alloc] init] dateFromString:[KeyValueStorage valueForKey:key]];
+    NSString *dateString = [KeyValueStorage getValueForKey:key];
+    if (dateString && dateString.length > 0) {
+        return [NSDate dateWithTimeIntervalSince1970:[[[[NSNumberFormatter alloc] init] numberFromString:dateString] doubleValue]];
+    }
+    return nil;
 }
 
 /**
