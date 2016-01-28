@@ -78,7 +78,7 @@
 - (void)unequipGood:(NSString*)good withEvent:(BOOL)notify;
 
 /**
- Sets expiration time for the given `SubscriptionVG`.
+ Sets expiration time for the given Virtual Good.
 
  @param dueDate The expiration time of given Virtual Good.
  @param good The Virtual Good to assign.
