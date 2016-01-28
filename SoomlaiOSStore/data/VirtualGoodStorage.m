@@ -145,6 +145,20 @@
     }
 }
 
+- (void)setDueDate:(NSDate *)dueDate forGood:(NSString *)good {
+    NSString *key = [VirtualGoodStorage keyGoodDueDate:good];
+    if (dueDate) {
+        [KeyValueStorage setValue:[[[NSDateFormatter alloc] init] stringFromDate:dueDate] forKey:key];
+    } else {
+        [KeyValueStorage deleteValueForKey:key];
+    }
+}
+
+- (NSDate *)dueDateForGood:(NSString *)good {
+    NSString *key = [VirtualGoodStorage keyGoodDueDate:good];
+    return [[[NSDateFormatter alloc] init] dateFromString:[KeyValueStorage valueForKey:key]];
+}
+
 /**
  * see parent
  */
@@ -169,6 +183,10 @@
 
 + (NSString*) keyGoodUpgrade:(NSString*)itemId {
     return [NSString stringWithFormat:@"%@%@.currentUpgrade", DB_KEY_GOOD_PREFIX, itemId];
+}
+
++ (NSString*) keyGoodDueDate:(NSString*)itemId {
+    return [NSString stringWithFormat:@"%@%@.dueDate", DB_KEY_GOOD_PREFIX, itemId];
 }
 
 @end

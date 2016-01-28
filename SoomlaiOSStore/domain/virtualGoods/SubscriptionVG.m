@@ -75,4 +75,12 @@ static NSString* TAG = @"SOOMLA SubscriptionVG";
     return balance < 1 && [self.dueDate compare:[NSDate date]] == NSOrderedDescending;
 }
 
+-(void)setDueDate:(NSDate *)dueDate {
+    [[[StorageManager getInstance] virtualGoodStorage] setDueDate:dueDate forGood:self.itemId];
+}
+
+-(NSDate *)dueDate {
+    return [[[StorageManager getInstance] virtualGoodStorage] dueDateForGood:self.itemId];
+}
+
 @end

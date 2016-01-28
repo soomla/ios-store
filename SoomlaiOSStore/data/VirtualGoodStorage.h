@@ -77,4 +77,18 @@
 - (void)unequipGood:(NSString*)good;
 - (void)unequipGood:(NSString*)good withEvent:(BOOL)notify;
 
+/**
+ Sets expiration time for the given `SubscriptionVG`.
+
+ @param dueDate The expiration time of .
+ @param good The `SubscriptionVG` to assign.
+ */
+- (void)setDueDate:(NSDate *)dueDate forGood:(NSString *)good;
+
+/**
+ Gets expiration time for the given `SubscriptionVG`.
+
+ @param good The `SubscriptionVG` to get expiration time.
+ */
+- (NSDate *)dueDateForGood:(NSString *)good;
 @end
