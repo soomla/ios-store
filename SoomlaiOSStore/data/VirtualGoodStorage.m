@@ -36,7 +36,7 @@
 
 - (int)balanceForItem:(NSString*)itemId {
     NSDate *itemDueDate = [self dueDateForGood:itemId];
-    if (itemDueDate && [itemDueDate compare:[NSDate date]] == NSOrderedDescending) {
+    if (itemDueDate && [[NSDate date] compare:itemDueDate] == NSOrderedDescending) {
         LogDebug(tag, ([NSString stringWithFormat:@"Subscription of VG %@ has been expired. Removing subscription...", itemId]));
         [self setDueDate:nil forGood:itemId];
         [self setBalance:0 toItem:itemId withEvent:NO];
