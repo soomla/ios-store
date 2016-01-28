@@ -34,6 +34,17 @@
     return self;
 }
 
+- (int)balanceForItem:(NSString*)itemId {
+    NSDate *itemDueDate = [self dueDateForGood:itemId];
+    if (itemDueDate && [itemDueDate compare:[NSDate date]] == NSOrderedDescending) {
+        LogDebug(tag, ([NSString stringWithFormat:@"Subscription of VG %@ has been expired. Removing subscription...", itemId]));
+        [self setDueDate:nil forGood:itemId];
+        [self setBalance:0 toItem:itemId withEvent:NO];
+        //TODO: should we notify user about subscription expiration?
+    }
+    return [super balanceForItem:itemId];
+}
+
 - (void)removeUpgradesFrom:(NSString*)goodItemId {
     [self removeUpgradesFrom:goodItemId withEvent:YES];
 }

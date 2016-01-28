@@ -80,15 +80,15 @@
 /**
  Sets expiration time for the given `SubscriptionVG`.
 
- @param dueDate The expiration time of .
- @param good The `SubscriptionVG` to assign.
+ @param dueDate The expiration time of given Virtual Good.
+ @param good The Virtual Good to assign.
  */
 - (void)setDueDate:(NSDate *)dueDate forGood:(NSString *)good;
 
 /**
- Gets expiration time for the given `SubscriptionVG`.
+ Gets expiration time for the given Virtual Good.
 
- @param good The `SubscriptionVG` to get expiration time.
+ @param good The Virtual Good to get expiration time.
  */
 - (NSDate *)dueDateForGood:(NSString *)good;
 @end
