@@ -73,6 +73,7 @@
 #define DICT_ELEMENT_DESCRIPTION       @"description"
 #define DICT_ELEMENT_LOCALE            @"locale"
 #define DICT_ELEMENT_MARKET_ITEMS      @"marketItems"
+#define DICT_ELEMENT_IS_RESTORED       @"isRestored"
 
 
 // Error Codes
@@ -108,15 +109,15 @@
 
 + (void)postItemPurchaseStarted:(NSString*)itemId;
 
-+ (void)postItemPurchased:(NSString*)itemId withPayload:(NSString*)payload;
++ (void)postItemPurchased:(NSString*)itemId isRestored:(BOOL)isRestored withPayload:(NSString*)payload;
 
 + (void)postMarketPurchaseCancelled:(PurchasableVirtualItem*)purchasableVirtualItem;
 
 + (void)postMarketPurchaseDeferred:(PurchasableVirtualItem*)purchasableVirtualItem andPayload:(NSString*)payload;
 
-+ (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem withExtraInfo:(NSDictionary*)extraInfo andPayload:(NSString*)payload;
++ (void)postMarketPurchase:(PurchasableVirtualItem*)purchasableVirtualItem isRestored:(BOOL)isRestored withExtraInfo:(NSDictionary*)extraInfo andPayload:(NSString*)payload;
 
-+ (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction forObject:(id)object;
++ (void)postMarketPurchaseVerification:(BOOL)verified forItem:(PurchasableVirtualItem*)purchasableVirtualItem andTransaction:(SKPaymentTransaction*)transaction isRestored:(BOOL)isRestored forObject:(id)object;
 
 + (void)postMarketPurchaseStarted:(PurchasableVirtualItem*)purchasableVirtualItem;
 

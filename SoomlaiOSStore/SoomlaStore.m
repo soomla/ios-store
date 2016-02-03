@@ -204,7 +204,7 @@ static NSString* developerPayload = NULL;
     return [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 }
 
-- (void)finalizeTransaction:(SKPaymentTransaction *)transaction forPurchasable:(PurchasableVirtualItem*)pvi {
+- (void)finalizeTransaction:(SKPaymentTransaction *)transaction isRestored:(BOOL)isRestored forPurchasable:(PurchasableVirtualItem*)pvi {
     if ([StoreInfo isItemNonConsumable:pvi]){
         int balance = [[[StorageManager getInstance] virtualItemStorage:pvi] balanceForItem:pvi.itemId];
         if (balance == 1){
@@ -243,7 +243,7 @@ static NSString* developerPayload = NULL;
     
     if (receiptUrlStr && transaction.transactionIdentifier && receiptString && transactionDateStr) {
         
-        [StoreEventHandling postMarketPurchase:pvi withExtraInfo:@{
+        [StoreEventHandling postMarketPurchase:pvi isRestored:isRestored withExtraInfo:@{
                                                                    @"receiptUrl": receiptUrlStr,
                                                                    @"transactionIdentifier": transaction.transactionIdentifier,
                                                                    @"receiptBase64": receiptString,
@@ -254,7 +254,7 @@ static NSString* developerPayload = NULL;
                                     andPayload:developerPayload];
         
         [pvi giveAmount:1];
-        [StoreEventHandling postItemPurchased:pvi.itemId withPayload:developerPayload];
+        [StoreEventHandling postItemPurchased:pvi.itemId isRestored:isRestored withPayload:developerPayload];
         developerPayload = NULL;
         
         // Remove the transaction from the payment queue.
@@ -268,7 +268,7 @@ static NSString* developerPayload = NULL;
     }
 }
 
-- (void)purchaseVerified:(NSNotification*)notification{
+- (void)purchaseVerified:(NSNotification*)notification {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_MARKET_PURCHASE_VERIF object:notification.object];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EVENT_UNEXPECTED_STORE_ERROR object:notification.object];
     
@@ -276,9 +276,10 @@ static NSString* developerPayload = NULL;
     PurchasableVirtualItem* purchasable = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
     BOOL verified = [(NSNumber*)[userInfo objectForKey:DICT_ELEMENT_VERIFIED] boolValue];
     SKPaymentTransaction* transaction = [userInfo objectForKey:DICT_ELEMENT_TRANSACTION];
+    BOOL isRestored = [(NSNumber *)userInfo[DICT_ELEMENT_IS_RESTORED] boolValue];
 
     if (verified) {
-        [self finalizeTransaction:transaction forPurchasable:purchasable];
+        [self finalizeTransaction:transaction isRestored:isRestored forPurchasable:purchasable];
     } else {
         LogError(TAG, ([NSString stringWithFormat:@"Failed to verify transaction receipt for %@. The user will not get what he just bought.", purchasable]));
         [self finishFailedTransaction:transaction];
@@ -298,32 +299,35 @@ static NSString* developerPayload = NULL;
     [verifications removeObject:notification.object];
 }
 
-- (void)givePurchasedItem:(SKPaymentTransaction *)transaction
-{
+-(void)givePurchasedItem:(SKPaymentTransaction *)transaction isRestored:(BOOL)isRestored {
     @try {
         PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
 
         if (VERIFY_PURCHASES) {
             [StoreEventHandling postVerificationStarted:pvi];
 
-            SoomlaVerification *sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi];
-                   
+            SoomlaVerification *sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi isRestored:isRestored];
+
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseVerified:) name:EVENT_MARKET_PURCHASE_VERIF object:sv];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_STORE_ERROR object:sv];
 
             [sv verifyData];
-            
+
             [verifications addObject:sv];
         } else {
-            [self finalizeTransaction:transaction forPurchasable:pvi];
+            [self finalizeTransaction:transaction isRestored:isRestored forPurchasable:pvi];
         }
 
     } @catch (VirtualItemNotFoundException* e) {
         LogError(TAG, ([NSString stringWithFormat:@"An error occured when handling completed purchase for PurchasableVirtualItem with productId: %@"
-                        @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
+                                                          @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
         [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
         [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
     }
+}
+
+- (void)givePurchasedItem:(SKPaymentTransaction *)transaction {
+    [self givePurchasedItem:transaction isRestored:NO];
 }
 
 - (void) completeTransaction: (SKPaymentTransaction *)transaction
@@ -339,7 +343,7 @@ static NSString* developerPayload = NULL;
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction
 {
     LogDebug(TAG, ([NSString stringWithFormat:@"Restore transaction for product: %@", transaction.payment.productIdentifier]));
-    [self givePurchasedItem:transaction];
+    [self givePurchasedItem:transaction isRestored:YES];
 }
 
 - (void) failedTransaction: (SKPaymentTransaction *)transaction
