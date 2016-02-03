@@ -1,3 +1,8 @@
+### v3.6.20 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.19...v3.6.20)
+
+* Changes
+  * Added `isRestoring` flag for purchase events
+
 ### v3.6.19 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.18...v3.6.19)
 
 * Changes
