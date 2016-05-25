@@ -20,23 +20,23 @@
  has an instance of this class.
  */
 @interface MarketItem : NSObject{
-    NSString* productId;
-    double          price;
+    NSString*   productId;
+    double      price;
 
-    NSString        *marketPriceAndCurrency;
-    NSString        *marketTitle;
-    NSString        *marketDescription;
-    NSString        *marketCurrencyCode;
-    long            marketPriceMicros;
+    NSString    *marketPriceAndCurrency;
+    NSString    *marketTitle;
+    NSString    *marketDescription;
+    NSString    *marketCurrencyCode;
+    long long   marketPriceMicros;
 }
 
-@property (nonatomic, retain) NSString* productId;
-@property double          price;
+@property (nonatomic, retain) NSString*       productId;
+@property (nonatomic)         double          price;
 @property (nonatomic, retain) NSString        *marketPriceAndCurrency;
 @property (nonatomic, retain) NSString        *marketTitle;
 @property (nonatomic, retain) NSString        *marketDescription;
 @property (nonatomic, retain) NSString        *marketCurrencyCode;
-@property (nonatomic)         long            marketPriceMicros;
+@property (nonatomic)         long long       marketPriceMicros;
 
 /**
  Constructor
