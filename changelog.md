@@ -1,3 +1,8 @@
+### v3.6.22 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.21...v3.6.22)
+
+* Changes
+  * Changed price of MarketItem to have only 2 decimal digits
+
 ### v3.6.21 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.20...v3.6.21)
 
 * Changes
@@ -5,8 +10,11 @@
 
 ### v3.6.20 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.19...v3.6.20)
 
+* Fixes
+  * Change type of `marketPriceMicros` variable to avoid type overflow
+
 * Changes
-  * Added `isRestoring` flag for purchase events
+  * Change verification URL
 
 ### v3.6.19 [view commit logs](https://github.com/soomla/ios-store/compare/v3.6.18...v3.6.19)
 
