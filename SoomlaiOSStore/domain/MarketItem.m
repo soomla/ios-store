@@ -21,7 +21,15 @@
 
 @implementation MarketItem
 
-@synthesize price, productId, marketPriceAndCurrency, marketTitle, marketDescription, marketCurrencyCode, marketPriceMicros;
+@synthesize price=_price, productId, marketPriceAndCurrency, marketTitle, marketDescription, marketCurrencyCode, marketPriceMicros;
+
+- (void)setPrice:(double)newPrice {
+    _price = (round(newPrice*100)) / 100.0;
+}
+
+- (double)price {
+    return _price;
+}
 
 - (id)initWithProductId:(NSString*)oProductId andPrice:(double)oPrice{
     self = [super init];
@@ -47,7 +55,7 @@
         self.marketTitle = [dict objectForKey:JSON_MARKETITEM_MARKETTITLE];
         self.marketDescription = [dict objectForKey:JSON_MARKETITEM_MARKETDESC];
         self.marketCurrencyCode = [dict objectForKey:JSON_MARKETITEM_MARKETCURRENCYCODE];
-        self.marketPriceMicros = [[dict objectForKey:JSON_MARKETITEM_MARKETPRICEMICROS] longValue];
+        self.marketPriceMicros = [[dict objectForKey:JSON_MARKETITEM_MARKETPRICEMICROS] longLongValue];
     }
     
     return self;
@@ -62,7 +70,7 @@
              JSON_MARKETITEM_MARKETTITLE: (self.marketTitle ? self.marketTitle : @""),
              JSON_MARKETITEM_MARKETDESC: (self.marketDescription ? self.marketDescription : @""),
              JSON_MARKETITEM_MARKETCURRENCYCODE: (self.marketCurrencyCode ? self.marketCurrencyCode : @""),
-             JSON_MARKETITEM_MARKETPRICEMICROS: [NSNumber numberWithLong:marketPriceMicros]
+             JSON_MARKETITEM_MARKETPRICEMICROS: [NSNumber numberWithLongLong:marketPriceMicros]
              };
 }
 

@@ -22,6 +22,6 @@ BOOL VERIFY_PURCHASES = NO;
 
 BOOL VERIFY_ON_ITUNES_FAILURE = NO;
 
-NSString* VERIFY_URL = @"https://verify.soom.la/verify_ios";
+NSString* VERIFY_URL = @"https://iap.vedidev.com/verify_ios";
 
 
