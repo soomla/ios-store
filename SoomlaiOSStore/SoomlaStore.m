@@ -1,12 +1,12 @@
 /*
  Copyright (C) 2012-2014 Soomla Inc.
-
+ 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
-
+ 
  http://www.apache.org/licenses/LICENSE-2.0
-
+ 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -52,13 +52,13 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
 
 + (SoomlaStore*)getInstance{
     static SoomlaStore* _instance = nil;
-
+    
     @synchronized( self ) {
         if( _instance == nil ) {
             _instance = [[SoomlaStore alloc] init];
         }
     }
-
+    
     return _instance;
 }
 
@@ -76,14 +76,14 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
     
     [StorageManager getInstance];
     [[StoreInfo getInstance] setStoreAssets:storeAssets];
-
+    
     [self loadBillingService];
-
+    
     [self refreshMarketItemsDetails];
-
+    
     self.initialized = YES;
     [StoreEventHandling postSoomlaStoreInitialized];
-
+    
     return YES;
 }
 
@@ -107,15 +107,15 @@ static NSString* TAG = @"SOOMLA SoomlaStore";
 }
 
 static NSString* developerPayload = NULL;
-- (BOOL)buyInMarketWithMarketItem:(MarketItem*)marketItem andPayload:(NSString*)payload{
-
+- (BOOL)buyInMarketWithMarketItem:(MarketItem*)marketItem isSubscription:(BOOL)subscription andPayload:(NSString*)payload{
+    
     if ([SKPaymentQueue canMakePayments]) {
         SKMutablePayment *payment = [[SKMutablePayment alloc] init] ;
         payment.productIdentifier = marketItem.productId;
         payment.quantity = 1;
         developerPayload = payload;
         [[SKPaymentQueue defaultQueue] addPayment:payment];
-
+        
         @try {
             PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:marketItem.productId];
             [StoreEventHandling postMarketPurchaseStarted:pvi];
@@ -127,7 +127,7 @@ static NSString* developerPayload = NULL;
         LogError(TAG, @"Can't make purchases. Parental control is probably enabled.");
         return NO;
     }
-
+    
     return YES;
 }
 
@@ -137,12 +137,12 @@ static NSString* developerPayload = NULL;
 }
 
 - (void)restoreTransactions {
-
+    
     LogDebug(TAG, @"Sending restore transaction request");
     if ([SKPaymentQueue canMakePayments]) {
         [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     }
-
+    
     [StoreEventHandling postRestoreTransactionsStarted];
 }
 
@@ -207,12 +207,13 @@ static NSString* developerPayload = NULL;
 }
 
 - (void)finalizeTransaction:(SKPaymentTransaction *)transaction isRestored:(BOOL)isRestored forPurchasable:(PurchasableVirtualItem*)pvi {
-
+    
     float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-
+    
+    
     if ([pvi isKindOfClass:[SubscriptionVG class]]) {
         NSData *receiptData = transaction.transactionReceipt;
-
+        
         NSDictionary *unparsedReceipt = [NSPropertyListSerialization propertyListWithData:receiptData
                                                                                   options:NSPropertyListImmutable
                                                                                    format:nil
@@ -222,10 +223,10 @@ static NSString* developerPayload = NULL;
                                                                                 format:nil
                                                                                  error:nil];
         ((SubscriptionVG *)pvi).dueDate = [NSDate dateWithTimeIntervalSince1970:
-                ([[[NSNumberFormatter alloc] init] numberFromString:purchaseInfo[@"expires-date"]].doubleValue / 1000)
-        ];
+                                           ([[[NSNumberFormatter alloc] init] numberFromString:purchaseInfo[@"expires-date"]].doubleValue / 1000)
+                                           ];
     }
-
+    
     if ([StoreInfo isItemNonConsumable:pvi]){
         int balance = [[[StorageManager getInstance] virtualItemStorage:pvi] balanceForItem:pvi.itemId];
         if (balance == 1){
@@ -234,7 +235,7 @@ static NSString* developerPayload = NULL;
             return;
         }
     }
-
+    
     NSURL* receiptUrl = [NSURL URLWithString:@"file:///"];
     if (version >= 7) {
         receiptUrl = [[NSBundle mainBundle] appStoreReceiptURL];
@@ -254,7 +255,7 @@ static NSString* developerPayload = NULL;
             receiptString = @"";
         }
     }
-
+    
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     NSString* transactionDateStr = [dateFormatter stringFromDate:transaction.transactionDate];
     
@@ -263,13 +264,13 @@ static NSString* developerPayload = NULL;
     if (receiptUrlStr && transaction.transactionIdentifier && receiptString && transactionDateStr) {
         
         [StoreEventHandling postMarketPurchase:pvi isRestored:isRestored withExtraInfo:@{
-                                                                   @"receiptUrl": receiptUrlStr,
-                                                                   @"transactionIdentifier": transaction.transactionIdentifier,
-                                                                   @"receiptBase64": receiptString,
-                                                                   @"transactionDate": transactionDateStr,
-                                                                   @"originalTransactionDate": originalDateStr,
-                                                                   @"originalTransactionIdentifier": transaction.originalTransaction ? transaction.originalTransaction.transactionIdentifier : transaction.transactionIdentifier
-                                                                   }
+                                                                                         @"receiptUrl": receiptUrlStr,
+                                                                                         @"transactionIdentifier": transaction.transactionIdentifier,
+                                                                                         @"receiptBase64": receiptString,
+                                                                                         @"transactionDate": transactionDateStr,
+                                                                                         @"originalTransactionDate": originalDateStr,
+                                                                                         @"originalTransactionIdentifier": transaction.originalTransaction ? transaction.originalTransaction.transactionIdentifier : transaction.transactionIdentifier
+                                                                                         }
                                     andPayload:developerPayload];
         
         [pvi giveAmount:1];
@@ -296,7 +297,7 @@ static NSString* developerPayload = NULL;
     BOOL verified = [(NSNumber*)[userInfo objectForKey:DICT_ELEMENT_VERIFIED] boolValue];
     SKPaymentTransaction* transaction = [userInfo objectForKey:DICT_ELEMENT_TRANSACTION];
     BOOL isRestored = [(NSNumber *)userInfo[DICT_ELEMENT_IS_RESTORED] boolValue];
-
+    
     if (verified) {
         [self finalizeTransaction:transaction isRestored:isRestored forPurchasable:purchasable];
     } else {
@@ -321,25 +322,25 @@ static NSString* developerPayload = NULL;
 -(void)givePurchasedItem:(SKPaymentTransaction *)transaction isRestored:(BOOL)isRestored {
     @try {
         PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
-
+        
         if (VERIFY_PURCHASES) {
             [StoreEventHandling postVerificationStarted:pvi];
-
+            
             SoomlaVerification *sv = [[SoomlaVerification alloc] initWithTransaction:transaction andPurchasable:pvi isRestored:isRestored];
-
+            
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseVerified:) name:EVENT_MARKET_PURCHASE_VERIF object:sv];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unexpectedVerificationError:) name:EVENT_UNEXPECTED_STORE_ERROR object:sv];
-
+            
             [sv verifyData];
-
+            
             [verifications addObject:sv];
         } else {
             [self finalizeTransaction:transaction isRestored:isRestored forPurchasable:pvi];
         }
-
+        
     } @catch (VirtualItemNotFoundException* e) {
         LogError(TAG, ([NSString stringWithFormat:@"An error occured when handling completed purchase for PurchasableVirtualItem with productId: %@"
-                                                          @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
+                        @". It's unexpected so an unexpected error is being emitted.", transaction.payment.productIdentifier]));
         [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
         [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
     }
@@ -369,14 +370,14 @@ static NSString* developerPayload = NULL;
 {
     if (transaction.error.code != SKErrorPaymentCancelled) {
         LogError(TAG, ([NSString stringWithFormat:@"An error occured for product id \"%@\" with code \"%ld\" and description \"%@\"", transaction.payment.productIdentifier, (long)transaction.error.code, transaction.error.debugDescription]));
-
+        
         [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
     }
     else{
-
+        
         @try {
             PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:transaction.payment.productIdentifier];
-
+            
             [StoreEventHandling postMarketPurchaseCancelled:pvi];
         }
         @catch (VirtualItemNotFoundException* e) {
@@ -385,7 +386,7 @@ static NSString* developerPayload = NULL;
             
             [StoreEventHandling postUnexpectedError:ERR_GENERAL forObject:self];
         }
-
+        
     }
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 }
@@ -436,19 +437,19 @@ static NSString* developerPayload = NULL;
         NSLocale* locale = product.priceLocale;
         NSString* productId = product.productIdentifier;
         LogDebug(TAG, ([NSString stringWithFormat:@"title: %@  price: %@  productId: %@  desc: %@",title,[price descriptionWithLocale:locale],productId,description]));
-
+        
         @try {
             PurchasableVirtualItem* pvi = [[StoreInfo getInstance] purchasableItemWithProductId:productId];
-
+            
             PurchaseType* purchaseType = pvi.purchaseType;
             if ([purchaseType isKindOfClass:[PurchaseWithMarket class]]) {
                 MarketItem* mi = ((PurchaseWithMarket*)purchaseType).marketItem;
                 [mi setMarketInformation:[MarketItem priceWithCurrencySymbol:locale andPrice:price andBackupPrice:mi.price]
-                          andTitle:title
+                                andTitle:title
                           andDescription:description
-                          andCurrencyCode:[locale objectForKey:NSLocaleCurrencyCode]
+                         andCurrencyCode:[locale objectForKey:NSLocaleCurrencyCode]
                           andPriceMicros:(product.price.floatValue * 1000000)];
-
+                
                 [marketItems addObject:mi];
                 [virtualItems addObject:pvi];
             }
@@ -459,12 +460,12 @@ static NSString* developerPayload = NULL;
             [StoreEventHandling postUnexpectedError:ERR_GENERAL forObject:self];
         }
     }
-
+    
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
     {
         LogError(TAG, ([NSString stringWithFormat: @"Invalid product id (when trying to fetch item details): %@" , invalidProductId]));
     }
-
+    
     NSUInteger idsCount = [[[StoreInfo getInstance] allProductIds] count];
     NSUInteger productsCount = [products count];
     if (idsCount != productsCount)
@@ -475,7 +476,7 @@ static NSString* developerPayload = NULL;
     if (virtualItems.count > 0) {
         [[StoreInfo getInstance] saveWithVirtualItems:virtualItems];
     }
-
+    
     [StoreEventHandling postMarketItemsRefreshFinished:marketItems];
 }
 

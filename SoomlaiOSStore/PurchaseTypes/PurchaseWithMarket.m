@@ -21,14 +21,23 @@
 #import "StoreEventHandling.h"
 #import "PurchasableVirtualItem.h"
 
+@interface PurchaseWithMarket()
+
+@property (nonatomic) BOOL isSubscription;
+
+@end
+
 @implementation PurchaseWithMarket
+
+
 
 @synthesize marketItem;
 
 static NSString* TAG = @"SOOMLA PurchaseWithMarket";
 
-- (id)initWithProductId:(NSString*)oProductId andPrice:(double)oPrice {
+- (id)initWithProductId:(NSString*)oProductId andPrice:(double)oPrice isSubscription:(BOOL)subscription {
     if (self = [super init]) {
+        self.isSubscription = subscription;
         self.marketItem = [[MarketItem alloc] initWithProductId:oProductId andPrice:oPrice];
     }
     return self;
@@ -47,12 +56,17 @@ static NSString* TAG = @"SOOMLA PurchaseWithMarket";
 - (void)buyWithPayload:(NSString*)payload {
     LogDebug(TAG, ([NSString stringWithFormat:@"Starting in-app purchase for productId: %@", self.marketItem.productId]));
     
-    if (![[SoomlaStore getInstance] buyInMarketWithMarketItem:self.marketItem andPayload:payload]) {
+    if (![[SoomlaStore getInstance] buyInMarketWithMarketItem:self.marketItem isSubscription:self.isSubscription andPayload:payload]) {
         [StoreEventHandling postUnexpectedError:ERR_PURCHASE_FAIL forObject:self];
         return;
     }
     
     [StoreEventHandling postItemPurchaseStarted:self.associatedItem.itemId];
+}
+
+
+- (BOOL)subscription {
+    return self.isSubscription;
 }
 
 @end
