@@ -28,13 +28,16 @@
 
 @property (retain, nonatomic) MarketItem* marketItem;
 
+
+
 /** 
  Constructor
  
  @param oProductId The productId to purchase in the App Store.
  @param oPrice The price of the product in the App Store.
  */
-- (id)initWithProductId:(NSString*)oProductId andPrice:(double)oPrice;
+- (id)initWithProductId:(NSString*)oProductId andPrice:(double)oPrice isSubscription:(BOOL)subscription;
+
 
 /** 
  Constructor
@@ -43,5 +46,6 @@
  */
 - (id)initWithMarketItem:(MarketItem*)oMarketItem;
 
+- (BOOL)subscription;
 
 @end

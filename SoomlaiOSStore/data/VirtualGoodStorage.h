@@ -77,4 +77,18 @@
 - (void)unequipGood:(NSString*)good;
 - (void)unequipGood:(NSString*)good withEvent:(BOOL)notify;
 
+/**
+ Sets expiration time for the given Virtual Good.
+
+ @param dueDate The expiration time of given Virtual Good.
+ @param good The Virtual Good to assign.
+ */
+- (void)setDueDate:(NSDate *)dueDate forGood:(NSString *)good;
+
+/**
+ Gets expiration time for the given Virtual Good.
+
+ @param good The Virtual Good to get expiration time.
+ */
+- (NSDate *)dueDateForGood:(NSString *)good;
 @end

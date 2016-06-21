@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6815C3715434FCC86649839 /* SubscriptionVG.h in Headers */ = {isa = PBXBuildFile; fileRef = A681517CABE9D3CD731D144C /* SubscriptionVG.h */; };
+		A6815F66E1C2FE71358AADF4 /* SubscriptionVG.m in Sources */ = {isa = PBXBuildFile; fileRef = A6815CF2A53D41C903CE9EFB /* SubscriptionVG.m */; };
 		C018B64F16105F77000FE817 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C018B47B160F5B23000FE817 /* CoreFoundation.framework */; };
 		C024137F176F2512007BB351 /* StoreJSONConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = C024132B176F2512007BB351 /* StoreJSONConsts.m */; };
 		C024138E176F2512007BB351 /* StorageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0241335176F2512007BB351 /* StorageManager.m */; };
@@ -87,6 +89,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A681517CABE9D3CD731D144C /* SubscriptionVG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionVG.h; sourceTree = "<group>"; };
+		A6815CF2A53D41C903CE9EFB /* SubscriptionVG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionVG.m; sourceTree = "<group>"; };
 		C018B47B160F5B23000FE817 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C024132A176F2512007BB351 /* StoreJSONConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreJSONConsts.h; sourceTree = "<group>"; };
 		C024132B176F2512007BB351 /* StoreJSONConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreJSONConsts.m; sourceTree = "<group>"; };
@@ -262,6 +266,8 @@
 				C024135A176F2512007BB351 /* UpgradeVG.m */,
 				C024135B176F2512007BB351 /* VirtualGood.h */,
 				C024135C176F2512007BB351 /* VirtualGood.m */,
+				A681517CABE9D3CD731D144C /* SubscriptionVG.h */,
+				A6815CF2A53D41C903CE9EFB /* SubscriptionVG.m */,
 			);
 			path = virtualGoods;
 			sourceTree = "<group>";
@@ -378,6 +384,7 @@
 				C097628F18FBF2C5000A4403 /* UpgradeVG.h in Headers */,
 				C097629718FBF2D9000A4403 /* StorageManager.h in Headers */,
 				C097628D18FBF2C5000A4403 /* SingleUsePackVG.h in Headers */,
+				A6815C3715434FCC86649839 /* SubscriptionVG.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +502,7 @@
 				C02413E7176F2512007BB351 /* StoreConfig.m in Sources */,
 				C02413EA176F2512007BB351 /* SoomlaStore.m in Sources */,
 				C02413ED176F2512007BB351 /* StoreInventory.m in Sources */,
+				A6815F66E1C2FE71358AADF4 /* SubscriptionVG.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

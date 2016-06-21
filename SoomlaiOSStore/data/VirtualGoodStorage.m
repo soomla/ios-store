@@ -34,6 +34,17 @@
     return self;
 }
 
+- (int)balanceForItem:(NSString*)itemId {
+    NSDate *itemDueDate = [self dueDateForGood:itemId];
+    if (itemDueDate && [[NSDate date] compare:itemDueDate] == NSOrderedDescending) {
+        LogDebug(tag, ([NSString stringWithFormat:@"Subscription of VG %@ has been expired. Removing subscription...", itemId]));
+        [self setDueDate:nil forGood:itemId];
+        [self setBalance:0 toItem:itemId withEvent:NO];
+        //TODO: should we notify user about subscription expiration?
+    }
+    return [super balanceForItem:itemId];
+}
+
 - (void)removeUpgradesFrom:(NSString*)goodItemId {
     [self removeUpgradesFrom:goodItemId withEvent:YES];
 }
@@ -145,6 +156,25 @@
     }
 }
 
+- (void)setDueDate:(NSDate *)dueDate forGood:(NSString *)good {
+    NSString *key = [VirtualGoodStorage keyGoodDueDate:good];
+    if (dueDate) {
+        [KeyValueStorage setValue:[[[NSNumberFormatter alloc] init] stringFromNumber:@([dueDate timeIntervalSince1970])]
+                           forKey:key];
+    } else {
+        [KeyValueStorage deleteValueForKey:key];
+    }
+}
+
+- (NSDate *)dueDateForGood:(NSString *)good {
+    NSString *key = [VirtualGoodStorage keyGoodDueDate:good];
+    NSString *dateString = [KeyValueStorage getValueForKey:key];
+    if (dateString && dateString.length > 0) {
+        return [NSDate dateWithTimeIntervalSince1970:[[[[NSNumberFormatter alloc] init] numberFromString:dateString] doubleValue]];
+    }
+    return nil;
+}
+
 /**
  * see parent
  */
@@ -169,6 +199,10 @@
 
 + (NSString*) keyGoodUpgrade:(NSString*)itemId {
     return [NSString stringWithFormat:@"%@%@.currentUpgrade", DB_KEY_GOOD_PREFIX, itemId];
+}
+
++ (NSString*) keyGoodDueDate:(NSString*)itemId {
+    return [NSString stringWithFormat:@"%@%@.dueDate", DB_KEY_GOOD_PREFIX, itemId];
 }
 
 @end
